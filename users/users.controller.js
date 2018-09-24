@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcryptjs");
 
 const validateRegisterInput = require("../validation/register");
 
-const User = require("./user.model");
+const userService = require("./user.service");
 
 /**
  * @route   POST /users/register
@@ -13,35 +12,14 @@ const User = require("./user.model");
  */
 router.post("/register", register);
 
-function register(req, res) {
+function register(req, res, next) {
   const { errors, isValid } = validateRegisterInput(req.body);
+  if (!isValid) return res.status(400).json(errors);
 
-  if (!isValid) {
-    return res.status(400).json(errors);
-  }
-
-  User.findOne({ name: req.body.name }).then(user => {
-    if (user) {
-      errors.name = "Name already in use";
-      res.status(400).json(errors);
-    } else {
-      const newUser = new User({
-        name: req.body.name,
-        password: req.body.password
-      });
-
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser
-            .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
-        });
-      });
-    }
-  });
+  userService
+    .create(req.body)
+    .then(user => res.status(200).json(user))
+    .catch(err => next(err));
 }
 
 module.exports = router;
