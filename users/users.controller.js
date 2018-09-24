@@ -13,10 +13,6 @@ const User = require("./user.model");
  */
 router.post("/register", register);
 
-router.get("/", (req, res) => {
-  res.json({ msg: "users works" });
-});
-
 function register(req, res) {
   const { errors, isValid } = validateRegisterInput(req.body);
 
