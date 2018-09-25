@@ -18,7 +18,7 @@ mongoose
   .then(() => console.log("Mongodb connected"))
   .catch(err => console.log(err));
 
-app.use("/users", require("./user/user.controller"));
+app.use("/user", require("./user/user.controller"));
 
 const port = process.env.PORT || 5000;
 
