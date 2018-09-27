@@ -18,7 +18,7 @@ router.post("/register", (req, res, next) => {
   userService
     .create(req.body)
     .then(user => res.status(200).json(user))
-    .catch(err => next(err));
+    .catch(err => res.status(400).json({ database: err }));
 });
 
 /**
