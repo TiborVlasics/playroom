@@ -1,10 +1,13 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { loginUser } from "../../actions/authActions";
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
-      email: "",
+      name: "",
       password: "",
       errors: {}
     };
@@ -21,12 +24,13 @@ class Login extends Component {
     e.preventDefault();
 
     const userData = {
-      email: this.state.email,
+      name: this.state.name,
       password: this.state.password
     };
 
-    console.log(userData);
+    this.props.loginUser(userData);
   }
+
   render() {
     return (
       <div className="login">
@@ -40,10 +44,10 @@ class Login extends Component {
               <form noValidate onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
-                    type="email"
-                    placeholder="Email Address"
-                    name="email"
-                    value={this.state.email}
+                    type="text"
+                    placeholder="Name"
+                    name="name"
+                    value={this.state.name}
                     onChange={this.onChange}
                   />
                 </div>
@@ -66,4 +70,15 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  loginUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateProps = state => ({ auth: state.auth, errors: state.errors });
+
+export default connect(
+  mapStateProps,
+  { loginUser }
+)(Login);
