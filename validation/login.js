@@ -8,7 +8,7 @@ module.exports = function validateLoginInput(data) {
   data.password = !isEmpty(data.password) ? data.password : "";
 
   if (Validator.isEmpty(data.name)) {
-    errors.email = "Name field is required";
+    errors.name = "Name field is required";
   }
 
   if (Validator.isEmpty(data.password)) {
