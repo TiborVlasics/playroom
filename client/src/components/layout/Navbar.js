@@ -2,15 +2,25 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { logoutUser } from "../../actions/authActions";
 
 class Navbar extends Component {
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.logoutUser();
+  }
+
   render() {
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <a href="" className="nav-link">
+          <a
+            href=""
+            className="nav-link"
+            onClick={this.onLogoutClick.bind(this)}
+          >
             <img
               src="https://i.pinimg.com/originals/9f/81/2d/9f812d4cf313e887ef99d8722229eee1.jpg"
               className="rounded"
@@ -80,5 +90,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  {}
+  { logoutUser }
 )(Navbar);
