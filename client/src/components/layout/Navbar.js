@@ -12,9 +12,10 @@ class Navbar extends Component {
         <li className="nav-item">
           <a href="" className="nav-link">
             <img
-              className="img-fluid img-thumbnail"
+              src="https://i.pinimg.com/originals/9f/81/2d/9f812d4cf313e887ef99d8722229eee1.jpg"
+              className="rounded"
               alt={user.name}
-              //style={{ width: "25px", marginRight: "5px" }}
+              style={{ maxWidth: "30px", marginRight: "15px" }}
             />
             Logout
           </a>
