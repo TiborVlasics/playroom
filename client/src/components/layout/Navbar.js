@@ -21,11 +21,12 @@ class Navbar extends Component {
             className="nav-link"
             onClick={this.onLogoutClick.bind(this)}
           >
+            <span style={{ marginRight: 10 }}>{user.name}</span>
             <img
               src="https://i.pinimg.com/originals/9f/81/2d/9f812d4cf313e887ef99d8722229eee1.jpg"
               className="rounded"
               alt={user.name}
-              style={{ maxWidth: "30px", marginRight: "15px" }}
+              style={{ maxWidth: "40px", marginRight: "15px" }}
             />
             Logout
           </a>
