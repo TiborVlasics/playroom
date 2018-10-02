@@ -36,9 +36,10 @@ router.post("/login", (req, res, next) => {
   userService
     .authenticate(req.body)
     .then(user => res.status(200).json(user))
-    .catch(err =>
-      res.status(400).json({ error: "Name or password is incorrect" })
-    );
+    .catch(err => {
+      errors.name = "Name or password is incorrect";
+      res.status(400).json(errors);
+    });
 });
 
 module.exports = router;
