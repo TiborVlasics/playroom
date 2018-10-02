@@ -36,11 +36,26 @@ class App extends Component {
       />
     );
 
+    const indexPath = (
+      <Route
+        exact
+        path="/"
+        render={() =>
+          isAuthenticated ? (
+            <Redirect to="/dashboard" />
+          ) : (
+            <Redirect to="/login" />
+          )
+        }
+      />
+    );
+
     return (
       <Router>
         <div className="App">
           <Navbar />
           <div className="container">
+            {indexPath}
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <SecretRoute exact path="/dashboard" component={Dashboard} />
