@@ -26,7 +26,7 @@ class Navbar extends Component {
               src="https://i.pinimg.com/originals/9f/81/2d/9f812d4cf313e887ef99d8722229eee1.jpg"
               className="rounded"
               alt={user.name}
-              style={{ maxWidth: "40px", marginRight: "15px" }}
+              style={{ width: "50px", height: "50px", marginRight: "15px" }}
             />
             Logout
           </a>
