@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { Provider } from "react-redux";
 import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser } from "./actions/authActions";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -20,17 +21,15 @@ if (localStorage.jwtToken) {
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <Router>
-          <div className="App">
-            <Navbar />
-            <div className="container">
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-            </div>
+      <Router>
+        <div className="App">
+          <Navbar />
+          <div className="container">
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
           </div>
-        </Router>
-      </Provider>
+        </div>
+      </Router>
     );
   }
 }
