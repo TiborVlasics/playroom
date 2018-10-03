@@ -1,12 +1,4 @@
 import React from "react";
-import {
-  Grid,
-  FormGroup,
-  ControlLabel,
-  FormControl,
-  Form,
-  Button
-} from "react-bootstrap";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import io from "socket.io-client";
@@ -36,11 +28,11 @@ class ChatRoom extends React.Component {
   render() {
     return (
       <div>
-        <Grid>
-          <Form inline onSubmit={this.handleSubmit}>
-            <FormGroup>
-              <ControlLabel>Message</ControlLabel>{" "}
-              <FormControl
+        <div>
+          <form inline onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <input
+                className="chat-input form-control mx-sm-3"
                 id="message"
                 type="text"
                 label="Message"
@@ -48,13 +40,12 @@ class ChatRoom extends React.Component {
                 onChange={this.setNewMessage}
                 value={this.state.newMessage}
                 autoComplete="off"
+                autoFocus
               />
-            </FormGroup>
-            <Button type="submit">Send</Button>
-          </Form>
-
+            </div>
+          </form>
           <ChatTable messages={this.state.messages} />
-        </Grid>
+        </div>
       </div>
     );
   }
