@@ -38,7 +38,8 @@ class Register extends Component {
     const newUser = {
       name: this.state.name,
       password: this.state.password,
-      password2: this.state.password2
+      password2: this.state.password2,
+      avatar: `https://api.adorable.io/avatars/141/${this.state.name}.png`
     };
 
     this.props.registerUser(newUser, this.props.history);

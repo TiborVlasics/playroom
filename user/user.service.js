@@ -14,7 +14,8 @@ async function create(user) {
   const hash = await bcrypt.hash(user.password, salt);
   const newUser = new User({
     name: user.name,
-    password: hash
+    password: hash,
+    avatar: user.avatar
   });
 
   return newUser.save();
@@ -30,7 +31,7 @@ async function authenticate(userData) {
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (isMatch) {
-    const payload = { id: user.id, name: user.name };
+    const payload = { id: user.id, name: user.name, avatar: user.avatar };
     const token = await jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: "365d"
     });

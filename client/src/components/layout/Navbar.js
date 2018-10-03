@@ -23,7 +23,7 @@ class Navbar extends Component {
           >
             <span style={{ marginRight: 10 }}>{user.name}</span>
             <img
-              src="https://i.pinimg.com/originals/9f/81/2d/9f812d4cf313e887ef99d8722229eee1.jpg"
+              src={user.avatar}
               className="rounded"
               alt={user.name}
               style={{ width: "50px", height: "50px", marginRight: "15px" }}
