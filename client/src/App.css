@@ -6,3 +6,8 @@ table.table td.name-column {
   white-space: nowrap;
   width: 1%;
 }
+
+.chat-input {
+  position: fixed;
+  bottom: 30px;
+}
