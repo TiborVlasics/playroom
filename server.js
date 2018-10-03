@@ -2,9 +2,9 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 5000;
 const server = app.listen(port, () => console.log(`Server running on ${port}`));
-const io = require("socket.io")(server);
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+require("./sockets")(server);
 require("dotenv").config();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -20,17 +20,3 @@ mongoose
   )
   .then(() => console.log("Mongodb connected"))
   .catch(err => console.log(err));
-
-io.on("connection", function(socket) {
-  console.log("user connected");
-
-  socket.on("disconnect", function() {
-    console.log("user disconnected");
-  });
-
-  socket.on("chat", function(data) {
-    console.log("user: " + data.name);
-    console.log("message: " + data.message);
-    io.emit("chat", data);
-  });
-});
