@@ -13,7 +13,7 @@ class ChatRoom extends React.Component {
     };
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.socket = io("/");
+    this.socket = io("/", { transports: ["polling"] });
   }
 
   componentDidMount() {
@@ -29,7 +29,7 @@ class ChatRoom extends React.Component {
     return (
       <div>
         <div>
-          <form inline onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit}>
             <div className="form-group">
               <input
                 className="chat-input form-control mx-sm-3"
