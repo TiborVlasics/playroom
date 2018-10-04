@@ -21,7 +21,7 @@ module.exports = function(server) {
               id: data.user.id,
               name: data.user.name
             },
-            text: data.message,
+            text: [data.message],
             thumbnail: data.user.avatar
           });
 
@@ -30,7 +30,7 @@ module.exports = function(server) {
               { _id: latestMessage._id },
               {
                 $set: {
-                  text: latestMessage.text + "\n" + data.message,
+                  text: [...latestMessage.text, data.message],
                   createdDate: data.timestamp
                 }
               }

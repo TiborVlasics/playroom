@@ -6,7 +6,7 @@ const MessageSchema = new Schema({
     id: { type: Schema.Types.ObjectId, required: true, ref: "users" },
     name: { type: String, required: true }
   },
-  text: { type: String, required: true },
+  text: [{ type: String, required: true }],
   thumbnail: { type: String, required: true },
   createdDate: { type: Date, default: Date.now }
 });
