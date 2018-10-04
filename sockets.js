@@ -1,3 +1,5 @@
+const Message = require("./models/message");
+
 module.exports = function(server) {
   var io = require("socket.io")(server);
 
@@ -9,8 +11,16 @@ module.exports = function(server) {
     });
 
     socket.on("chat", function(data) {
-      console.log("user: " + data.name);
-      console.log("message: " + data.message);
+      const newMessage = new Message({
+        author: {
+          id: data.user.id,
+          name: data.user.name
+        },
+        text: data.message,
+        thumbnail: data.user.avatar
+      });
+      newMessage.save();
+
       io.emit("chat", data);
     });
   });
