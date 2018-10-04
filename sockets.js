@@ -11,17 +11,29 @@ module.exports = function(server) {
     });
 
     socket.on("chat", function(data) {
-      const newMessage = new Message({
-        author: {
-          id: data.user.id,
-          name: data.user.name
-        },
-        text: data.message,
-        thumbnail: data.user.avatar
-      });
-      newMessage.save();
+      Message.find()
+        .sort({ $natural: -1 })
+        .limit(1)
+        .then(res => {
+          const latestMessage = res[0];
+          const newMessage = new Message({
+            author: {
+              id: data.user.id,
+              name: data.user.name
+            },
+            text: data.message,
+            thumbnail: data.user.avatar
+          });
 
-      io.emit("chat", data);
+          if (latestMessage.author.name === data.user.name) {
+            Message.updateOne(
+              { _id: latestMessage._id },
+              { $set: { text: latestMessage.text + "\n" + data.message } }
+            ).then(io.emit("chat", data));
+          } else {
+            newMessage.save().then(io.emit("chat", data));
+          }
+        });
     });
   });
 
