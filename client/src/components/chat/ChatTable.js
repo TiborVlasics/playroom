@@ -18,18 +18,22 @@ class ChatTable extends React.Component {
         {messages.map(message => (
           <div
             key={message._id}
-            className={classnames("chat-message", {
-              "chat-message own-message": message.author.name === user.name
+            className={classnames("message-container", {
+              "message-container own-message": message.author.name === user.name
             })}
           >
             <img
               src={message.thumbnail}
-              style={{ maxWidth: 30 }}
+              style={{ maxWidth: 35 }}
               alt="thumbnail"
             />
-            <div className="name-column">{message.author.name}</div>
-            <div class="message-text">{message.text}</div>
-            <div>{message.createdDate}</div>
+            <div className="message-name">{message.author.name + ":"}</div>
+            {message.text.map(text => (
+              <div key={text} className="message-text">
+                {text}
+              </div>
+            ))}
+            <div className="message-date">{message.createdDate}</div>
           </div>
         ))}
       </div>
