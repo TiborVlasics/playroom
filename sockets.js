@@ -28,7 +28,12 @@ module.exports = function(server) {
           if (latestMessage.author.name === data.user.name) {
             Message.updateOne(
               { _id: latestMessage._id },
-              { $set: { text: latestMessage.text + "\n" + data.message } }
+              {
+                $set: {
+                  text: latestMessage.text + "\n" + data.message,
+                  createdDate: data.timestamp
+                }
+              }
             ).then(io.emit("chat", data));
           } else {
             newMessage.save().then(io.emit("chat", data));
