@@ -34,7 +34,7 @@ class ChatRoom extends React.Component {
                 id="message"
                 type="text"
                 label="Message"
-                placeholder="Enter your message"
+                placeholder="Say something dirty..."
                 onChange={this.setNewMessage}
                 value={this.state.newMessage}
                 autoComplete="off"
