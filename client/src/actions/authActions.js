@@ -57,7 +57,10 @@ export const logoutUser = () => dispatch => {
 export const fetchMessages = () => dispatch => {
   axios
     .get("/messages/")
-    .then(res => dispatch({ type: FETCH_MESSAGES, payload: res.data }))
+    .then(res => {
+      dispatch({ type: FETCH_MESSAGES, payload: res.data });
+      window.scrollTo(0, document.body.scrollHeight);
+    })
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

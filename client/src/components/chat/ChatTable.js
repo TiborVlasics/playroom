@@ -7,6 +7,7 @@ import classnames from "classnames";
 class ChatTable extends React.Component {
   componentDidMount() {
     this.props.fetchMessages();
+    window.scrollTo(0, document.body.scrollHeight);
   }
 
   render() {
@@ -28,8 +29,8 @@ class ChatTable extends React.Component {
               alt="thumbnail"
             />
             <div className="message-name">{message.author.name + ":"}</div>
-            {message.text.map(text => (
-              <div key={text} className="message-text">
+            {message.text.map((text, index) => (
+              <div key={index} className="message-text">
                 {text}
               </div>
             ))}
