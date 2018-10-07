@@ -2,17 +2,25 @@
   text-align: center;
 }
 
+body {
+  padding-top: 100px;
+}
+
 .chat-input {
   z-index: 3;
   position: fixed;
   bottom: 30px;
 }
 
+.chat-table {
+  margin-bottom: 120px;
+}
+
 .message-container {
   display: block;
-  width: 300px;
+  width: 400px;
   margin: 0 auto;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 
 .own-message {
@@ -22,24 +30,23 @@
 
 .message-name {
   text-align: left;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .message-text {
-  font-family: "Josefin Sans", sans-serif;
   text-align: left;
   word-wrap: break-word;
   margin: 1px;
-  background-color: #e1e1e1;
-  border-radius: 5px;
+  background-color: #ffffcf;
+  border-radius: 50px;
   padding: 10px;
-  font-size: 15px;
-  width: 230px;
+  font-size: 20px;
+  width: 330px;
   text-align: right;
 }
 
 .own-message .message-text {
-  background-color: #f6f6f6;
+  background-color: #ffcfcf;
   text-align: left;
   position: relative;
   left: 40px;
@@ -50,10 +57,15 @@
   float: left;
 }
 
+.own-message .message-date {
+  float: right;
+  position: relative;
+  right: 40px;
+}
+
 .message-container img {
   float: right;
   vertical-align: bottom;
-  max-width: 60px;
   margin-right: 20px;
   border-radius: 50%;
 }
