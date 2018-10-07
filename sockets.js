@@ -12,7 +12,7 @@ module.exports = function(server) {
 
     socket.on("chat", function(data) {
       Message.find()
-        .sort({ $natural: -1 })
+        .sort({ createdDate: -1 })
         .limit(1)
         .then(res => {
           const latestMessage = res[0];
@@ -25,13 +25,13 @@ module.exports = function(server) {
             thumbnail: data.user.avatar
           });
 
-          if (latestMessage.author.name === data.user.name) {
+          if (latestMessage && latestMessage.author.name === data.user.name) {
             Message.updateOne(
               { _id: latestMessage._id },
               {
                 $set: {
                   text: [...latestMessage.text, data.message],
-                  createdDate: data.timestamp
+                  createdDate: Date.now()
                 }
               }
             ).then(io.emit("chat", data));
