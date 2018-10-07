@@ -56,10 +56,8 @@ class Login extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Log In</h1>
-              <p className="lead text-center">
-                Sign in to your DevConnector account
-              </p>
+              <h1 className="display-5 text-center">Log In</h1>
+              <p className="lead text-center">Sign in to your account</p>
               <form noValidate onSubmit={this.onSubmit}>
                 <div className="form-group">
                   <input
