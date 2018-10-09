@@ -6,6 +6,24 @@ body {
   padding-top: 100px;
 }
 
+.landing {
+  position: relative;
+  background: url("https://i2-prod.bristolpost.co.uk/incoming/article239870.ece/ALTERNATES/s1200/Balloon-Girl-by-Banksy.jpg")
+    no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  margin-top: -45px;
+  margin-bottom: -50px;
+}
+
+.landing-inner {
+  position: relative;
+  top: 100px;
+  right: 200px;
+  text-align: left;
+}
+
 .chat-input {
   z-index: 3;
   position: fixed;

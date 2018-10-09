@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class Dashboard extends Component {
   render() {
     return (
-      <div>
+      <div class="container">
         <div
           className="card"
           style={{ backgroundColor: "rgba(100, 10, 10, 0.2)" }}

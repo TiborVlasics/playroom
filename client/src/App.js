@@ -13,6 +13,7 @@ import Login from "./components/auth/Login";
 import Navbar from "./components/layout/Navbar";
 import Dashboard from "./components/layout/Dashboard";
 import ChatRoom from "./components/chat/ChatRoom";
+import Landing from "./components/layout/Landing";
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
@@ -31,7 +32,7 @@ class App extends Component {
           isAuthenticated === true ? (
             <Component {...props} />
           ) : (
-            <Redirect to="/login" />
+            <Redirect to="/" />
           )
         }
       />
@@ -41,13 +42,8 @@ class App extends Component {
       <Route
         exact
         path="/"
-        render={() =>
-          isAuthenticated ? (
-            <Redirect to="/dashboard" />
-          ) : (
-            <Redirect to="/login" />
-          )
-        }
+        render={() => (isAuthenticated ? <Redirect to="/dashboard" /> : null)}
+        component={Landing}
       />
     );
 
@@ -55,7 +51,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <Navbar />
-          <div className="container">
+          <div>
             {indexPath}
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
