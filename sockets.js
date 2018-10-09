@@ -1,4 +1,4 @@
-const Message = require("./models/message");
+const Message = require("./models/Message");
 
 module.exports = function(server) {
   var io = require("socket.io")(server);

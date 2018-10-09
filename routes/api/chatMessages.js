@@ -1,7 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const Message = require("../models/message");
+const Message = require("../../models/Message");
 
+/**
+ * @route   POST /chat
+ * @desc    Register user
+ * @access  Public
+ * Returns all chat messages
+ * TODO: Make it private
+ */
 router.get("/", (req, res) => {
   Message.find()
     .sort({ createdDate: 1 })

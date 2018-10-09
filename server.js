@@ -9,8 +9,8 @@ require("dotenv").config();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/user", require("./user/user.controller"));
-app.use("/messages", require("./controller/messageController"));
+app.use("/user", require("./routes/api/users"));
+app.use("/messages", require("./routes/api/chatMessages"));
 
 mongoose
   .connect(
