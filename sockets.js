@@ -10,7 +10,7 @@ module.exports = function(server) {
       console.log("user disconnected");
     });
 
-    socket.on("chat", function(data) {
+    socket.on("chat", function(message) {
       Message.find()
         .sort({ createdDate: -1 })
         .limit(1)
@@ -18,25 +18,35 @@ module.exports = function(server) {
           const latestMessage = res[0];
           const newMessage = new Message({
             author: {
-              id: data.user.id,
-              name: data.user.name
+              id: message.author.id,
+              name: message.author.name
             },
-            text: [data.message],
-            thumbnail: data.user.avatar
+            text: [message.text],
+            thumbnail: message.author.avatar
           });
 
-          if (latestMessage && latestMessage.author.name === data.user.name) {
-            Message.updateOne(
+          if (
+            latestMessage &&
+            latestMessage.author.name === message.author.name
+          ) {
+            Message.findOneAndUpdate(
               { _id: latestMessage._id },
               {
                 $set: {
-                  text: [...latestMessage.text, data.message],
+                  text: [...latestMessage.text, message.text],
                   createdDate: Date.now()
                 }
-              }
-            ).then(io.emit("chat", data));
+              },
+              { new: true }
+            )
+              .then(data => {
+                io.emit("chat", data);
+              })
+              .catch(err => console.log(err));
           } else {
-            newMessage.save().then(io.emit("chat", data));
+            newMessage.save().then(message => {
+              io.emit("chat", message);
+            });
           }
         });
     });

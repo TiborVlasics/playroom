@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import io from "socket.io-client";
 import ChatTable from "./ChatTable";
-import { fetchMessages } from "../../actions/authActions";
+import { addMessage } from "../../actions/authActions";
 
 class ChatRoom extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class ChatRoom extends React.Component {
 
   componentDidMount() {
     this.socket.on("chat", message => {
-      this.props.fetchMessages();
+      this.props.addMessage(message);
     });
   }
 
@@ -42,7 +42,7 @@ class ChatRoom extends React.Component {
               />
             </div>
           </form>
-          <ChatTable messages={this.state.messages} />
+          <ChatTable />
         </div>
       </div>
     );
@@ -61,8 +61,8 @@ class ChatRoom extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.socket.emit("chat", {
-      user: this.props.auth.user,
-      message: this.state.newMessage,
+      author: this.props.auth.user,
+      text: this.state.newMessage,
       timestamp: new Date().toISOString()
     });
     this.setState({
@@ -73,7 +73,7 @@ class ChatRoom extends React.Component {
 
 ChatRoom.propTypes = {
   auth: PropTypes.object.isRequired,
-  fetchMessages: PropTypes.func.isRequired
+  addMessage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -82,5 +82,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchMessages }
+  { addMessage }
 )(ChatRoom);
