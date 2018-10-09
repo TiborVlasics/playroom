@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { fetchMessages } from "../../actions/authActions";
+import { fetchMessages } from "../../actions/chatActions";
 import { connect } from "react-redux";
 
 class ChatTable extends React.Component {
