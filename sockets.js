@@ -43,6 +43,10 @@ module.exports = function(server) {
           }
         });
     });
+
+    socket.on("user typing", function(data) {
+      socket.broadcast.emit("user typing", data);
+    });
   });
 
   return io;

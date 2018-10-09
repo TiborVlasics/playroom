@@ -6,6 +6,15 @@ body {
   padding-top: 100px;
 }
 
+.card {
+  padding: 10px;
+  border: 2px dashed #000;
+  border-radius: 10px;
+  box-shadow: 0 0 0 4px #ffd0d0, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
+  text-shadow: -1px -1px #aad0d0;
+  margin-bottom: 30px;
+}
+
 .landing {
   position: relative;
   background: url("https://i2-prod.bristolpost.co.uk/incoming/article239870.ece/ALTERNATES/s1200/Balloon-Girl-by-Banksy.jpg")
@@ -30,8 +39,25 @@ body {
   bottom: 30px;
 }
 
+.chat-wrapper {
+  display: flex;
+  align-items: flex-end;
+  width: 60%;
+  margin: 100px;
+}
+
 .chat-table {
-  margin-bottom: 120px;
+  flex: 0 0 80%;
+  float: right;
+  width: 75%;
+}
+
+.users-typing {
+  flex: 1;
+  vertical-align: -webkit-baseline-middle;
+  width: 10%;
+  position: relative;
+  bottom: 100px;
 }
 
 .message-container {
