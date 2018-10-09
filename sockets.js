@@ -10,43 +10,36 @@ module.exports = function(server) {
       console.log("user disconnected");
     });
 
-    socket.on("chat", function(message) {
+    socket.on("chat", function(msg) {
       Message.find()
         .sort({ createdDate: -1 })
         .limit(1)
         .then(res => {
-          const latestMessage = res[0];
-          const newMessage = new Message({
-            author: {
-              id: message.author.id,
-              name: message.author.name
-            },
-            text: [message.text],
-            thumbnail: message.author.avatar
-          });
-
-          if (
-            latestMessage &&
-            latestMessage.author.name === message.author.name
-          ) {
+          const lastMsg = res[0];
+          if (lastMsg && lastMsg.author.name === msg.author.name) {
             Message.findOneAndUpdate(
-              { _id: latestMessage._id },
+              { _id: lastMsg._id },
               {
                 $set: {
-                  text: [...latestMessage.text, message.text],
+                  text: [...lastMsg.text, msg.text],
                   createdDate: Date.now()
                 }
               },
               { new: true }
             )
-              .then(data => {
-                io.emit("chat", data);
-              })
+              .then(message => io.emit("chat", message))
               .catch(err => console.log(err));
           } else {
-            newMessage.save().then(message => {
-              io.emit("chat", message);
-            });
+            new Message({
+              author: {
+                id: msg.author.id,
+                name: msg.author.name
+              },
+              text: [msg.text],
+              thumbnail: msg.author.avatar
+            })
+              .save()
+              .then(message => io.emit("chat", message));
           }
         });
     });
