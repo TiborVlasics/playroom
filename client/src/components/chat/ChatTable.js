@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { fetchMessages } from "../../actions/authActions";
 import { connect } from "react-redux";
-import classnames from "classnames";
 
 class ChatTable extends React.Component {
   componentDidMount() {
@@ -19,9 +18,11 @@ class ChatTable extends React.Component {
         {messages.map(message => (
           <div
             key={message._id}
-            className={classnames("message-container", {
-              "message-container own-message": message.author.name === user.name
-            })}
+            className={
+              message.author.name === user.name
+                ? "message-container own-message"
+                : "message-container"
+            }
           >
             <img
               src={message.thumbnail}
