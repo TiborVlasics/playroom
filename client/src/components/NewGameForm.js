@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 import io from "socket.io-client";
 
 class NewGameForm extends Component {
@@ -14,7 +16,9 @@ class NewGameForm extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    this.socket.emit("new game", { game: this.state.game });
+    this.socket.emit("new game", {
+      game: this.state.game
+    });
   }
 
   render() {
@@ -44,4 +48,15 @@ class NewGameForm extends Component {
   }
 }
 
-export default NewGameForm;
+NewGameForm.propTypes = {
+  auth: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  {}
+)(NewGameForm);
