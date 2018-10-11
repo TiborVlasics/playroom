@@ -60,6 +60,11 @@ body {
   bottom: 100px;
 }
 
+.blurry-text {
+  color: transparent;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
 .message-container {
   display: block;
   width: 400px;

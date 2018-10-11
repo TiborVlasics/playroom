@@ -10,7 +10,8 @@ class ChatRoom extends React.Component {
     super(props);
     this.state = {
       newMessage: "",
-      usersTyping: []
+      usersTyping: {},
+      userMessage: ""
     };
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -23,23 +24,19 @@ class ChatRoom extends React.Component {
     });
 
     this.socket.on("user typing", user => {
-      if (!this.state.usersTyping.includes(user.name) && user.isTyping) {
-        this.setState({
-          usersTyping: this.state.usersTyping.concat(user.name)
-        });
-      } else if (this.state.usersTyping.includes(user.name) && !user.isTyping) {
-        let index = this.state.usersTyping.indexOf(user.name);
-        this.setState({
-          usersTyping: this.state.usersTyping
-            .slice(0, index)
-            .concat(
-              this.state.usersTyping.slice(
-                index,
-                this.state.usersTyping.length - 1
-              )
-            )
-        });
+      let name = user.name;
+      let text = user.text;
+      let oldstate = this.state.usersTyping;
+      let newState;
+      if (!this.state.usersTyping[name] && user.isTyping) {
+        newState = { ...oldstate, [name]: text };
+      } else if (this.state.usersTyping[name] && user.isTyping) {
+        newState = { ...oldstate, [name]: text };
+      } else if (this.state.usersTyping[name] && !user.isTyping) {
+        let { [name]: omit, ...state } = oldstate;
+        newState = state;
       }
+      this.setState({ usersTyping: newState });
     });
   }
 
@@ -62,11 +59,21 @@ class ChatRoom extends React.Component {
               />
             </div>
           </form>
-          <div class="chat-wrapper">
+          <div className="chat-wrapper">
             <ChatTable />
-            <div class="users-typing typewriter">
-              {this.state.usersTyping.map(user => user + " is typing...")}
-            </div>
+            {Object.keys(this.state.usersTyping).map(key => (
+              <div className="message-container">
+                <div className="message-name">
+                  {key} is writing a message...
+                </div>
+                <div
+                  style={{ backgroundColor: "white" }}
+                  className="message-text blurry-text"
+                >
+                  {this.state.usersTyping[key]}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -84,11 +91,13 @@ class ChatRoom extends React.Component {
     if (event.target.value !== "") {
       this.socket.emit("user typing", {
         name: this.props.auth.user.name,
+        text: event.target.value,
         isTyping: true
       });
     } else {
       this.socket.emit("user typing", {
         name: this.props.auth.user.name,
+        text: event.target.value,
         isTyping: false
       });
     }
