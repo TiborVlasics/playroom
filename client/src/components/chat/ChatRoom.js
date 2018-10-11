@@ -41,7 +41,7 @@ class ChatRoom extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <div>
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
