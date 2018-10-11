@@ -3,10 +3,10 @@ import React, { Component } from "react";
 class Dashboard extends Component {
   render() {
     return (
-      <div className="container">
+      <div className="container cards">
         <div
-          className="card"
-          style={{ backgroundColor: "rgba(100, 10, 10, 0.2)" }}
+          className="card new-card"
+          style={{ backgroundColor: "rgba(100, 100, 10, 0.2)", marginTop: 10 }}
         >
           <div className="card-body">
             <h5 className="card-title">Card title</h5>
@@ -23,7 +23,7 @@ class Dashboard extends Component {
 
         <div
           className="card"
-          style={{ backgroundColor: "rgba(100, 100, 10, 0.2)", marginTop: 10 }}
+          style={{ backgroundColor: "rgba(100, 10, 10, 0.2)" }}
         >
           <div className="card-body">
             <h5 className="card-title">Card title</h5>

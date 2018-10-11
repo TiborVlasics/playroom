@@ -6,13 +6,32 @@ body {
   padding-top: 100px;
 }
 
+.cards {
+  display: flex;
+}
+
 .card {
+  background: url("https://images.cdn3.stockunlimited.net/preview1300/tic-tac-toe-pattern-background_1242337.jpg");
   padding: 10px;
-  border: 2px dashed #000;
+  margin: 10px;
   border-radius: 10px;
-  box-shadow: 0 0 0 4px #ffd0d0, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
-  text-shadow: -1px -1px #aad0d0;
   margin-bottom: 30px;
+  color: white;
+  width: 300px;
+}
+
+.new-card {
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 18%,
+    rgba(227, 223, 227, 1) 50%,
+    rgba(237, 237, 237, 1) 99%,
+    rgba(237, 237, 237, 1) 100%
+  );
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 2px dashed #000;
+  color: black;
 }
 
 .landing {
@@ -85,10 +104,9 @@ body {
 .message-text {
   text-align: left;
   word-wrap: break-word;
-  margin: 1px;
   background-color: #ffffcf;
-  border-radius: 50px;
-  padding: 10px;
+  border-radius: 10px;
+  padding: 5px;
   font-size: 20px;
   width: 330px;
   text-align: right;
