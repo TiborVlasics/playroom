@@ -63,7 +63,7 @@ class ChatRoom extends React.Component {
             <ChatTable />
             {Object.keys(this.state.usersTyping).map(key => (
               <div className="message-container">
-                <div className="message-name">
+                <div className="message-name typewriter">
                   {key} is writing a message...
                 </div>
                 <div
