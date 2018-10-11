@@ -8,7 +8,7 @@ export const addMessage = message => dispatch => {
 
 export const fetchMessages = () => dispatch => {
   axios
-    .get("/messages/")
+    .get("/api/messages/")
     .then(res => {
       dispatch({ type: FETCH_MESSAGES, payload: res.data });
       window.scrollTo(0, document.body.scrollHeight);

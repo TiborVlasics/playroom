@@ -3,7 +3,7 @@ const router = express.Router();
 const Message = require("../models/Message");
 
 /**
- * @route   POST /chat
+ * @route   POST api/chat
  * @desc    Register user
  * @access  Public
  * Returns all chat messages

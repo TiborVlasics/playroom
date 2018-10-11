@@ -3,7 +3,7 @@ const router = express.Router();
 const TicTacToe = require("../models/TicTacToe");
 
 /**
- * @route   GET /games/
+ * @route   GET api/games/
  * @desc    Get all games that are not finished yet
  * @access  Public
  * TODO: make it provate

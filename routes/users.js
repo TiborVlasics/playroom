@@ -7,7 +7,7 @@ const validateLoginInput = require("../validation/login");
 const userService = require("../services/userService");
 
 /**
- * @route   POST /user/register
+ * @route   POST api/user/register
  * @desc    Register user
  * @access  Public
  */
