@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class Games extends Component {
+class Tavern extends Component {
   render() {
     return (
       <div>
@@ -11,4 +11,4 @@ class Games extends Component {
   }
 }
 
-export default Games;
+export default Tavern;
