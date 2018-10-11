@@ -13,7 +13,8 @@ const TicTacToeSchema = new Schema({
     avatar: { type: Schema.Types.String, required: false, ref: "users" }
   },
   boardState: [{ type: String, required: false }],
-  isOver: { type: Boolean, default: false },
+  isStarted: { type: Boolean, default: false },
+  isEnded: { type: Boolean, default: false },
   createdDate: { type: Date, default: Date.now }
 });
 
