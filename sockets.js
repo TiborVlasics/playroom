@@ -9,6 +9,7 @@ module.exports = function(server) {
     });
 
     require("./chatSocket")(io, socket);
+    require("./gameSocket")(io, socket);
 
     socket.on("user typing", function(data) {
       socket.broadcast.emit("user typing", data);
