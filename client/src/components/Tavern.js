@@ -6,12 +6,19 @@ import { fetchGames } from "../actions/tavernActions";
 import NewGameForm from "./NewGameForm";
 
 class Tavern extends Component {
+  componentDidMount() {
+    this.props.fetchGames();
+  }
+
   render() {
     return (
       <div className="container cards">
         <NewGameForm />
         <div>
           <div>Games:</div>
+          {this.props.games.map(game => (
+            <div>{game._id}</div>
+          ))}
         </div>
       </div>
     );
@@ -20,11 +27,13 @@ class Tavern extends Component {
 
 Tavern.propTypes = {
   auth: PropTypes.object.isRequired,
+  games: PropTypes.array.isRequired,
   fetchGames: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  games: state.games
 });
 
 export default connect(
