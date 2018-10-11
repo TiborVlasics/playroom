@@ -16,12 +16,16 @@ class Navbar extends Component {
     const authLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <span style={{ marginRight: 10 }}>{user.name}</span>
+          <span class="nav-link" style={{ marginRight: 10 }}>
+            {user.name}
+          </span>
+        </li>
+        <li>
           <img
             src={user.avatar}
-            className="rounded"
+            className="rounded nav-link"
             alt={user.name}
-            style={{ width: "50px", height: "50px", marginRight: "15px" }}
+            style={{ width: "50px", height: "50px" }}
           />
         </li>
         <li className="nav-item">
