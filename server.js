@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/user", require("./routes/users"));
 app.use("/messages", require("./routes/chatMessages"));
+app.use("/games", require("./routes/games"));
 
 mongoose
   .connect(
