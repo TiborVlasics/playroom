@@ -35,7 +35,7 @@ class NewGameForm extends Component {
             to additional content. This content is a little bit longer.
           </p>
           <form onSubmit={this.onSubmit}>
-            <select name="game" class="form-control">
+            <select name="game" className="form-control">
               <option>Tictactoe</option>
             </select>
             <button className="btn btn-danger btn-sm mt-2">New Game</button>

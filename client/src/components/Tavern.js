@@ -8,7 +8,7 @@ import NewGameForm from "./NewGameForm";
 class Tavern extends Component {
   render() {
     return (
-      <div class="container cards">
+      <div className="container cards">
         <NewGameForm />
         <div>
           <div>Games:</div>
