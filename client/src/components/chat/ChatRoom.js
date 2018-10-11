@@ -10,8 +10,7 @@ class ChatRoom extends React.Component {
     super(props);
     this.state = {
       newMessage: "",
-      usersTyping: {},
-      userMessage: ""
+      usersTyping: {}
     };
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
