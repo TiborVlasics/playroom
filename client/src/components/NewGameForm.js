@@ -1,6 +1,22 @@
 import React, { Component } from "react";
+import io from "socket.io-client";
 
 class NewGameForm extends Component {
+  constructor() {
+    super();
+    this.state = {
+      game: "tictactoe"
+    };
+
+    this.onSubmit = this.onSubmit.bind(this);
+    this.socket = io("/", { transports: ["polling"] });
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+    this.socket.emit("new game", { game: this.state.game });
+  }
+
   render() {
     return (
       <div
@@ -17,7 +33,7 @@ class NewGameForm extends Component {
             <select name="game" class="form-control">
               <option>Tictactoe</option>
             </select>
-            <button className="btn btn-danger">New Game</button>
+            <button className="btn btn-danger btn-sm mt-2">New Game</button>
           </form>
           <p className="card-text">
             <small className="text-muted">Last updated 3 mins ago</small>
