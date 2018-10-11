@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { fetchGames } from "../actions/tavernActions";
+
 import NewGameForm from "./NewGameForm";
 
 class Tavern extends Component {
@@ -14,4 +18,16 @@ class Tavern extends Component {
   }
 }
 
-export default Tavern;
+Tavern.propTypes = {
+  auth: PropTypes.object.isRequired,
+  fetchGames: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(
+  mapStateToProps,
+  { fetchGames }
+)(Tavern);
