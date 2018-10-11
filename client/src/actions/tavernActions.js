@@ -1,5 +1,5 @@
 import axios from "axios";
-import { FETCH_GAMES } from "./types";
+import { FETCH_GAMES, GET_ERRORS } from "./types";
 
 export const fetchGames = () => dispatch => {
   axios
