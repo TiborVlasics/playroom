@@ -14,6 +14,7 @@ import Navbar from "./components/layout/Navbar";
 import Dashboard from "./components/layout/Dashboard";
 import ChatRoom from "./components/chat/ChatRoom";
 import Landing from "./components/layout/Landing";
+import Tavern from "./components/Tavern";
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
@@ -48,6 +49,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <SecretRoute exact path="/chat" component={ChatRoom} />
             <SecretRoute exact path="/dashboard" component={Dashboard} />
+            <SecretRoute exact path="/tavern" component={Tavern} />
           </div>
         </div>
       </Router>
