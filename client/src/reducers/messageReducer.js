@@ -1,4 +1,5 @@
 import { ADD_MESSAGE, FETCH_MESSAGES, CLEAR_MESSAGES } from "../actions/types";
+import { LOCATION_CHANGE } from "react-router-redux";
 
 export default function messageReducer(state = [], action = {}) {
   switch (action.type) {
@@ -11,7 +12,7 @@ export default function messageReducer(state = [], action = {}) {
         return state.concat([action.payload]);
       }
     case CLEAR_MESSAGES:
-      return action.payload;
+      return [];
     default:
       return state;
   }

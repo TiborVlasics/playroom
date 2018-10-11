@@ -26,9 +26,6 @@ export const fetchMessages = () => dispatch => {
     );
 };
 
-export const clearMessages = () => {
-  return {
-    type: CLEAR_MESSAGES,
-    payload: {}
-  };
+export const clearMessages = () => dispatch => {
+  dispatch({ type: CLEAR_MESSAGES });
 };
