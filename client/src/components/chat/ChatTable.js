@@ -1,12 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { fetchMessages } from "../../actions/chatActions";
+import { clearMessages } from "../../actions/chatActions";
 import { connect } from "react-redux";
 
 class ChatTable extends React.Component {
   componentDidMount() {
     this.props.fetchMessages();
     window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  componentWillUnmount() {
+    this.props.clearMessages();
   }
 
   render() {
@@ -46,7 +51,8 @@ class ChatTable extends React.Component {
 ChatTable.propTypes = {
   auth: PropTypes.object.isRequired,
   messages: PropTypes.array.isRequired,
-  fetchMessages: PropTypes.func.isRequired
+  fetchMessages: PropTypes.func.isRequired,
+  clearMessages: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -56,5 +62,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchMessages }
+  { fetchMessages, clearMessages }
 )(ChatTable);

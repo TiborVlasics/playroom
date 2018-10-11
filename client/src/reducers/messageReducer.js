@@ -1,4 +1,4 @@
-import { ADD_MESSAGE, FETCH_MESSAGES } from "../actions/types";
+import { ADD_MESSAGE, FETCH_MESSAGES, CLEAR_MESSAGES } from "../actions/types";
 
 export default function messageReducer(state = [], action = {}) {
   switch (action.type) {
@@ -10,6 +10,8 @@ export default function messageReducer(state = [], action = {}) {
       } else {
         return state.concat([action.payload]);
       }
+    case CLEAR_MESSAGES:
+      return action.payload;
     default:
       return state;
   }

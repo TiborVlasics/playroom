@@ -1,5 +1,10 @@
 import axios from "axios";
-import { GET_ERRORS, FETCH_MESSAGES, ADD_MESSAGE } from "./types";
+import {
+  GET_ERRORS,
+  FETCH_MESSAGES,
+  ADD_MESSAGE,
+  CLEAR_MESSAGES
+} from "./types";
 
 export const addMessage = message => dispatch => {
   dispatch({ type: ADD_MESSAGE, payload: message });
@@ -19,4 +24,11 @@ export const fetchMessages = () => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+export const clearMessages = () => {
+  return {
+    type: CLEAR_MESSAGES,
+    payload: {}
+  };
 };
