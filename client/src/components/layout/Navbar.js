@@ -47,6 +47,11 @@ class Navbar extends Component {
             Chat
           </Link>
         </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/tavern">
+            Tavern
+          </Link>
+        </li>
       </ul>
     );
 
