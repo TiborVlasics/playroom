@@ -15,7 +15,7 @@ class Tavern extends Component {
       <div>
         <h1>Games:</h1>
         <div className="container cards">
-          <NewGameForm />
+          {this.props.auth.user.isPlaying ? null : <NewGameForm />}
           {this.props.games.map(game => (
             <div
               key={game._id}
