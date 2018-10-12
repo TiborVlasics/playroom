@@ -17,7 +17,7 @@ class Tavern extends Component {
         <div>
           <div>Games:</div>
           {this.props.games.map(game => (
-            <div>{game._id}</div>
+            <div key={game._id}>{game._id}</div>
           ))}
         </div>
       </div>
