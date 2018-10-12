@@ -24,17 +24,9 @@ body {
   width: 300px;
 }
 
-.new-card {
-  background: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 1) 18%,
-    rgba(227, 223, 227, 1) 50%,
-    rgba(237, 237, 237, 1) 99%,
-    rgba(237, 237, 237, 1) 100%
-  );
-  background-color: rgba(0, 0, 0, 0.5);
-  border: 2px dashed #000;
+.new-game-card {
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%);
+  border: 0px;
   color: black;
 }
 

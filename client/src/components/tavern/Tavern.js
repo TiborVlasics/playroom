@@ -12,10 +12,10 @@ class Tavern extends Component {
 
   render() {
     return (
-      <div className="container cards">
-        <NewGameForm />
-        <div>
-          <h1>Games:</h1>
+      <div>
+        <h1>Games:</h1>
+        <div className="container cards">
+          <NewGameForm />
           {this.props.games.map(game => (
             <div
               key={game._id}

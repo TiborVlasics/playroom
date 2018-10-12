@@ -29,7 +29,7 @@ class NewGameForm extends Component {
   render() {
     return (
       <div
-        className="card new-card"
+        className="card new-game-card"
         style={{ backgroundColor: "rgba(100, 100, 10, 0.2)", marginTop: 10 }}
       >
         <div className="card-body">
