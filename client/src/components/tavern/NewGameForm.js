@@ -14,10 +14,6 @@ class NewGameForm extends Component {
     this.socket = io("/", { transports: ["polling"] });
   }
 
-  // componentDidMount() {
-  //   this.socket.on("new game", function(data) {});
-  // }
-
   onSubmit(event) {
     event.preventDefault();
     this.socket.emit("new game", {
