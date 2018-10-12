@@ -17,7 +17,7 @@ module.exports = function(io, socket) {
         avatar: user.avatar
       };
       const game = await new TicTacToe({ player1: player1 }).save();
-      await socket.emit("new game", game);
+      await io.emit("new game", game);
     } catch (err) {
       console.log(err);
     }
