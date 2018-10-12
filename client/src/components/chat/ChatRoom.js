@@ -60,16 +60,16 @@ class ChatRoom extends React.Component {
           </form>
           <div className="chat-wrapper">
             <ChatTable />
-            {Object.keys(this.state.usersTyping).map(key => (
-              <div className="message-container">
+            {Object.keys(this.state.usersTyping).map((user, index) => (
+              <div key={index} className="message-container">
                 <div className="message-name typewriter">
-                  {key} is writing a message...
+                  {user} is writing a message...
                 </div>
                 <div
                   style={{ backgroundColor: "white" }}
                   className="message-text blurry-text"
                 >
-                  {this.state.usersTyping[key]}
+                  {this.state.usersTyping[user]}
                 </div>
               </div>
             ))}
