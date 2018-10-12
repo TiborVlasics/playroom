@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { fetchGames } from "../actions/tavernActions";
+import { fetchGames } from "../../actions/tavernActions";
 
 import NewGameForm from "./NewGameForm";
 
