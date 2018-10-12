@@ -17,10 +17,17 @@ export default function messageReducer(state = initialState, action = {}) {
     case LOAD_MESSAGES:
       return { ...state, messages: action.payload, loading: false };
     case ADD_MESSAGE:
-      if (state[state.length - 1]._id === action.payload._id) {
-        return state.slice(0, state.length - 1).concat(action.payload);
+      if (
+        state.messages[state.messages.length - 1]._id === action.payload._id
+      ) {
+        return {
+          ...state,
+          messages: state.messages
+            .slice(0, state.messages.length - 1)
+            .concat(action.payload)
+        };
       } else {
-        return state.concat([action.payload]);
+        return { ...state, messages: state.messages.concat([action.payload]) };
       }
     case CLEAR_MESSAGES:
       return initialState;
