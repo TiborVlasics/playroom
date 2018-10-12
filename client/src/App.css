@@ -15,12 +15,13 @@ body {
 }
 
 .card {
-  background: url("https://images.cdn3.stockunlimited.net/preview1300/tic-tac-toe-pattern-background_1242337.jpg");
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%);
   padding: 10px;
   margin: 10px;
+  border: 2px solid #000;
   border-radius: 10px;
   margin-bottom: 30px;
-  color: white;
+  color: black;
   width: 300px;
 }
 
