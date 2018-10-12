@@ -14,7 +14,7 @@ import Navbar from "./components/layout/Navbar";
 import Dashboard from "./components/layout/Dashboard";
 import ChatRoom from "./components/chat/ChatRoom";
 import Landing from "./components/layout/Landing";
-import Tavern from "./components/Tavern";
+import Tavern from "./components/tavern/Tavern";
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
