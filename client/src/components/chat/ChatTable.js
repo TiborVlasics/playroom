@@ -20,14 +20,14 @@ class ChatTable extends React.Component {
 
     const spinner = (
       <div id="cssload-loader">
-        <div class="cssload-dot" />
-        <div class="cssload-dot" />
-        <div class="cssload-dot" />
-        <div class="cssload-dot" />
-        <div class="cssload-dot" />
-        <div class="cssload-dot" />
-        <div class="cssload-dot" />
-        <div class="cssload-dot" />
+        <div className="cssload-dot" />
+        <div className="cssload-dot" />
+        <div className="cssload-dot" />
+        <div className="cssload-dot" />
+        <div className="cssload-dot" />
+        <div className="cssload-dot" />
+        <div className="cssload-dot" />
+        <div className="cssload-dot" />
       </div>
     );
 
