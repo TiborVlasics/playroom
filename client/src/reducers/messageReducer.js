@@ -18,6 +18,7 @@ export default function messageReducer(state = initialState, action = {}) {
       return { ...state, messages: action.payload, loading: false };
     case ADD_MESSAGE:
       if (
+        state.messages.length !== 0 &&
         state.messages[state.messages.length - 1]._id === action.payload._id
       ) {
         return {
