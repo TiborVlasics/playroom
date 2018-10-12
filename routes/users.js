@@ -51,7 +51,6 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.user);
     User.findOne({ _id: req.user.id })
       .then(user => {
         console.log(user);
