@@ -26,6 +26,10 @@ class Tavern extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.socket.close();
+  }
+
   render() {
     return (
       <div>
