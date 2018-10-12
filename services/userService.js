@@ -34,8 +34,7 @@ async function authenticate(userData) {
     const payload = {
       id: user.id,
       name: user.name,
-      avatar: user.avatar,
-      isPlaying: user.isPlaying
+      avatar: user.avatar
     };
     const token = await jwt.sign(payload, process.env.SECRET_KEY, {
       expiresIn: "365d"
