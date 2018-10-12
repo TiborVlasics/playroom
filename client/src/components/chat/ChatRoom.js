@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import io from "socket.io-client";
 import ChatTable from "./ChatTable";
-import { addMessage, clearMessages } from "../../actions/chatActions";
+import { addMessage } from "../../actions/chatActions";
 
 class ChatRoom extends React.Component {
   constructor(props) {
