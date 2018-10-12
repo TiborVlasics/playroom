@@ -9,7 +9,7 @@ const TicTacToe = require("../models/TicTacToe");
  * TODO: make it private
  */
 router.get("/", (req, res) => {
-  TicTacToe.find({ isOver: false })
+  TicTacToe.find({ isEnded: false })
     .then(game => res.status(200).json(game))
     .catch(err => console.log(err));
 });
