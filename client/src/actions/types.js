@@ -5,3 +5,5 @@ export const LOAD_MESSAGES = "LOAD_MESSAGES";
 export const CLEAR_MESSAGES = "CLEAR_MESSAGES";
 export const FETCH_GAMES = "FETCH_GAMES";
 export const CHAT_LOADING = "CHAT_LOADING";
+export const LOAD_NEW_GAME = "LOAD_NEW_GAME";
+export const GET_USER_PLAYING = "GET_USER_PLAYNG";
