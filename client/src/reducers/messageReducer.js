@@ -1,10 +1,21 @@
-import { ADD_MESSAGE, FETCH_MESSAGES, CLEAR_MESSAGES } from "../actions/types";
-import { LOCATION_CHANGE } from "react-router-redux";
+import {
+  ADD_MESSAGE,
+  LOAD_MESSAGES,
+  CLEAR_MESSAGES,
+  CHAT_LOADING
+} from "../actions/types";
 
-export default function messageReducer(state = [], action = {}) {
+const initialState = {
+  loading: false,
+  messages: []
+};
+
+export default function messageReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case FETCH_MESSAGES:
-      return action.payload;
+    case CHAT_LOADING:
+      return { ...state, loading: true, messages: [] };
+    case LOAD_MESSAGES:
+      return { ...state, messages: action.payload, loading: false };
     case ADD_MESSAGE:
       if (state[state.length - 1]._id === action.payload._id) {
         return state.slice(0, state.length - 1).concat(action.payload);
@@ -12,7 +23,7 @@ export default function messageReducer(state = [], action = {}) {
         return state.concat([action.payload]);
       }
     case CLEAR_MESSAGES:
-      return [];
+      return initialState;
     default:
       return state;
   }

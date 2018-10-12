@@ -1,9 +1,10 @@
 import axios from "axios";
 import {
   GET_ERRORS,
-  FETCH_MESSAGES,
+  LOAD_MESSAGES,
   ADD_MESSAGE,
-  CLEAR_MESSAGES
+  CLEAR_MESSAGES,
+  CHAT_LOADING
 } from "./types";
 
 export const addMessage = message => dispatch => {
@@ -11,11 +12,13 @@ export const addMessage = message => dispatch => {
   window.scrollTo(0, document.body.scrollHeight);
 };
 
-export const fetchMessages = () => dispatch => {
+export const loadMessages = () => dispatch => {
+  dispatch(setChatLoading());
+
   axios
     .get("/api/messages/")
     .then(res => {
-      dispatch({ type: FETCH_MESSAGES, payload: res.data });
+      dispatch({ type: LOAD_MESSAGES, payload: res.data });
       window.scrollTo(0, document.body.scrollHeight);
     })
     .catch(err =>
@@ -24,6 +27,10 @@ export const fetchMessages = () => dispatch => {
         payload: err.response.data
       })
     );
+};
+
+export const setChatLoading = () => {
+  return { type: CHAT_LOADING };
 };
 
 export const clearMessages = () => dispatch => {

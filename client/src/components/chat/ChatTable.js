@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { fetchMessages } from "../../actions/chatActions";
+import { loadMessages } from "../../actions/chatActions";
 import { clearMessages } from "../../actions/chatActions";
 import { connect } from "react-redux";
 
 class ChatTable extends React.Component {
   componentDidMount() {
-    this.props.fetchMessages();
+    this.props.loadMessages();
     window.scrollTo(0, document.body.scrollHeight);
   }
 
@@ -16,8 +16,8 @@ class ChatTable extends React.Component {
 
   render() {
     const { user } = this.props.auth;
-    const messages = this.props.messages;
-
+    const { messages, loading } = this.props.chat;
+    console.log(loading);
     return (
       <div className="chat-table">
         {messages.map(message => (
@@ -50,17 +50,17 @@ class ChatTable extends React.Component {
 
 ChatTable.propTypes = {
   auth: PropTypes.object.isRequired,
-  messages: PropTypes.array.isRequired,
-  fetchMessages: PropTypes.func.isRequired,
+  chat: PropTypes.object.isRequired,
+  loadMessages: PropTypes.func.isRequired,
   clearMessages: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  messages: state.messages
+  chat: state.chat
 });
 
 export default connect(
   mapStateToProps,
-  { fetchMessages, clearMessages }
+  { loadMessages, clearMessages }
 )(ChatTable);
