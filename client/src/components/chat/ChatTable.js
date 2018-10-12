@@ -17,8 +17,21 @@ class ChatTable extends React.Component {
   render() {
     const { user } = this.props.auth;
     const { messages, loading } = this.props.chat;
-    console.log(loading);
-    return (
+
+    const spinner = (
+      <div id="cssload-loader">
+        <div class="cssload-dot" />
+        <div class="cssload-dot" />
+        <div class="cssload-dot" />
+        <div class="cssload-dot" />
+        <div class="cssload-dot" />
+        <div class="cssload-dot" />
+        <div class="cssload-dot" />
+        <div class="cssload-dot" />
+      </div>
+    );
+
+    const chatTable = (
       <div className="chat-table">
         {messages.map(message => (
           <div
@@ -45,6 +58,8 @@ class ChatTable extends React.Component {
         ))}
       </div>
     );
+
+    return <div className="container">{loading ? spinner : chatTable}</div>;
   }
 }
 
