@@ -7,6 +7,8 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser } from "./actions/authActions";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import io from "socket.io-client";
+import SocketContext from "./SocketContext";
 
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -23,6 +25,10 @@ if (localStorage.jwtToken) {
 }
 
 class App extends Component {
+  constructor() {
+    super();
+    this.socket = io("/", { transports: ["polling"] });
+  }
   render() {
     const { isAuthenticated } = this.props.auth;
 
@@ -40,19 +46,21 @@ class App extends Component {
     );
 
     return (
-      <Router>
-        <div className="App">
-          <Navbar />
-          <div>
-            <Route exact path="/" component={Landing} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <SecretRoute exact path="/chat" component={ChatRoom} />
-            <SecretRoute exact path="/dashboard" component={Dashboard} />
-            <SecretRoute exact path="/tavern" component={Tavern} />
+      <SocketContext.Provider value={this.socket}>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <div>
+              <Route exact path="/" component={Landing} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <SecretRoute exact path="/chat" component={ChatRoom} />
+              <SecretRoute exact path="/dashboard" component={Dashboard} />
+              <SecretRoute exact path="/tavern" component={Tavern} />
+            </div>
           </div>
-        </div>
-      </Router>
+        </Router>
+      </SocketContext.Provider>
     );
   }
 }

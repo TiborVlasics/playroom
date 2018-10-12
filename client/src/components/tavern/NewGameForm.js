@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import io from "socket.io-client";
+import SocketContext from "../../SocketContext";
 
 class NewGameForm extends Component {
   constructor() {
@@ -11,19 +11,14 @@ class NewGameForm extends Component {
     };
 
     this.onSubmit = this.onSubmit.bind(this);
-    this.socket = io("/", { transports: ["polling"] });
   }
 
   onSubmit(event) {
     event.preventDefault();
-    this.socket.emit("new game", {
+    this.props.socket.emit("new game", {
       game: this.state.game,
       user: this.props.auth.user
     });
-  }
-
-  componentWillUnmount() {
-    this.socket.close();
   }
 
   render() {
@@ -54,7 +49,13 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
+const NewGameFormWithSocket = props => (
+  <SocketContext.Consumer>
+    {socket => <NewGameForm {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+
 export default connect(
   mapStateToProps,
   {}
-)(NewGameForm);
+)(NewGameFormWithSocket);

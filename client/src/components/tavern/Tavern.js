@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import io from "socket.io-client";
+import SocketContext from "../../SocketContext";
 import {
   fetchGames,
   loadNewGame,
@@ -10,24 +10,15 @@ import {
 import NewGameForm from "./NewGameForm";
 
 class Tavern extends Component {
-  constructor() {
-    super();
-    this.socket = io("/", { transports: ["polling"] });
-  }
-
   componentDidMount() {
     this.props.fetchGames();
     this.props.getUserPlaying();
-    this.socket.on("new game", game => {
+    this.props.socket.on("new game", game => {
       this.props.loadNewGame(game);
       if (this.props.auth.user.id === game.player1.id) {
         this.props.getUserPlaying();
       }
     });
-  }
-
-  componentWillUnmount() {
-    this.socket.close();
   }
 
   render() {
@@ -81,7 +72,13 @@ const mapStateToProps = state => ({
   games: state.games
 });
 
+const TavernWithSocket = props => (
+  <SocketContext.Consumer>
+    {socket => <Tavern {...props} socket={socket} />}
+  </SocketContext.Consumer>
+);
+
 export default connect(
   mapStateToProps,
   { fetchGames, loadNewGame, getUserPlaying }
-)(Tavern);
+)(TavernWithSocket);
