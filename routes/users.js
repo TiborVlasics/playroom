@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
-
 const userService = require("../services/userService");
+const passport = require("passport");
+require("../config/passport")(passport);
 
 /**
  * @route   POST api/user/register
@@ -25,7 +25,7 @@ router.post("/register", (req, res, next) => {
 });
 
 /**
- * @route   GET api/user/login
+ * @route   POST api/user/login
  * @desc    Login user / returning token
  * @access  Public
  */
@@ -41,5 +41,24 @@ router.post("/login", (req, res, next) => {
       res.status(400).json(errors);
     });
 });
+
+/**
+ * @route   GET api/user/current
+ * @desc    Get current user
+ * @access  Private
+ */
+router.get(
+  "/current",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.user);
+    User.findOne({ _id: req.user.id })
+      .then(user => {
+        console.log(user);
+        res.status(200).json(user);
+      })
+      .catch(err => console.log(err));
+  }
+);
 
 module.exports = router;
