@@ -1,37 +1,34 @@
 const Message = require("./models/Message");
 
 module.exports = function(io, socket) {
-  socket.on("chat", function(msg) {
-    Message.find()
-      .sort({ createdDate: -1 })
-      .limit(1)
-      .then(res => {
-        const lastMsg = res[0];
-        if (lastMsg && lastMsg.author.name === msg.author.name) {
-          Message.findOneAndUpdate(
-            { _id: lastMsg._id },
-            {
-              $set: {
-                text: [...lastMsg.text, msg.text],
-                createdDate: Date.now()
-              }
-            },
-            { new: true }
-          )
-            .then(message => io.emit("chat", message))
-            .catch(err => console.log(err));
-        } else {
-          new Message({
-            author: {
-              id: msg.author.id,
-              name: msg.author.name
-            },
-            text: [msg.text],
-            thumbnail: msg.author.avatar
-          })
-            .save()
-            .then(message => io.emit("chat", message));
-        }
-      });
+  socket.on("chat", async function(msg) {
+    try {
+      let lastMsg = await Message.findOne().sort({ createdDate: -1 });
+      if (lastMsg && lastMsg.author.name === msg.author.name) {
+        let newMsg = await Message.findOneAndUpdate(
+          { _id: lastMsg._id },
+          {
+            $set: {
+              text: [...lastMsg.text, msg.text],
+              createdDate: Date.now()
+            }
+          },
+          { new: true }
+        );
+        io.emit("chat", newMsg);
+      } else {
+        let newMessage = await new Message({
+          author: {
+            id: msg.author.id,
+            name: msg.author.name
+          },
+          text: [msg.text],
+          thumbnail: msg.author.avatar
+        }).save();
+        io.emit("chat", newMessage);
+      }
+    } catch (err) {
+      socket.broadcast.emit("chat", err);
+    }
   });
 };
