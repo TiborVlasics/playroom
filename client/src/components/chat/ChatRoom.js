@@ -38,6 +38,11 @@ class ChatRoom extends React.Component {
     });
   }
 
+  componentWillMount() {
+    this.props.socket.removeAllListeners("chat");
+    this.props.socket.removeAllListeners("user typing");
+  }
+
   render() {
     return (
       <div className="container">
