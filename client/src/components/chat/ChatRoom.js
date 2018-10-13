@@ -33,6 +33,8 @@ class ChatRoom extends React.Component {
       } else if (this.state.usersTyping[name] && !user.isTyping) {
         let { [name]: omit, ...state } = oldstate;
         newState = state;
+      } else {
+        newState = oldstate;
       }
       this.setState({ usersTyping: newState });
     });
