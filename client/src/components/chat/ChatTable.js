@@ -32,7 +32,7 @@ class ChatTable extends React.Component {
     );
 
     const chatTable = (
-      <div className="chat-table">
+      <div>
         {messages.map(message => (
           <div
             key={message._id}
@@ -59,7 +59,7 @@ class ChatTable extends React.Component {
       </div>
     );
 
-    return <div className="container">{loading ? spinner : chatTable}</div>;
+    return <div className="chat-table">{loading ? spinner : chatTable}</div>;
   }
 }
 

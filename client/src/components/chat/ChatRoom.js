@@ -49,38 +49,40 @@ class ChatRoom extends React.Component {
     return (
       <div className="container">
         <div>
-          <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
-              <input
-                className="chat-input form-control mx-sm-3"
-                id="message"
-                type="text"
-                label="Message"
-                placeholder="Talk to your little friends..."
-                onChange={this.setNewMessage}
-                value={this.state.newMessage}
-                autoComplete="off"
-                autoFocus
-              />
-            </div>
-          </form>
           <div className="chat-wrapper">
             <ChatTable />
-            {Object.keys(this.state.usersTyping).map((user, index) => (
-              <div key={index} className="message-container">
-                <div className="message-name typewriter">
-                  {user} is writing a message...
+            <div className="shadow-messages">
+              {Object.keys(this.state.usersTyping).map((user, index) => (
+                <div key={index} className="shadow-message">
+                  <div className="message-name ">
+                    {user} is writing a message...
+                  </div>
+                  <div
+                    style={{ backgroundColor: "white" }}
+                    className="shadow-message-text blurry-text"
+                  >
+                    {this.state.usersTyping[user]}
+                  </div>
                 </div>
-                <div
-                  style={{ backgroundColor: "white" }}
-                  className="message-text blurry-text"
-                >
-                  {this.state.usersTyping[user]}
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <input
+              className="chat-input form-control"
+              id="message"
+              type="text"
+              label="Message"
+              placeholder="Talk to your little friends..."
+              onChange={this.setNewMessage}
+              value={this.state.newMessage}
+              autoComplete="off"
+              autoFocus
+            />
+          </div>
+        </form>
       </div>
     );
   }
