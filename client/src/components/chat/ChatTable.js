@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { loadMessages } from "../../actions/chatActions";
 import { clearMessages } from "../../actions/chatActions";
 import { connect } from "react-redux";
+import Spinner from "../common/Spinner";
 
 class ChatTable extends React.Component {
   componentDidMount() {
@@ -17,19 +18,6 @@ class ChatTable extends React.Component {
   render() {
     const { user } = this.props.auth;
     const { messages, loading } = this.props.chat;
-
-    const spinner = (
-      <div id="cssload-loader">
-        <div className="cssload-dot" />
-        <div className="cssload-dot" />
-        <div className="cssload-dot" />
-        <div className="cssload-dot" />
-        <div className="cssload-dot" />
-        <div className="cssload-dot" />
-        <div className="cssload-dot" />
-        <div className="cssload-dot" />
-      </div>
-    );
 
     const chatTable = (
       <div>
@@ -59,7 +47,9 @@ class ChatTable extends React.Component {
       </div>
     );
 
-    return <div className="chat-table">{loading ? spinner : chatTable}</div>;
+    return (
+      <div className="chat-table">{loading ? <Spinner /> : chatTable}</div>
+    );
   }
 }
 
