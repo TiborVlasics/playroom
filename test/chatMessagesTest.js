@@ -61,7 +61,7 @@ describe("POST /api/user/login", () => {
       });
   });
 
-  it("Request body's name property equals to Name or password is incorrect n unsuccessful login", done => {
+  it("Request body's name property equals to 'Name or password is incorrect' on unsuccessful login", done => {
     chai
       .request(app)
       .post("/api/user/login")
