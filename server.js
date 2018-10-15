@@ -1,3 +1,5 @@
+"use strict";
+
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -22,3 +24,5 @@ mongoose
   )
   .then(() => console.log("Mongodb connected"))
   .catch(err => console.log(err));
+
+module.exports = server;
