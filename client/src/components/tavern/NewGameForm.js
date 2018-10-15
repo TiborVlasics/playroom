@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import SocketContext from "../../SocketContext";
 
 class NewGameForm extends Component {
   constructor() {
@@ -49,13 +48,7 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-const NewGameFormWithSocket = props => (
-  <SocketContext.Consumer>
-    {socket => <NewGameForm {...props} socket={socket} />}
-  </SocketContext.Consumer>
-);
-
 export default connect(
   mapStateToProps,
   {}
-)(NewGameFormWithSocket);
+)(NewGameForm);

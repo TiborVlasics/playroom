@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import SocketContext from "../../SocketContext";
+import io from "socket.io-client";
 import {
   fetchGames,
   loadNewGame,
@@ -11,10 +11,14 @@ import NewGameForm from "./NewGameForm";
 import Spinner from "../common/Spinner";
 
 class Tavern extends Component {
+  constructor() {
+    super();
+    this.socket = io("/games", { transports: ["polling"] });
+  }
   componentDidMount() {
     this.props.fetchGames();
     this.props.getUserPlaying();
-    this.props.socket.on("new game", game => {
+    this.socket.on("new game", game => {
       this.props.loadNewGame(game);
       if (this.props.auth.user.id === game.player1.id) {
         this.props.getUserPlaying();
@@ -22,10 +26,16 @@ class Tavern extends Component {
     });
   }
 
+  componentWillUnmount() {
+    this.socket.close();
+  }
+
   render() {
     const tavernContent = (
       <div className="container cards">
-        {this.props.tavern.isUserPlaying ? null : <NewGameForm />}
+        {this.props.tavern.isUserPlaying ? null : (
+          <NewGameForm socket={this.socket} />
+        )}
         {this.props.tavern.games.map((game, index) => (
           <div
             key={index}
@@ -75,13 +85,7 @@ const mapStateToProps = state => ({
   tavern: state.tavern
 });
 
-const TavernWithSocket = props => (
-  <SocketContext.Consumer>
-    {socket => <Tavern {...props} socket={socket} />}
-  </SocketContext.Consumer>
-);
-
 export default connect(
   mapStateToProps,
   { fetchGames, loadNewGame, getUserPlaying }
-)(TavernWithSocket);
+)(Tavern);

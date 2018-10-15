@@ -1,7 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import SocketContext from "../../SocketContext";
+import io from "socket.io-client";
+
 import ChatTable from "./ChatTable";
 import { addMessage } from "../../actions/chatActions";
 
@@ -12,16 +13,18 @@ class ChatRoom extends React.Component {
       newMessage: "",
       usersTyping: {}
     };
+    this.socket = io("/chat", { transports: ["polling"] });
+
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
-    this.props.socket.on("chat", message => {
+    this.socket.on("chat", message => {
       this.props.addMessage(message);
     });
 
-    this.props.socket.on("user typing", user => {
+    this.socket.on("user typing", user => {
       let name = user.name;
       let text = user.text;
       let oldstate = this.state.usersTyping;
@@ -41,8 +44,9 @@ class ChatRoom extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.socket.removeAllListeners("chat");
-    this.props.socket.removeAllListeners("user typing");
+    //this.props.socket.removeAllListeners("chat");
+    //this.props.socket.removeAllListeners("user typing");
+    this.socket.close();
   }
 
   render() {
@@ -92,13 +96,13 @@ class ChatRoom extends React.Component {
       newMessage: event.target.value
     });
     if (event.target.value !== "") {
-      this.props.socket.emit("user typing", {
+      this.socket.emit("user typing", {
         name: this.props.auth.user.name,
         text: event.target.value,
         isTyping: true
       });
     } else {
-      this.props.socket.emit("user typing", {
+      this.socket.emit("user typing", {
         name: this.props.auth.user.name,
         text: event.target.value,
         isTyping: false
@@ -108,7 +112,7 @@ class ChatRoom extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.socket.emit("chat", {
+    this.socket.emit("chat", {
       author: this.props.auth.user,
       text: this.state.newMessage,
       timestamp: new Date().toISOString()
@@ -116,7 +120,7 @@ class ChatRoom extends React.Component {
     this.setState({
       newMessage: ""
     });
-    this.props.socket.emit("user typing", {
+    this.socket.emit("user typing", {
       name: this.props.auth.user.name,
       isTyping: false
     });
@@ -132,13 +136,7 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-const ChatRoomWithSockets = props => (
-  <SocketContext.Consumer>
-    {socket => <ChatRoom {...props} socket={socket} />}
-  </SocketContext.Consumer>
-);
-
 export default connect(
   mapStateToProps,
   { addMessage }
-)(ChatRoomWithSockets);
+)(ChatRoom);
