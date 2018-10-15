@@ -13,7 +13,10 @@ class ChatRoom extends React.Component {
       newMessage: "",
       usersTyping: {}
     };
-    this.socket = io("/chat", { transports: ["polling"] });
+    this.socket = io("/chat", {
+      transports: ["polling"],
+      query: { token: localStorage.jwtToken }
+    });
 
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);

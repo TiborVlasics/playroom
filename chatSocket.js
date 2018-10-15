@@ -1,3 +1,5 @@
+const jwtDecode = require("jwt-decode");
+
 const Message = require("./models/Message");
 
 module.exports = function(io) {
@@ -6,10 +8,10 @@ module.exports = function(io) {
   chat.on("connection", function(socket) {
     console.log("User connected to chat");
 
-    io.of("/chat").clients((error, clients) => {
-      if (error) throw error;
-      console.log(clients);
-    });
+    let token = socket.handshake.query.token;
+    token = token.slice(7, token.length).trimLeft();
+    let user = jwtDecode(token);
+    socket.user = user;
 
     socket.on("disconnect", function() {
       console.log("user disconnected from chat");
