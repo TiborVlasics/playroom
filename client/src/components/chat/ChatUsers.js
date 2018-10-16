@@ -10,6 +10,16 @@ class ChatUsers extends Component {
     this.props.socket.on("users", users => {
       this.setState({ users: users });
     });
+
+    this.props.socket.on("user joined", user => {
+      this.setState({ users: this.state.users.concat(user) });
+    });
+
+    this.props.socket.on("user left", userData => {
+      let users = this.state.users.filter(user => user.id !== userData.id);
+      this.setState({ users: users });
+    });
+
     this.props.socket.emit("get users");
   }
 

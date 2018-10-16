@@ -1,5 +1,4 @@
 const jwtDecode = require("jwt-decode");
-
 const Message = require("./models/Message");
 
 module.exports = function(io) {
@@ -13,9 +12,11 @@ module.exports = function(io) {
     let user = jwtDecode(token);
     socket.user = user;
     chat.users = chat.users.concat(user);
+    chat.emit("user joined", socket.user);
 
     socket.on("disconnect", function() {
       chat.users = chat.users.filter(user => user.id !== socket.user.id);
+      chat.emit("user left", socket.user);
       console.log("user disconnected from chat");
     });
 
@@ -55,7 +56,6 @@ module.exports = function(io) {
     });
 
     socket.on("get users", () => {
-      //socket.emit("users", chat.users);
       chat.to(socket.id).emit("users", chat.users);
     });
   });
