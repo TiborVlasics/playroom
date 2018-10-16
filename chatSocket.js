@@ -6,18 +6,39 @@ module.exports = function(io) {
   chat.users = [];
 
   chat.on("connection", function(socket) {
-    console.log("User connected to chat");
     let token = socket.handshake.query.token;
     token = token.slice(7, token.length).trimLeft();
     let user = jwtDecode(token);
     socket.user = user;
-    chat.users = chat.users.concat(user);
-    chat.emit("user joined", socket.user);
+
+    if (!chat.users.some(user => user.id === socket.user.id)) {
+      console.log("User connected to chat");
+      user.times = 1;
+      chat.users = chat.users.concat(user);
+      socket.broadcast.emit("user joined", socket.user);
+    } else {
+      for (let user of chat.users) {
+        if (user.id === socket.user.id) {
+          user.times += 1;
+          break;
+        }
+      }
+    }
 
     socket.on("disconnect", function() {
-      chat.users = chat.users.filter(user => user.id !== socket.user.id);
-      chat.emit("user left", socket.user);
-      console.log("user disconnected from chat");
+      for (let user of chat.users) {
+        if (user.id === socket.user.id) {
+          if (user.times > 1) {
+            user.times -= 1;
+            break;
+          } else {
+            chat.users = chat.users.filter(user => user.id !== socket.user.id);
+            chat.emit("user left", socket.user);
+            console.log("User disconnected from chat");
+            break;
+          }
+        }
+      }
     });
 
     socket.on("chat", async function(msg) {
