@@ -55,23 +55,22 @@ body {
 }
 
 .chat-wrapper {
-  /* display: flex;
-  align-items: flex-end;*/
   justify-content: center;
   margin-bottom: 100px;
 }
 
 .chat-table {
   display: inline-block;
-  /*float: left;*/
-  background-color: #d4d4d4;
+  /*background-color: #d4d4d4;*/
 }
 
 .usersBar {
-  display: inline-block;
-  /*position: relative;
-  bottom: 70px;
-  right: 80px;*/
+  /*display: inline-block;*/
+  margin-top: 120px;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 30px;
   background-color: #f4f4f4;
 }
 
@@ -83,7 +82,6 @@ body {
 
 .shadow-message {
   margin-top: 30px;
-  /*display: block;*/
 }
 
 .shadow-message-text {
@@ -108,7 +106,6 @@ body {
 
 .own-message {
   position: relative;
-  /*right: 100px;*/
 }
 
 .message-name {
