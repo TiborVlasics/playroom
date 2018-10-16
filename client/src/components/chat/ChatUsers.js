@@ -32,7 +32,7 @@ class ChatUsers extends Component {
         <p>online users:</p>
         {users.map((user, index) => {
           return (
-            <div key={index}>
+            <div key={index} onClick={() => this.props.onClick(user)}>
               <div style={{ display: "inline-block", marginRight: "20px" }}>
                 {user.name}
               </div>

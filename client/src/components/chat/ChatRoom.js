@@ -5,19 +5,21 @@ import io from "socket.io-client";
 
 import ChatTable from "./ChatTable";
 import ChatUsers from "./ChatUsers";
+import ChatWindow from "./ChatWindow";
 import { addMessage } from "../../actions/chatActions";
 
 class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { newMessage: "", usersTyping: {} };
+    this.state = { newMessage: "", usersTyping: {}, user: null };
     this.socket = io("/chat", {
       transports: ["polling"],
       query: { token: localStorage.jwtToken }
     });
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.putUserToState = this.putUserToState.bind(this);
   }
 
   componentDidMount() {
@@ -50,12 +52,19 @@ class ChatRoom extends React.Component {
     this.socket.close();
   }
 
+  putUserToState(user) {
+    this.setState({ user: user });
+  }
+
   render() {
     return (
       <div className="container">
         <div>
+          {this.state.user ? (
+            <ChatWindow socket={this.socket} user={this.state.user} />
+          ) : null}
           <div className="chat-wrapper">
-            <ChatUsers socket={this.socket} />
+            <ChatUsers socket={this.socket} onClick={this.putUserToState} />
             <ChatTable />
             <div className="shadow-messages">
               {Object.keys(this.state.usersTyping).map((user, index) => (
