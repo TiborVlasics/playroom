@@ -9,6 +9,7 @@ class ChatUsers extends Component {
   componentDidMount() {
     this.props.socket.on("users", users => {
       this.setState({ users: users });
+      window.scrollTo(0, document.body.scrollHeight);
     });
 
     this.props.socket.emit("get users");
@@ -27,10 +28,7 @@ class ChatUsers extends Component {
     let { users } = this.state;
 
     return (
-      <div
-        className="usersBar"
-        style={{ position: "relative", bottom: "70px", right: "80px" }}
-      >
+      <div className="usersBar">
         <p>online users:</p>
         {users.map((user, index) => {
           return (

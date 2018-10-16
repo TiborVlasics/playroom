@@ -6,10 +6,6 @@ body {
   padding-top: 100px;
 }
 
-.container {
-  justify-content: center;
-}
-
 .cards {
   display: flex;
   flex-wrap: wrap;
@@ -59,24 +55,35 @@ body {
 }
 
 .chat-wrapper {
-  display: flex;
-  align-items: flex-end;
+  /* display: flex;
+  align-items: flex-end;*/
   justify-content: center;
   margin-bottom: 100px;
 }
 
 .chat-table {
-  display: block;
-  float: left;
+  display: inline-block;
+  /*float: left;*/
+  background-color: #d4d4d4;
+}
+
+.usersBar {
+  display: inline-block;
+  /*position: relative;
+  bottom: 70px;
+  right: 80px;*/
+  background-color: #f4f4f4;
 }
 
 .shadow-messages {
   width: 15%;
+  display: inline-block;
+  background-color: #d9d9d9;
 }
 
 .shadow-message {
   margin-top: 30px;
-  display: block;
+  /*display: block;*/
 }
 
 .shadow-message-text {
@@ -88,6 +95,10 @@ body {
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
 }
 
+/**
+* Chat messages
+*
+/*/
 .message-container {
   display: block;
   width: 400px;
