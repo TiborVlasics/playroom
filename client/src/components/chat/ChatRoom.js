@@ -4,20 +4,18 @@ import { connect } from "react-redux";
 import io from "socket.io-client";
 
 import ChatTable from "./ChatTable";
+import ChatUsers from "./ChatUsers";
 import { addMessage } from "../../actions/chatActions";
 
 class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      newMessage: "",
-      usersTyping: {}
-    };
+
+    this.state = { newMessage: "", usersTyping: {} };
     this.socket = io("/chat", {
       transports: ["polling"],
       query: { token: localStorage.jwtToken }
     });
-
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -57,6 +55,7 @@ class ChatRoom extends React.Component {
       <div className="container">
         <div>
           <div className="chat-wrapper">
+            <ChatUsers socket={this.socket} />
             <ChatTable />
             <div className="shadow-messages">
               {Object.keys(this.state.usersTyping).map((user, index) => (
