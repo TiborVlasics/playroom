@@ -11,6 +11,8 @@ class ChatUsers extends Component {
       this.setState({ users: users });
     });
 
+    this.props.socket.emit("get users");
+
     this.props.socket.on("user joined", user => {
       this.setState({ users: this.state.users.concat(user) });
     });
@@ -19,8 +21,6 @@ class ChatUsers extends Component {
       let users = this.state.users.filter(user => user.id !== userData.id);
       this.setState({ users: users });
     });
-
-    this.props.socket.emit("get users");
   }
 
   render() {
