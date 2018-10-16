@@ -4,16 +4,18 @@ const Message = require("./models/Message");
 
 module.exports = function(io) {
   const chat = io.of("/chat");
+  chat.users = [];
 
   chat.on("connection", function(socket) {
     console.log("User connected to chat");
-
     let token = socket.handshake.query.token;
     token = token.slice(7, token.length).trimLeft();
     let user = jwtDecode(token);
     socket.user = user;
+    chat.users = chat.users.concat(user);
 
     socket.on("disconnect", function() {
+      chat.users = chat.users.filter(user => user.id !== socket.user.id);
       console.log("user disconnected from chat");
     });
 
@@ -50,6 +52,11 @@ module.exports = function(io) {
 
     socket.on("user typing", function(data) {
       socket.broadcast.emit("user typing", data);
+    });
+
+    socket.on("get users", () => {
+      //socket.emit("users", chat.users);
+      chat.to(socket.id).emit("users", chat.users);
     });
   });
 };
