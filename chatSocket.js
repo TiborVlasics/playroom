@@ -3,6 +3,7 @@ const Message = require("./models/Message");
 
 module.exports = function(io) {
   const chat = io.of("/chat");
+  let currentConnections = {};
   chat.users = [];
 
   chat.on("connection", function(socket) {
@@ -24,6 +25,7 @@ module.exports = function(io) {
         }
       }
     }
+    currentConnections[user.id] = socket;
 
     socket.on("disconnect", function() {
       for (let user of chat.users) {
@@ -39,6 +41,14 @@ module.exports = function(io) {
           }
         }
       }
+      delete currentConnections[socket.user.id];
+    });
+
+    socket.on("private", data => {
+      currentConnections[data.to].emit("private", {
+        from: socket.user.id,
+        msg: data.text
+      });
     });
 
     socket.on("chat", async function(msg) {
