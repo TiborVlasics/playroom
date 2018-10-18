@@ -30,7 +30,7 @@ body {
 
 .landing {
   position: relative;
-  background: url("https://wonderfulengineering.com/wp-content/uploads/2016/01/Desktop-Wallpaper-4.jpg")
+  background: url("http://www.ingrammicrocloud.me/wp-content/uploads/sites/73/2015/06/landing-page-background-5_1900x765.png")
     no-repeat;
   background-size: cover;
   background-position: center;
@@ -54,6 +54,10 @@ body {
   width: 100%;
   border-left: 0;
   height: 60px;
+}
+
+.chat-input:focus {
+  border: 0;
 }
 
 .container {
