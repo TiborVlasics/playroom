@@ -12,6 +12,7 @@ module.exports = function(io) {
     let user = jwtDecode(token);
     socket.user = user;
 
+    //TODO: make this work from currentConnections
     if (!chat.users.some(user => user.id === socket.user.id)) {
       console.log("User connected to chat");
       user.times = 1;
@@ -28,6 +29,7 @@ module.exports = function(io) {
     currentConnections[user.id] = socket;
 
     socket.on("disconnect", function() {
+      //TODO: make this work from currentConnections
       for (let user of chat.users) {
         if (user.id === socket.user.id) {
           if (user.times > 1) {
@@ -87,7 +89,12 @@ module.exports = function(io) {
     });
 
     socket.on("get users", () => {
-      chat.to(socket.id).emit("users", chat.users);
+      let users = [];
+      Object.keys(currentConnections).map(key => {
+        users.push(currentConnections[key].user);
+      });
+
+      chat.to(socket.id).emit("users", users);
     });
   });
 };
