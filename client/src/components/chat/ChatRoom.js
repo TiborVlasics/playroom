@@ -12,7 +12,13 @@ class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { newMessage: "", usersTyping: {}, user: null };
+    this.state = {
+      newMessage: "",
+      usersTyping: {},
+      user: null,
+      privateMsg: "POOP",
+      chatWindows: []
+    };
     this.socket = io("/chat", {
       transports: ["polling"],
       query: { token: localStorage.jwtToken }
@@ -30,25 +36,27 @@ class ChatRoom extends React.Component {
     this.socket.on("user typing", user => {
       let name = user.name;
       let text = user.text;
-      let oldstate = this.state.usersTyping;
+      let oldState = this.state.usersTyping;
       let newState;
-      if (!this.state.usersTyping[name] && user.isTyping) {
-        newState = { ...oldstate, [name]: text };
-      } else if (this.state.usersTyping[name] && user.isTyping) {
-        newState = { ...oldstate, [name]: text };
-      } else if (this.state.usersTyping[name] && !user.isTyping) {
-        let { [name]: omit, ...state } = oldstate;
+      if (!oldState[name] && user.isTyping) {
+        newState = { ...oldState, [name]: text };
+      } else if (oldState[name] && user.isTyping) {
+        newState = { ...oldState, [name]: text };
+      } else if (oldState[name] && !user.isTyping) {
+        let { [name]: omit, ...state } = oldState;
         newState = state;
       } else {
-        newState = oldstate;
+        newState = oldState;
       }
       this.setState({ usersTyping: newState });
+    });
+
+    this.socket.on("private", data => {
+      this.setState({ privateMsg: data.msg });
     });
   }
 
   componentWillUnmount() {
-    //this.props.socket.removeAllListeners("chat");
-    //this.props.socket.removeAllListeners("user typing");
     this.socket.close();
   }
 
@@ -69,7 +77,7 @@ class ChatRoom extends React.Component {
             <div className="shadow-messages">
               {Object.keys(this.state.usersTyping).map((user, index) => (
                 <div key={index} className="shadow-message">
-                  <div className="message-name ">
+                  <div className="message-name">
                     {user} is writing a message...
                   </div>
                   <div
@@ -90,7 +98,7 @@ class ChatRoom extends React.Component {
               id="message"
               type="text"
               label="Message"
-              placeholder="Talk to your little friends..."
+              placeholder="Type your message ..."
               onChange={this.setNewMessage}
               value={this.state.newMessage}
               autoComplete="off"
