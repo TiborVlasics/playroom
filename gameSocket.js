@@ -1,10 +1,10 @@
 const TicTacToe = require("./models/TicTacToe");
 const User = require("./models/User");
 
-module.exports = function(io, socket) {
-  const chat = io.of("/games");
+module.exports = function(io) {
+  const games = io.of("/games");
 
-  chat.on("connection", function(socket) {
+  games.on("connection", function(socket) {
     console.log("User connected to games");
 
     socket.on("disconnect", function() {
