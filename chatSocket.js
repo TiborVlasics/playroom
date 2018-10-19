@@ -4,46 +4,28 @@ const Message = require("./models/Message");
 module.exports = function(io) {
   const chat = io.of("/chat");
   let currentConnections = {};
-  chat.users = [];
 
-  chat.on("connection", function(client) {
-    let token = client.handshake.query.token;
-    token = token.slice(7, token.length).trimLeft();
-    let user = jwtDecode(token);
-    client.user = user;
+  chat.on("connection", client => {
+    const token = client.handshake.query.token;
+    const user = jwtDecode(token.slice(7, token.length).trimLeft());
 
-    //TODO: make this work from currentConnections
-    if (!chat.users.some(user => user.id === client.user.id)) {
-      console.log("User connected to chat");
-      user.times = 1;
-      chat.users = chat.users.concat(user);
-      client.broadcast.emit("user joined", client.user);
+    if (currentConnections.hasOwnProperty(user.id)) {
+      currentConnections[user.id].sockets[client.id] = client;
     } else {
-      for (let user of chat.users) {
-        if (user.id === client.user.id) {
-          user.times += 1;
-          break;
-        }
-      }
+      currentConnections[user.id] = {
+        sockets: { [client.id]: client },
+        user: user
+      };
+      client.broadcast.emit("user joined", user);
     }
-    currentConnections[user.id] = socket;
 
-    client.on("disconnect", function() {
-      //TODO: make this work from currentConnections
-      for (let user of chat.users) {
-        if (user.id === client.user.id) {
-          if (user.times > 1) {
-            user.times -= 1;
-            break;
-          } else {
-            chat.users = chat.users.filter(user => user.id !== client.user.id);
-            chat.emit("user left", client.user);
-            console.log("User disconnected from chat");
-            break;
-          }
-        }
+    client.on("disconnect", () => {
+      if (Object.keys(currentConnections[user.id].sockets).length === 1) {
+        delete currentConnections[user.id];
+        chat.emit("user left", user);
+      } else {
+        delete currentConnections[user.id].sockets[client.id];
       }
-      delete currentConnections[client.user.id];
     });
 
     client.on("private", data => {
@@ -53,7 +35,7 @@ module.exports = function(io) {
       });
     });
 
-    client.on("chat", async function(msg) {
+    client.on("chat", async msg => {
       try {
         let lastMsg = await Message.findOne().sort({ createdDate: -1 });
         if (lastMsg && lastMsg.author.name === msg.author.name) {
@@ -84,7 +66,7 @@ module.exports = function(io) {
       }
     });
 
-    client.on("user typing", function(data) {
+    client.on("user typing", data => {
       client.broadcast.emit("user typing", data);
     });
 
