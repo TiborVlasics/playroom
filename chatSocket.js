@@ -6,21 +6,21 @@ module.exports = function(io) {
   let currentConnections = {};
   chat.users = [];
 
-  chat.on("connection", function(socket) {
-    let token = socket.handshake.query.token;
+  chat.on("connection", function(client) {
+    let token = client.handshake.query.token;
     token = token.slice(7, token.length).trimLeft();
     let user = jwtDecode(token);
-    socket.user = user;
+    client.user = user;
 
     //TODO: make this work from currentConnections
-    if (!chat.users.some(user => user.id === socket.user.id)) {
+    if (!chat.users.some(user => user.id === client.user.id)) {
       console.log("User connected to chat");
       user.times = 1;
       chat.users = chat.users.concat(user);
-      socket.broadcast.emit("user joined", socket.user);
+      client.broadcast.emit("user joined", client.user);
     } else {
       for (let user of chat.users) {
-        if (user.id === socket.user.id) {
+        if (user.id === client.user.id) {
           user.times += 1;
           break;
         }
@@ -28,32 +28,32 @@ module.exports = function(io) {
     }
     currentConnections[user.id] = socket;
 
-    socket.on("disconnect", function() {
+    client.on("disconnect", function() {
       //TODO: make this work from currentConnections
       for (let user of chat.users) {
-        if (user.id === socket.user.id) {
+        if (user.id === client.user.id) {
           if (user.times > 1) {
             user.times -= 1;
             break;
           } else {
-            chat.users = chat.users.filter(user => user.id !== socket.user.id);
-            chat.emit("user left", socket.user);
+            chat.users = chat.users.filter(user => user.id !== client.user.id);
+            chat.emit("user left", client.user);
             console.log("User disconnected from chat");
             break;
           }
         }
       }
-      delete currentConnections[socket.user.id];
+      delete currentConnections[client.user.id];
     });
 
-    socket.on("private", data => {
+    client.on("private", data => {
       currentConnections[data.to].emit("private", {
-        from: socket.user.id,
+        from: client.user.id,
         msg: data.text
       });
     });
 
-    socket.on("chat", async function(msg) {
+    client.on("chat", async function(msg) {
       try {
         let lastMsg = await Message.findOne().sort({ createdDate: -1 });
         if (lastMsg && lastMsg.author.name === msg.author.name) {
@@ -80,21 +80,21 @@ module.exports = function(io) {
           chat.emit("chat", newMessage);
         }
       } catch (err) {
-        socket.broadcast.emit("chat", err);
+        client.broadcast.emit("chat", err);
       }
     });
 
-    socket.on("user typing", function(data) {
-      socket.broadcast.emit("user typing", data);
+    client.on("user typing", function(data) {
+      client.broadcast.emit("user typing", data);
     });
 
-    socket.on("get users", () => {
+    client.on("get users", () => {
       let users = [];
       Object.keys(currentConnections).map(key => {
         users.push(currentConnections[key].user);
       });
 
-      chat.to(socket.id).emit("users", users);
+      chat.to(client.id).emit("users", users);
     });
   });
 };
