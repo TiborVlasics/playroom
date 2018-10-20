@@ -1,13 +1,11 @@
-const jwtDecode = require("jwt-decode");
 const Message = require("./models/Message");
 
-module.exports = function(io) {
+module.exports = function (io) {
   const chat = io.of("/chat");
   let currentConnections = {};
 
   chat.on("connection", client => {
-    const token = client.handshake.query.token;
-    const user = jwtDecode(token.slice(7, token.length).trimLeft());
+    const user = client.handshake.headers.user;
 
     if (currentConnections.hasOwnProperty(user.id)) {
       currentConnections[user.id].sockets[client.id] = client;
@@ -17,11 +15,13 @@ module.exports = function(io) {
         user: user
       };
       client.broadcast.emit("user joined", user);
+      console.log(user.name + " connected to chat")
     }
 
     client.on("disconnect", () => {
       if (Object.keys(currentConnections[user.id].sockets).length === 1) {
         delete currentConnections[user.id];
+        console.log(user.name + " disconnected from chat")
         chat.emit("user left", user);
       } else {
         delete currentConnections[user.id].sockets[client.id];
