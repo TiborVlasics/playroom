@@ -14,21 +14,16 @@ module.exports = function (io) {
 
     socket.on("new game", async function (data) {
       try {
-        const user = await User.findOneAndUpdate(
-          { _id: data.user.id },
+        await User.findOneAndUpdate(
+          { _id: user.id },
           { $set: { isPlaying: true } },
           { new: true }
         );
-
-        let player1 = {
-          id: user._id,
-          name: user.name,
-          avatar: user.avatar
-        };
-        const game = await new TicTacToe({ player1: player1 }).save();
+        const game = await new TicTacToe({ player1: user }).save();
         await games.emit("new game", game);
       } catch (err) {
         console.log(err);
+        games.emit("error", err)
       }
     });
   });
