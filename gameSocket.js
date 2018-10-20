@@ -1,17 +1,18 @@
 const TicTacToe = require("./models/TicTacToe");
 const User = require("./models/User");
 
-module.exports = function(io) {
+module.exports = function (io) {
   const games = io.of("/games");
 
-  games.on("connection", function(socket) {
-    console.log("User connected to games");
+  games.on("connection", function (socket) {
+    const user = socket.handshake.headers.user;
+    console.log(user.name + " connected to tavern");
 
-    socket.on("disconnect", function() {
-      console.log("user disconnected from games");
+    socket.on("disconnect", function () {
+      console.log(user.name + " disconnected from tavern");
     });
 
-    socket.on("new game", async function(data) {
+    socket.on("new game", async function (data) {
       try {
         const user = await User.findOneAndUpdate(
           { _id: data.user.id },
