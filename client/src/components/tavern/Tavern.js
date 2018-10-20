@@ -17,6 +17,8 @@ class Tavern extends Component {
       transports: ["polling"],
       query: { token: localStorage.jwtToken }
     });
+
+    this.joinGame = this.joinGame.bind(this)
   }
   componentDidMount() {
     this.props.fetchGames();
@@ -27,10 +29,18 @@ class Tavern extends Component {
         this.props.getUserPlaying();
       }
     });
+    this.socket.on("game starting", game => {
+      console.log("GAME STARTING")
+      console.log(game)
+    })
   }
 
   componentWillUnmount() {
     this.socket.close();
+  }
+
+  joinGame(game) {
+    this.socket.emit("join game", game)
   }
 
   render() {
@@ -59,7 +69,7 @@ class Tavern extends Component {
               <p className="card-text">
                 <small className="text-text">Created: {game.createdDate}</small>
               </p>
-              <button className="btn btn-success">Join game</button>
+              <button className="btn btn-success" onClick={() => this.joinGame(game)}>Join game</button>
             </div>
           </div>
         ))}
