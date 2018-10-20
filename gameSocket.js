@@ -68,7 +68,7 @@ module.exports = function (io) {
 
       TicTacToe.findOneAndUpdate(
         { _id: game.id },
-        { $set: { player2: user } },
+        { $set: { player2: user, isStarted: true } },
         { new: true }
       ).then(game => {
         const player1 = game.player1.id;
