@@ -18,7 +18,7 @@ export default function tavernReducer(state = initialState, action = {}) {
     case FETCH_GAMES:
       return { ...state, games: action.payload, isLoading: false };
     case LOAD_NEW_GAME:
-      return { ...state, games: state.concat(action.payload) };
+      return { ...state, games: state.games.concat(action.payload) };
     case GET_USER_PLAYING:
       return {
         ...state,
