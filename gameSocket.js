@@ -2,9 +2,9 @@ const TicTacToe = require("./models/TicTacToe");
 const User = require("./models/User");
 
 module.exports = function (io) {
-  const games = io.of("/games");
+  const tavern = io.of("/tavern");
 
-  games.on("connection", function (socket) {
+  tavern.on("connection", function (socket) {
     const user = socket.handshake.headers.user;
     console.log(user.name + " connected to tavern");
 
@@ -20,10 +20,10 @@ module.exports = function (io) {
           { new: true }
         );
         const game = await new TicTacToe({ player1: user }).save();
-        await games.emit("new game", game);
+        await tavern.emit("new game", game);
       } catch (err) {
         console.log(err);
-        games.emit("error", err)
+        tavern.emit("error", err)
       }
     });
   });

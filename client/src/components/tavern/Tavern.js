@@ -13,7 +13,7 @@ import Spinner from "../common/Spinner";
 class Tavern extends Component {
   constructor() {
     super();
-    this.socket = io("/games", {
+    this.socket = io("/tavern", {
       transports: ["polling"],
       query: { token: localStorage.jwtToken }
     });
