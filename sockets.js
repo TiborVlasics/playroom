@@ -11,7 +11,8 @@ module.exports = function (server) {
       token = token.slice(7, token.length).trimLeft();
       jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
         if (err) return next(new Error("Authentication error"));
-        socket.handshake.headers.user = decoded;
+        const { iat, exp, ...user } = decoded;
+        socket.handshake.headers.user = user;
         next();
       });
     } else {
