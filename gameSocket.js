@@ -14,10 +14,10 @@ module.exports = function (io) {
      * if it doesn't then makes a new property with the key of the user's ID 
      */
     if (currentConnections.hasOwnProperty(user.id)) {
-      currentConnections[user.id].sockets[client.id] = client;
+      currentConnections[user.id].sockets[socket.id] = socket;
     } else {
       currentConnections[user.id] = {
-        sockets: { [client.id]: client },
+        sockets: { [socket.id]: socket },
         user: user
       };
       console.log(user.name + " connected to tavern")
@@ -32,9 +32,9 @@ module.exports = function (io) {
       if (Object.keys(currentConnections[user.id].sockets).length === 1) {
         delete currentConnections[user.id];
         console.log(user.name + " disconnected from tavern")
-        chat.emit("user left", user);
+        tavern.emit("user left", user);
       } else {
-        delete currentConnections[user.id].sockets[client.id];
+        delete currentConnections[user.id].sockets[socket.id];
       }
     });
 
