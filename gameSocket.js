@@ -57,6 +57,27 @@ module.exports = function (io) {
         tavern.emit("error", err)
       }
     });
+
+    /**
+     * 
+     * @desc Puts user to the already existing game object as player2
+     * Sends back game object to the two users in the game with "game starting"
+     */
+    socket.on("join game", function (data) {
+      let game = data.game;
+
+      TicTacToe.findOneAndUpdate(
+        { _id: game.id },
+        { $set: { player2: user } },
+        { new: true }
+      ).then(game => {
+        const player1 = game.player1.id;
+        const player2 = game.player2.id;
+        currentConnections[player1].sockets.map(socket => socket.emit("game starting", game))
+        currentConnections[player2].sockets.map(socket => socket.emit("game starting", game))
+      })
+    });
+
   });
 
 };
