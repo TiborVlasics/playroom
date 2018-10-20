@@ -14,10 +14,10 @@ module.exports = function (io) {
      * if it doesn't then makes a new property with the key of the user's ID 
      */
     if (currentConnections.hasOwnProperty(user.id)) {
-      currentConnections[user.id].sockets[socket.id] = socket;
+      currentConnections[user.id].sockets.push(socket);
     } else {
       currentConnections[user.id] = {
-        sockets: { [socket.id]: socket },
+        sockets: [socket],
         user: user
       };
       console.log(user.name + " connected to tavern")
@@ -29,12 +29,13 @@ module.exports = function (io) {
      * If she just have 1 session, she get deleted from current connections
      */
     socket.on("disconnect", function () {
-      if (Object.keys(currentConnections[user.id].sockets).length === 1) {
+      if (currentConnections[user.id].sockets.length === 1) {
         delete currentConnections[user.id];
         console.log(user.name + " disconnected from tavern")
         tavern.emit("user left", user);
       } else {
-        delete currentConnections[user.id].sockets[socket.id];
+        currentConnections[user.id].sockets = currentConnections[user.id].sockets
+          .filter(client => client.id !== socket.id)
       }
     });
 
@@ -63,11 +64,9 @@ module.exports = function (io) {
      * @desc Puts user to the already existing game object as player2
      * Sends back game object to the two users in the game with "game starting"
      */
-    socket.on("join game", function (data) {
-      let game = data.game;
-
+    socket.on("join game", function (game) {
       TicTacToe.findOneAndUpdate(
-        { _id: game.id },
+        { _id: game._id },
         { $set: { player2: user, isStarted: true } },
         { new: true }
       ).then(game => {
@@ -75,7 +74,7 @@ module.exports = function (io) {
         const player2 = game.player2.id;
         currentConnections[player1].sockets.map(socket => socket.emit("game starting", game))
         currentConnections[player2].sockets.map(socket => socket.emit("game starting", game))
-      })
+      }).catch(err => console.log(err))
     });
 
   });
