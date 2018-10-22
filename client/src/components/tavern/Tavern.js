@@ -5,7 +5,7 @@ import io from "socket.io-client";
 import {
   fetchGames,
   loadNewGame,
-  getUserPlaying
+  getCurrentGame
 } from "../../actions/tavernActions";
 import NewGameForm from "./NewGameForm";
 import Spinner from "../common/Spinner";
@@ -21,12 +21,12 @@ class Tavern extends Component {
     this.joinGame = this.joinGame.bind(this)
   }
   componentDidMount() {
-    this.props.getUserPlaying();
+    this.props.getCurrentGame();
     this.props.fetchGames();
     this.socket.on("new game", game => {
       this.props.loadNewGame(game);
       if (this.props.auth.user.id === game.player1.id) {
-        this.props.getUserPlaying();
+        this.props.getCurrentGame();
       }
     });
     this.socket.on("game starting", game => {
@@ -47,7 +47,7 @@ class Tavern extends Component {
   render() {
     const tavernContent = (
       <div className="container cards">
-        {this.props.tavern.isUserPlaying ? null : (
+        {this.props.tavern.currentGame ? null : (
           <NewGameForm socket={this.socket} />
         )}
         {this.props.tavern.games.map((game, index) => (
@@ -91,7 +91,7 @@ Tavern.propTypes = {
   tavern: PropTypes.object.isRequired,
   fetchGames: PropTypes.func.isRequired,
   loadNewGame: PropTypes.func.isRequired,
-  getUserPlaying: PropTypes.func.isRequired
+  getCurrentGame: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -101,5 +101,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchGames, loadNewGame, getUserPlaying }
+  { fetchGames, loadNewGame, getCurrentGame }
 )(Tavern);

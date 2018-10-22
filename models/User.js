@@ -5,7 +5,7 @@ const UserSchema = new Schema({
   name: { type: String, required: true },
   password: { type: String, required: true },
   avatar: { type: String, required: true },
-  isPlaying: { type: Boolean, default: false },
+  currentGame: { type: Schema.Types.ObjectId, default: null },
   createdDate: { type: Date, default: Date.now }
 });
 

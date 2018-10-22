@@ -3,7 +3,7 @@ import {
   FETCH_GAMES,
   GET_ERRORS,
   LOAD_NEW_GAME,
-  GET_USER_PLAYING,
+  GET_CURRENT_GAME,
   TAVERN_LOADING
 } from "./types";
 
@@ -21,12 +21,12 @@ export const loadNewGame = game => dispatch => {
   dispatch({ type: LOAD_NEW_GAME, payload: game });
 };
 
-export const getUserPlaying = () => dispatch => {
+export const getCurrentGame = () => dispatch => {
   dispatch(setLoading());
   axios
     .get("/api/user/current")
     .then(res => {
-      dispatch({ type: GET_USER_PLAYING, payload: res.data.isPlaying });
+      dispatch({ type: GET_CURRENT_GAME, payload: res.data.currentGame });
     })
     .catch(err => console.log(err));
 };

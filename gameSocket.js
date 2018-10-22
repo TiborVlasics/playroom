@@ -44,14 +44,14 @@ module.exports = function (io) {
      * Modifies user in mongoDB to "isPlaying"
      * Sends the game back for all users in the tavern to be able to join it as "new game"
      */
-    socket.on("new game", async function (data) {
+    socket.on("new game", async function () {
       try {
+        const game = await new TicTacToe({ player1: user }).save();
         await User.findOneAndUpdate(
           { _id: user.id },
-          { $set: { isPlaying: true } },
+          { $set: { currentGame: game._id } },
           { new: true }
         );
-        const game = await new TicTacToe({ player1: user }).save();
         await tavern.emit("new game", game);
       } catch (err) {
         console.log(err);
@@ -68,7 +68,7 @@ module.exports = function (io) {
     socket.on("join game", function (game) {
       User.findOneAndUpdate(
         { _id: user.id },
-        { $set: { isPlaying: true } },
+        { $set: { currentGame: game._id } },
         { new: true }
       ).then(TicTacToe.findOneAndUpdate(
         { _id: game._id },
