@@ -22,6 +22,7 @@ module.exports = function (server) {
 
   require("./chatSocket")(io);
   require("./gameSocket")(io);
+  require("./ticTacToe")(io);
 
   return io;
 };
