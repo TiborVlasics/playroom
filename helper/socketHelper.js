@@ -21,9 +21,9 @@ function deleteSocketFromConnections(currentConnections, user, io, socket, nameS
 }
 
 /**
-* @desc Checks if currentConnections contains the connected users
-* if it does, then puts it to next to as a different session,
-* if it doesn't then makes a new property with the key of the user's ID 
+* @desc Checks if currentConnections contains the connected user
+* if it does, then puts the new socket next to the others under the user's id,
+* if it doesn't then makes a new property with the user's ID as key
 * @param: {object} currentConnections    object that stores connections, in an array for every user
 * @param: {object} user                  user object with name property
 * @param: {object} io                    io object
