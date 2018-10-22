@@ -21,8 +21,8 @@ class Tavern extends Component {
     this.joinGame = this.joinGame.bind(this)
   }
   componentDidMount() {
-    this.props.fetchGames();
     this.props.getUserPlaying();
+    this.props.fetchGames();
     this.socket.on("new game", game => {
       this.props.loadNewGame(game);
       if (this.props.auth.user.id === game.player1.id) {
