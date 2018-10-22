@@ -7,10 +7,9 @@ require("../config/passport")(passport);
 /**
  * @route   GET api/games/
  * @desc    Get all games that are not finished yet
- * @access  Public
- * TODO: make it private
+ * @access  Private
  */
-router.get("/", (req, res) => {
+router.get("/", passport.authenticate("jwt", { session: false }), (req, res) => {
   TicTacToe.find({ isEnded: false })
     .then(game => res.status(200).json(game))
     .catch(err => console.log(err));
