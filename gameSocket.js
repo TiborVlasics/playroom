@@ -63,7 +63,7 @@ module.exports = function (io) {
      * 
      * @desc Puts user to the already existing game object as player2
      * Joining player1 and player2 to a room named of the game's id
-     * Sending game the object to all sockets in the room
+     * Sending rhe game object to all sockets in the room
      */
     socket.on("join game", function (game) {
       TicTacToe.findOneAndUpdate(
@@ -73,12 +73,15 @@ module.exports = function (io) {
       ).then(game => {
         const player1 = game.player1.id;
         const player2 = game.player2.id;
-        currentConnections[player1].sockets.map(socket => socket.join(game._id))
-        currentConnections[player2].sockets.map(socket => socket.join(game._id))
+        if (currentConnections.hasOwnProperty(player1)) {
+          currentConnections[player1].sockets.map(socket => socket.join(game._id))
+        }
+        if (currentConnections.hasOwnProperty(player2)) {
+          currentConnections[player2].sockets.map(socket => socket.join(game._id))
+        }
         tavern.to(game._id).emit("game starting", game)
       }).catch(err => console.log(err))
     });
-
   });
 
 };
