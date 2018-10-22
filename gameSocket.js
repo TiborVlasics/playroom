@@ -66,7 +66,11 @@ module.exports = function (io) {
      * Sending rhe game object to all sockets in the room
      */
     socket.on("join game", function (game) {
-      TicTacToe.findOneAndUpdate(
+      User.findOneAndUpdate(
+        { _id: user.id },
+        { $set: { isPlaying: true } },
+        { new: true }
+      ).then(TicTacToe.findOneAndUpdate(
         { _id: game._id },
         { $set: { player2: user, isStarted: true } },
         { new: true }
@@ -80,7 +84,7 @@ module.exports = function (io) {
           currentConnections[player2].sockets.map(socket => socket.join(game._id))
         }
         tavern.to(game._id).emit("game starting", game)
-      }).catch(err => console.log(err))
+      })).catch(err => console.log(err))
     });
   });
 
