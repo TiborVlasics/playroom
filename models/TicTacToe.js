@@ -15,7 +15,9 @@ const TicTacToeSchema = new Schema({
   boardState: [{ type: String, required: false }],
   isStarted: { type: Boolean, default: false },
   isEnded: { type: Boolean, default: false },
-  createdDate: { type: Date, default: Date.now }
+  createdDate: { type: Date, default: Date.now },
+  nextPlayer: { type: Schema.Types.ObjectId, default: null },
+  winner: { type: Schema.Types.ObjectId, default: null }
 });
 
 module.exports = Message = mongoose.model("tictactoes", TicTacToeSchema);
