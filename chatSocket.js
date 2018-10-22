@@ -1,4 +1,6 @@
 const Message = require("./models/Message");
+const socketHelper = require("./helper/socketHelper")
+
 
 module.exports = function (io) {
   const chat = io.of("/chat");
@@ -6,26 +8,10 @@ module.exports = function (io) {
 
   chat.on("connection", client => {
     const user = client.handshake.headers.user;
-
-    if (currentConnections.hasOwnProperty(user.id)) {
-      currentConnections[user.id].sockets[client.id] = client;
-    } else {
-      currentConnections[user.id] = {
-        sockets: { [client.id]: client },
-        user: user
-      };
-      client.broadcast.emit("user joined", user);
-      console.log(user.name + " connected to chat")
-    }
+    socketHelper.addSocketToConnections(currentConnections, user, chat, client, "chat");
 
     client.on("disconnect", () => {
-      if (Object.keys(currentConnections[user.id].sockets).length === 1) {
-        delete currentConnections[user.id];
-        console.log(user.name + " disconnected from chat")
-        chat.emit("user left", user);
-      } else {
-        delete currentConnections[user.id].sockets[client.id];
-      }
+      socketHelper.deleteSocketFromConnections(currentConnections, user, chat, client, "chat");
     });
 
     client.on("private", data => {

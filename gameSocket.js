@@ -1,5 +1,6 @@
 const TicTacToe = require("./models/TicTacToe");
 const User = require("./models/User");
+const socketHelper = require("./helper/socketHelper")
 
 module.exports = function (io) {
   const tavern = io.of("/tavern");
@@ -7,42 +8,16 @@ module.exports = function (io) {
 
   tavern.on("connection", function (socket) {
     const user = socket.handshake.headers.user;
+    socketHelper.addSocketToConnections(currentConnections, user, tavern, socket, "tavern");
 
-    /**
-     * @desc Checks if currentConnections contains the connected users
-     * if it does, then puts it to next to as a different session,
-     * if it doesn't then makes a new property with the key of the user's ID 
-     */
-    if (currentConnections.hasOwnProperty(user.id)) {
-      currentConnections[user.id].sockets.push(socket);
-    } else {
-      currentConnections[user.id] = {
-        sockets: [socket],
-        user: user
-      };
-      console.log(user.name + " connected to tavern")
-    }
-
-    /**
-     * @desc Check if user has more sessions, if she does, 
-     * she does not get deleted, just the session. 
-     * If she just have 1 session, she get deleted from current connections
-     */
     socket.on("disconnect", function () {
-      if (currentConnections[user.id].sockets.length === 1) {
-        delete currentConnections[user.id];
-        console.log(user.name + " disconnected from tavern")
-        tavern.emit("user left", user);
-      } else {
-        currentConnections[user.id].sockets = currentConnections[user.id].sockets
-          .filter(client => client.id !== socket.id)
-      }
+      socketHelper.deleteSocketFromConnections(currentConnections, user, tavern, socket, "tavern");
     });
 
     /**
      * @desc Makes a new game and puts the user who requested to it as player1
-     * Modifies user in mongoDB to "isPlaying"
-     * Sends the game back for all users in the tavern to be able to join it as "new game"
+     * Sets game as user's current game
+     * Sends the game back for all users in the tavern to be able to join it
      */
     socket.on("new game", async function () {
       try {
@@ -63,7 +38,8 @@ module.exports = function (io) {
      * 
      * @desc Puts user to the already existing game object as player2
      * Joining player1 and player2 to a room named of the game's id
-     * Sending the game object to all sockets in the room
+     * Emits object everybody in the room
+     * @param game  tictactoe object that stores players and game states
      */
     socket.on("join game", function (game) {
       User.findOneAndUpdate(
@@ -87,7 +63,6 @@ module.exports = function (io) {
       })).catch(err => console.log(err))
     });
 
-    require("./ticTacToe")(tavern, socket, user);
   });
 
 };
