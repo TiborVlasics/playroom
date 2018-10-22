@@ -6,7 +6,7 @@ const port = process.env.PORT || 5000;
 const server = app.listen(port, () => console.log(`Server running on ${port}`));
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-require("./sockets")(server);
+require("./controller/sockets")(server);
 require("dotenv").config();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,7 +18,7 @@ app.use("/api/games", require("./routes/games"));
 mongoose
   .connect(
     `mongodb://${process.env.DB_USERNAME}:${
-      process.env.DB_PASSWORD
+    process.env.DB_PASSWORD
     }@cluster0-shard-00-00-52ie2.mongodb.net:27017,cluster0-shard-00-01-52ie2.mongodb.net:27017,cluster0-shard-00-02-52ie2.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true`,
     { useNewUrlParser: true }
   )

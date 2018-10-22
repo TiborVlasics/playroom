@@ -1,6 +1,6 @@
-const TicTacToe = require("./models/TicTacToe");
-const User = require("./models/User");
-const socketHelper = require("./helper/socketHelper")
+const TicTacToe = require("../models/TicTacToe");
+const User = require("../models/User");
+const socketHelper = require("../helper/socketHelper")
 
 module.exports = function (io) {
   const tavern = io.of("/tavern");

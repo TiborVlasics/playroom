@@ -1,5 +1,5 @@
-const TicTacToe = require("./models/TicTacToe");
-const socketHelper = require("./helper/socketHelper")
+const TicTacToe = require("../models/TicTacToe");
+const socketHelper = require("../helper/socketHelper")
 
 module.exports = function (io) {
   const game = io.of("/tic-tac-toe");

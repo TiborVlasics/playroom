@@ -1,6 +1,5 @@
-const Message = require("./models/Message");
-const socketHelper = require("./helper/socketHelper")
-
+const Message = require("../models/Message");
+const socketHelper = require("../helper/socketHelper")
 
 module.exports = function (io) {
   const chat = io.of("/chat");
