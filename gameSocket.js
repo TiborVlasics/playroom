@@ -63,7 +63,7 @@ module.exports = function (io) {
      * 
      * @desc Puts user to the already existing game object as player2
      * Joining player1 and player2 to a room named of the game's id
-     * Sending rhe game object to all sockets in the room
+     * Sending the game object to all sockets in the room
      */
     socket.on("join game", function (game) {
       User.findOneAndUpdate(
@@ -86,6 +86,8 @@ module.exports = function (io) {
         tavern.to(game._id).emit("game starting", game)
       })).catch(err => console.log(err))
     });
+
+    require("./ticTacToe")(tavern, socket, user);
   });
 
 };
