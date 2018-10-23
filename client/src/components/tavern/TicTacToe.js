@@ -1,7 +1,25 @@
 import React, { Component } from 'react'
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getCurrentGame } from "../../actions/tavernActions";
 
 class TicTacToe extends Component {
+
+
+  componentWillMount() {
+    this.props.getCurrentGame();
+  }
+
+  componentDidMount() {
+    console.log(this.props.match.params.id)
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+  }
+
   render() {
+    // console.log(this.props.tavern.currentGame)
+
     return (
       <div className="tic-tac-toe">
         <h1>TicTacToe</h1>
@@ -21,4 +39,15 @@ class TicTacToe extends Component {
   }
 }
 
-export default TicTacToe;
+TicTacToe.propTypes = {
+  auth: PropTypes.object.isRequired,
+  game: PropTypes.object,
+  getCurrentGame: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  game: state.tavern.currentGame
+});
+
+export default connect(mapStateToProps, { getCurrentGame })(TicTacToe);
