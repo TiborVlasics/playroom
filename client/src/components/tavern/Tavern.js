@@ -32,8 +32,7 @@ class Tavern extends Component {
     });
     this.socket.on("game starting", game => {
       console.log("GAME STARTING")
-      console.log(game)
-      this.props.history.push("/tictactoe");
+      this.props.history.push(`/tictactoe/${game._id}`);
     })
   }
 
