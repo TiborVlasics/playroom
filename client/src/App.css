@@ -176,6 +176,28 @@ body {
 }
 
 /**
+*Tic tac toe game
+*/
+.tic-tac-toe {
+  margin-top: 50px;
+}
+
+.tic-tac-toe .game-board {
+  width: 366px;
+  height: 366px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto;
+  align-items: stretch;
+}
+
+.tic-tac-toe .game-board div {
+  border: 1px solid black;
+  line-height: 120px;
+}
+
+/**
  * from:
  * https://css-tricks.com/snippets/css/typewriter-effect/ 
  *
