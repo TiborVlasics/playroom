@@ -8,3 +8,4 @@ export const CHAT_LOADING = "CHAT_LOADING";
 export const LOAD_NEW_GAME = "LOAD_NEW_GAME";
 export const GET_CURRENT_GAME = "GET_CURRENT_GAME";
 export const TAVERN_LOADING = "TAVERN_LOADING";
+export const CLEAR_GAMES = "CLEAR_GAMES";

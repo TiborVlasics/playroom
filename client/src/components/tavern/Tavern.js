@@ -5,7 +5,8 @@ import io from "socket.io-client";
 import {
   fetchGames,
   loadNewGame,
-  getCurrentGame
+  getCurrentGame,
+  clearGames
 } from "../../actions/tavernActions";
 import NewGameForm from "./NewGameForm";
 import Spinner from "../common/Spinner";
@@ -37,6 +38,7 @@ class Tavern extends Component {
   }
 
   componentWillUnmount() {
+    this.props.clearGames();
     this.socket.close();
   }
 
@@ -91,7 +93,8 @@ Tavern.propTypes = {
   tavern: PropTypes.object.isRequired,
   fetchGames: PropTypes.func.isRequired,
   loadNewGame: PropTypes.func.isRequired,
-  getCurrentGame: PropTypes.func.isRequired
+  getCurrentGame: PropTypes.func.isRequired,
+  clearGames: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -101,5 +104,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchGames, loadNewGame, getCurrentGame }
+  { fetchGames, loadNewGame, getCurrentGame, clearGames }
 )(Tavern);

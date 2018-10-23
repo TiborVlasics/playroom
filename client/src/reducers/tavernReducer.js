@@ -2,7 +2,8 @@ import {
   FETCH_GAMES,
   LOAD_NEW_GAME,
   TAVERN_LOADING,
-  GET_CURRENT_GAME
+  GET_CURRENT_GAME,
+  CLEAR_GAMES
 } from "../actions/types";
 
 const initialState = {
@@ -25,6 +26,8 @@ export default function tavernReducer(state = initialState, action = {}) {
         currentGame: action.payload,
         isLoading: false
       };
+    case CLEAR_GAMES:
+      return { ...state, games: [] }
     default:
       return state;
   }

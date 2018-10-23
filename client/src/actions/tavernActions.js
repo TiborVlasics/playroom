@@ -4,7 +4,8 @@ import {
   GET_ERRORS,
   LOAD_NEW_GAME,
   GET_CURRENT_GAME,
-  TAVERN_LOADING
+  TAVERN_LOADING,
+  CLEAR_GAMES
 } from "./types";
 
 export const fetchGames = () => dispatch => {
@@ -43,3 +44,7 @@ export const getCurrentGame = () => dispatch => {
 export const setLoading = () => {
   return { type: TAVERN_LOADING };
 };
+
+export const clearGames = () => {
+  return { type: CLEAR_GAMES }
+}
