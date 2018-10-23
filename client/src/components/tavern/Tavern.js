@@ -2,12 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import io from "socket.io-client";
-import {
-  fetchGames,
-  loadNewGame,
-  getCurrentGame,
-  clearGames
-} from "../../actions/tavernActions";
+import { fetchGames, loadNewGame, clearGames } from "../../actions/tavernActions";
+import { getCurrentGame } from "../../actions/gameActions"
 import NewGameForm from "./NewGameForm";
 import Spinner from "../common/Spinner";
 
@@ -48,7 +44,7 @@ class Tavern extends Component {
   render() {
     const tavernContent = (
       <div className="container cards">
-        {this.props.tavern.currentGame ? null : (
+        {this.props.currentGame ? null : (
           <NewGameForm socket={this.socket} />
         )}
         {this.props.tavern.games.map((game, index) => (
@@ -98,7 +94,8 @@ Tavern.propTypes = {
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  tavern: state.tavern
+  tavern: state.tavern,
+  currentGame: state.currentGame
 });
 
 export default connect(
