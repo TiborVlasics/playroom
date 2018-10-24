@@ -4,8 +4,10 @@ import { connect } from "react-redux";
 import io from "socket.io-client";
 import { fetchGames, loadNewGame, clearGames } from "../../actions/tavernActions";
 import { getCurrentGame } from "../../actions/gameActions"
-import NewGameForm from "./NewGameForm";
+
 import Spinner from "../common/Spinner";
+import NewGameForm from "./NewGameForm";
+import GameList from "./GameList"
 
 class Tavern extends Component {
   constructor() {
@@ -47,34 +49,11 @@ class Tavern extends Component {
         {this.props.currentGame ? null : (
           <NewGameForm socket={this.socket} />
         )}
-        {this.props.tavern.games.map((game, index) => (
-          <div
-            key={index}
-            className="card"
-            style={{ backgroundColor: "rgba(100, 10, 10, 0.2)" }}
-          >
-            <div className="card-body">
-              <h5 className="card-title">{game.player1.name}</h5>
-              <p className="card-text">
-                New tictactoe game, created by {game.player1.name},{" "}
-                <img
-                  src={game.player1.avatar}
-                  style={{ maxWidth: "70px" }}
-                  alt="user avatar"
-                />
-              </p>
-              <h3>{game.isStarted}</h3>
-              <p className="card-text">
-                <small className="text-text">Created: {game.createdDate}</small>
-              </p>
-              <button
-                className={this.props.currentGame
-                  ? "btn btn-success hidden-button"
-                  : "btn btn-success"}
-                onClick={() => this.joinGame(game)}>Join game</button>
-            </div>
-          </div>
-        ))}
+        <GameList
+          games={this.props.tavern.games}
+          joinGame={this.joinGame}
+          currentGame={this.props.currentGame}
+        />
       </div>
     );
 
