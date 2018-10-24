@@ -1,45 +1,24 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 class Dashboard extends Component {
+
+  componentWillReceiveProps(nextProps) {
+    let game = nextProps.currentGame;
+    if (game.hasOwnProperty("_id") && game.isStarted) {
+      this.props.history.push(`/tictactoe/${nextProps.currentGame._id}`)
+    }
+  }
+
   render() {
     return (
-      <div className="container cards">
-        <div
-          className="card new-card"
-          style={{ backgroundColor: "rgba(100, 100, 10, 0.2)", marginTop: 10 }}
-        >
-          <div className="card-body">
-            <h5 className="card-title">Card title</h5>
-            <p className="card-text">
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-            <p className="card-text">
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </p>
-          </div>
-        </div>
-
-        <div
-          className="card"
-          style={{ backgroundColor: "rgba(100, 10, 10, 0.2)" }}
-        >
-          <div className="card-body">
-            <h5 className="card-title">Card title</h5>
-            <p className="card-text">
-              This is a wider card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </p>
-            <p className="card-text">
-              <small className="text-muted">Last updated 3 mins ago</small>
-            </p>
-          </div>
-        </div>
+      <div>
+        <h1>Dashboard</h1>
       </div>
     );
   }
 }
 
-export default Dashboard;
+const mapStateToProps = state => ({ currentGame: state.currentGame })
+
+export default connect(mapStateToProps)(Dashboard);
