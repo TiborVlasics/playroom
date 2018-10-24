@@ -5,8 +5,6 @@ import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser } from "./actions/authActions";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -16,6 +14,7 @@ import ChatRoom from "./components/chat/ChatRoom";
 import Landing from "./components/layout/Landing";
 import Tavern from "./components/tavern/Tavern";
 import TicTacToe from "./components/tavern/TicTacToe"
+import SecretRoute from "./components/SecretRoute"
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
@@ -25,21 +24,6 @@ if (localStorage.jwtToken) {
 
 class App extends Component {
   render() {
-    const { isAuthenticated } = this.props.auth;
-
-    const SecretRoute = ({ component: Component, ...rest }) => (
-      <Route
-        {...rest}
-        render={props =>
-          isAuthenticated === true ? (
-            <Component {...props} />
-          ) : (
-              <Redirect to="/" />
-            )
-        }
-      />
-    );
-
     return (
       <Router>
         <div className="App">
@@ -62,15 +46,4 @@ class App extends Component {
   }
 }
 
-App.propTypes = {
-  auth: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-
-export default connect(
-  mapStateToProps,
-  {}
-)(App);
+export default App;
