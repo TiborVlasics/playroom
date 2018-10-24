@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 import store from "./store";
 import jwt_decode from "jwt-decode";
-import setAuthToken from "./utils/setAuthToken";
+import setAuthToken from "./helper/setAuthToken";
 import { setCurrentUser } from "./actions/authActions";
 import { getCurrentGame } from "./actions/gameActions";
 
