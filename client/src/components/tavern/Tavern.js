@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import io from "socket.io-client";
 import { fetchGames, loadNewGame, clearGames } from "../../actions/tavernActions";
-import { getCurrentGame } from "../../actions/gameActions"
+import { setCurrentGame } from "../../actions/gameActions"
 
 import Spinner from "../common/Spinner";
 import NewGameForm from "./NewGameForm";
@@ -33,13 +33,12 @@ class Tavern extends Component {
     this.socket.on("new game", game => {
       this.props.loadNewGame(game);
       if (this.props.auth.user.id === game.player1.id) {
-        this.props.getCurrentGame();
+        this.props.setCurrentGame(game);
       }
     });
 
-    this.socket.on("game starting", game => {
-      console.log("GAME STARTING")
-      this.props.history.push(`/tictactoe/${game._id}`);
+    this.socket.on("game started", game => {
+      this.props.setCurrentGame(game)
     })
   }
 
@@ -59,9 +58,10 @@ class Tavern extends Component {
   render() {
     const tavernContent = (
       <div className="container cards">
-        {this.props.currentGame ? null : (
-          <NewGameForm socket={this.socket} />
-        )}
+        {this.props.currentGame.hasOwnProperty("_id")
+          ? null
+          : (<NewGameForm socket={this.socket} />)
+        }
         <GameList
           games={this.props.tavern.games}
           joinGame={this.joinGame}
@@ -84,7 +84,7 @@ Tavern.propTypes = {
   tavern: PropTypes.object.isRequired,
   fetchGames: PropTypes.func.isRequired,
   loadNewGame: PropTypes.func.isRequired,
-  getCurrentGame: PropTypes.func.isRequired,
+  setCurrentGame: PropTypes.func.isRequired,
   clearGames: PropTypes.func.isRequired
 };
 
@@ -96,5 +96,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchGames, loadNewGame, getCurrentGame, clearGames }
+  { fetchGames, loadNewGame, setCurrentGame, clearGames }
 )(Tavern);
