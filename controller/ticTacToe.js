@@ -6,7 +6,7 @@ module.exports = function (io) {
   let currentConnections = {};
 
   game.on("connection", function (socket) {
-    const user = client.handshake.headers.user;
+    const user = socket.handshake.headers.user;
 
     socketHelper.addSocketToConnections(currentConnections, user, game, socket, "tictactoe");
 

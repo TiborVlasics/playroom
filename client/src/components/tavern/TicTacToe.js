@@ -1,28 +1,31 @@
 import React, { Component } from 'react'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentGame } from "../../actions/gameActions";
+import io from "socket.io-client";
 
 class TicTacToe extends Component {
-
-
-  componentWillMount() {
-    this.props.getCurrentGame();
+  constructor() {
+    super();
+    this.socket = io("/tic-tac-toe", {
+      transports: ["polling"],
+      query: { token: localStorage.jwtToken }
+    });
   }
 
   componentDidMount() {
-    console.log(this.props.match.params.id)
   }
+
+  componentWillUnmount() {
+    this.socket.close();
+  }
+
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
+    console.log(nextProps.game)
   }
 
   render() {
-    // console.log(this.props.tavern.currentGame)
-
     return (
       <div className="tic-tac-toe">
-        <h1>TicTacToe</h1>
         <div className="game-board">
           <div>1</div>
           <div>2</div>
@@ -42,7 +45,6 @@ class TicTacToe extends Component {
 TicTacToe.propTypes = {
   auth: PropTypes.object.isRequired,
   game: PropTypes.object.isRequired,
-  getCurrentGame: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -50,4 +52,4 @@ const mapStateToProps = state => ({
   game: state.currentGame
 });
 
-export default connect(mapStateToProps, { getCurrentGame })(TicTacToe);
+export default connect(mapStateToProps)(TicTacToe);
