@@ -10,8 +10,8 @@ export const getCurrentGame = () => dispatch => {
       } else {
         axios
           .get(`/api/games/${res.data.currentGame}`)
-          .then(res => {
-            dispatch({ type: GET_CURRENT_GAME, payload: res.data });
+          .then(game => {
+            dispatch({ type: GET_CURRENT_GAME, payload: game.data });
           })
           .catch(err => console.log(err))
       }
