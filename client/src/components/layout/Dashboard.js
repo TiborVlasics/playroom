@@ -6,7 +6,7 @@ class Dashboard extends Component {
   componentWillReceiveProps(nextProps) {
     let game = nextProps.currentGame;
     if (game.hasOwnProperty("_id") && game.isStarted) {
-      this.props.history.push(`/tictactoe/${nextProps.currentGame._id}`)
+      this.props.history.push(`/tictactoe/${game._id}`)
     }
   }
 
