@@ -67,7 +67,11 @@ class Tavern extends Component {
               <p className="card-text">
                 <small className="text-text">Created: {game.createdDate}</small>
               </p>
-              <button className="btn btn-success" onClick={() => this.joinGame(game)}>Join game</button>
+              <button
+                className={this.props.currentGame
+                  ? "btn btn-success hidden-button"
+                  : "btn btn-success"}
+                onClick={() => this.joinGame(game)}>Join game</button>
             </div>
           </div>
         ))}

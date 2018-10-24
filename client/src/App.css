@@ -28,6 +28,10 @@ body {
   color: black;
 }
 
+.hidden-button {
+  display: none;
+}
+
 .landing {
   position: relative;
   background: url("http://www.ingrammicrocloud.me/wp-content/uploads/sites/73/2015/06/landing-page-background-5_1900x765.png")
