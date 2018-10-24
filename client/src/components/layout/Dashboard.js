@@ -3,11 +3,18 @@ import { connect } from "react-redux";
 
 class Dashboard extends Component {
 
-  componentWillReceiveProps(nextProps) {
-    let game = nextProps.currentGame;
+  pushUserToGame(game) {
     if (game.hasOwnProperty("_id") && game.isStarted) {
-      this.props.history.push(`/tictactoe/${game._id}`)
+      this.props.history.push(`/tictactoe/${game._id}`);
     }
+  }
+
+  componentDidMount() {
+    this.pushUserToGame(this.props.currentGame);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.pushUserToGame(nextProps.currentGame)
   }
 
   render() {

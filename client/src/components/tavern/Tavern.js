@@ -19,18 +19,32 @@ class Tavern extends Component {
 
     this.joinGame = this.joinGame.bind(this)
   }
+
+  pushUserToGame(game) {
+    if (game.hasOwnProperty("_id") && game.isStarted) {
+      this.props.history.push(`/tictactoe/${game._id}`);
+    }
+  }
+
   componentDidMount() {
+    this.pushUserToGame(this.props.currentGame);
     this.props.fetchGames();
+
     this.socket.on("new game", game => {
       this.props.loadNewGame(game);
       if (this.props.auth.user.id === game.player1.id) {
         this.props.getCurrentGame();
       }
     });
+
     this.socket.on("game starting", game => {
       console.log("GAME STARTING")
       this.props.history.push(`/tictactoe/${game._id}`);
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.pushUserToGame(nextProps.currentGame)
   }
 
   componentWillUnmount() {
