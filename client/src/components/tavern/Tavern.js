@@ -20,7 +20,6 @@ class Tavern extends Component {
     this.joinGame = this.joinGame.bind(this)
   }
   componentDidMount() {
-    this.props.getCurrentGame();
     this.props.fetchGames();
     this.socket.on("new game", game => {
       this.props.loadNewGame(game);

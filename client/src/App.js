@@ -5,6 +5,7 @@ import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser } from "./actions/authActions";
+import { getCurrentGame } from "./actions/gameActions";
 
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -20,6 +21,7 @@ if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   const decoded = jwt_decode(localStorage.jwtToken);
   store.dispatch(setCurrentUser(decoded));
+  store.dispatch(getCurrentGame());
 }
 
 class App extends Component {
