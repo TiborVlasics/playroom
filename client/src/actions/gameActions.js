@@ -6,7 +6,7 @@ export const getCurrentGame = () => dispatch => {
     .get("/api/user/current")
     .then(res => {
       if (res.data.currentGame == null) {
-        dispatch({ type: GET_CURRENT_GAME, payload: res.data.currentGame });
+        dispatch({ type: GET_CURRENT_GAME, payload: {} });
       } else {
         axios
           .get(`/api/games/${res.data.currentGame}`)

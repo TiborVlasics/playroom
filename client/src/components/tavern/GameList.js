@@ -24,7 +24,7 @@ const GameList = ({ games, currentGame, joinGame }) => {
               <small className="text-text">Created: {game.createdDate}</small>
             </p>
             <button
-              className={currentGame || game.isStarted
+              className={currentGame.hasOwnProperty("_id") || game.isStarted
                 ? "btn btn-success hidden-button"
                 : "btn btn-success"}
               onClick={() => joinGame(game)}>Join game</button>
