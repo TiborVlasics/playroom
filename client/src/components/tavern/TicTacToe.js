@@ -12,6 +12,7 @@ class TicTacToe extends Component {
       transports: ["polling"],
       query: { token: localStorage.jwtToken }
     });
+    this.move = this.move.bind(this)
   }
 
   componentDidMount() {
@@ -32,12 +33,22 @@ class TicTacToe extends Component {
     this.socket.close();
   }
 
+  move(index) {
+    this.socket.emit("move", { index: index })
+  }
+
   render() {
     let game = this.props.game;
     let content = game.isStarted
       ? game.boardState[game.boardState.length - 1]
         .split('')
-        .map(col => <div>{col}</div>)
+        .map((col, index) => {
+          if (game.nextPlayer === this.props.auth.user.id && col === "?") {
+            return <div key={index} onClick={() => this.move(index)}>{col}</div>
+          } else {
+            return <div key={index}>{col}</div>
+          }
+        })
       : <Spinner />
 
     return (
