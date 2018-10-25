@@ -27,14 +27,19 @@ class TicTacToe extends Component {
     this.socket.on("game started", game => {
       this.props.setCurrentGame(game)
     })
+
+    this.socket.on("move", game => {
+      this.props.setCurrentGame(game)
+    })
   }
 
   componentWillUnmount() {
     this.socket.close();
   }
 
-  move(index) {
-    this.socket.emit("move", { index: index })
+  move(game, index) {
+    let data = { ...game, move: index }
+    this.socket.emit("move", data)
   }
 
   render() {
@@ -44,7 +49,7 @@ class TicTacToe extends Component {
         .split('')
         .map((col, index) => {
           if (game.nextPlayer === this.props.auth.user.id && col === "?") {
-            return <div key={index} onClick={() => this.move(index)}>{col}</div>
+            return <div key={index} onClick={() => this.move(game, index)}>{col}</div>
           } else {
             return <div key={index}>{col}</div>
           }
