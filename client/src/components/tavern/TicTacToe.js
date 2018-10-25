@@ -18,6 +18,10 @@ class TicTacToe extends Component {
     if (!this.props.game.hasOwnProperty("_id")) {
       this.props.history.push("/dashboard")
     }
+
+    this.socket.on("connect", () => {
+      this.socket.emit("join me to a room please", this.props.game)
+    })
   }
 
   componentWillUnmount() {
