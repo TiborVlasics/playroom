@@ -1,7 +1,12 @@
 
 module.exports = { mapGameStringToArray }
 
-
+/**
+ * 
+ * @param gameString a string representing the game eg: 'xxooxooox'
+ * @returns A two dimensional array representing the game
+ * 
+ */
 function mapGameStringToArray(gameString) {
   let rows = Math.sqrt(gameString.length);
   let game = gameString.split("");

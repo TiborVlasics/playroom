@@ -14,6 +14,11 @@ module.exports = function (io) {
       socketHelper.deleteSocketFromConnections(currentConnections, user, gameIo, socket, "tictactoe");
     });
 
+    /**
+     * @desc Joins player to a room, identified by the game id, which is sent.
+     * If all player connected, sets the game to started, 
+     * and emits updated game object to all players with an initial state.
+     */
     socket.on("join me to a room please", game => {
       socket.join(game._id)
       let user1Connected = currentConnections.hasOwnProperty(game.player1.id);
@@ -33,7 +38,9 @@ module.exports = function (io) {
             }
           },
           { new: true }
-        ).then(next => gameIo.to(game._id).emit("game started", next))
+        )
+          .then(next => gameIo.to(game._id).emit("game started", next))
+          .catch(err => console.log(err))
       }
     })
 
