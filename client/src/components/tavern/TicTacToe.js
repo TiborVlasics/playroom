@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentGame, setCurrentGame } from "../../actions/gameActions"
 import io from "socket.io-client";
+import Spinner from "../common/Spinner";
 
 class TicTacToe extends Component {
   constructor() {
@@ -32,19 +33,20 @@ class TicTacToe extends Component {
   }
 
   render() {
+    let game = this.props.game;
+    let content = game.isStarted
+      ? game.boardState[game.boardState.length - 1]
+        .split('')
+        .map(col => <div>{col}</div>)
+      : <Spinner />
+
     return (
       <div className="tic-tac-toe">
+        <div className="player1"></div>
         <div className="game-board">
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-          <div>4</div>
-          <div>5</div>
-          <div>6</div>
-          <div>7</div>
-          <div>8</div>
-          <div>9</div>
+          {content}
         </div>
+        <div className="player2"></div>
       </div>
     )
   }
