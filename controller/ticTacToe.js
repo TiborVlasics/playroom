@@ -27,7 +27,9 @@ module.exports = function (io) {
             {
               isStarted: true,
               nextPlayer: game.player1.id,
-              boardState: game.boardState.concat("?????????")
+              boardState: game.boardState.concat("?????????"),
+              'player1.symbol': "X",
+              'player2.symbol': "Y"
             }
           },
           { new: true }
