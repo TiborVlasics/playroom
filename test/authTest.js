@@ -5,17 +5,8 @@ const expect = require("chai").expect;
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 const app = require("../server");
-const request = chai.request(app);
 const User = require("../models/User");
 
-describe("GET /api/messages/", () => {
-  it("should return status code 200", done => {
-    request.get("/api/messages/").end(function (err, res) {
-      expect(res).to.have.status(200);
-      done();
-    });
-  });
-});
 
 describe("POST /api/user/register", () => {
 
