@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { getCurrentGame, setCurrentGame } from "../../actions/gameActions"
 import io from "socket.io-client";
 
 class TicTacToe extends Component {
@@ -13,14 +14,14 @@ class TicTacToe extends Component {
   }
 
   componentDidMount() {
+    this.props.getCurrentGame();
+    if (!this.props.game.hasOwnProperty("_id")) {
+      this.props.history.push("/dashboard")
+    }
   }
 
   componentWillUnmount() {
     this.socket.close();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps.game)
   }
 
   render() {
@@ -45,6 +46,8 @@ class TicTacToe extends Component {
 TicTacToe.propTypes = {
   auth: PropTypes.object.isRequired,
   game: PropTypes.object.isRequired,
+  getCurrentGame: PropTypes.func.isRequired,
+  setCurrentGame: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -52,4 +55,7 @@ const mapStateToProps = state => ({
   game: state.currentGame
 });
 
-export default connect(mapStateToProps)(TicTacToe);
+export default connect(
+  mapStateToProps,
+  { getCurrentGame, setCurrentGame }
+)(TicTacToe);
