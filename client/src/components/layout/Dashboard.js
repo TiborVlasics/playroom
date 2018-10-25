@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 class Dashboard extends Component {
 
   pushUserToGame(game) {
-    if (game.hasOwnProperty("_id") && game.isStarted) {
+    if (game.hasOwnProperty("_id") && game.isFull) {
       this.props.history.push(`/tictactoe/${game._id}`);
     }
   }

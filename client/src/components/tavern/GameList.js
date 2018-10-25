@@ -33,12 +33,12 @@ const GameList = ({ games, currentGame, joinGame }) => {
                 />
               </p>
               {player2}
-              <h3>{game.isStarted}</h3>
+              <h3>{game.isFull}</h3>
               <p className="card-text">
                 <small className="text-text">Created: {game.createdDate}</small>
               </p>
               <button
-                className={currentGame.hasOwnProperty("_id") || game.isStarted
+                className={currentGame.hasOwnProperty("_id") || game.isFull
                   ? "btn btn-success hidden-button"
                   : "btn btn-success"}
                 onClick={() => joinGame(game)}>Join game</button>

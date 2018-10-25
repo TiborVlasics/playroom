@@ -21,7 +21,7 @@ module.exports = function (io) {
      */
     socket.on("new game", async function () {
       try {
-        const game = await new TicTacToe({ player1: user }).save();
+        const game = await new TicTacToe({ player1: user, isFull: false }).save();
         await User.findOneAndUpdate(
           { _id: user.id },
           { $set: { currentGame: game._id } },
@@ -48,7 +48,7 @@ module.exports = function (io) {
         { new: true }
       ).then(TicTacToe.findOneAndUpdate(
         { _id: game._id },
-        { $set: { player2: user, isStarted: true } },
+        { $set: { player2: user, isFull: true } },
         { new: true }
       ).then(game => {
         const player1 = game.player1.id;
