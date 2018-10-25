@@ -59,7 +59,7 @@ module.exports = function (io) {
         if (currentConnections.hasOwnProperty(player2)) {
           currentConnections[player2].sockets.map(socket => socket.join(game._id))
         }
-        tavern.to(game._id).emit("game started", game)
+        tavern.to(game._id).emit("game is ready to start", game)
       })).catch(err => console.log(err))
     });
 

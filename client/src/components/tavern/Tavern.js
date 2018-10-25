@@ -37,7 +37,7 @@ class Tavern extends Component {
       }
     });
 
-    this.socket.on("game started", game => {
+    this.socket.on("game is ready to start", game => {
       this.props.setCurrentGame(game)
     })
   }
