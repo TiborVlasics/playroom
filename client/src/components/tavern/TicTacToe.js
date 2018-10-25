@@ -22,6 +22,9 @@ class TicTacToe extends Component {
     this.socket.on("connect", () => {
       this.socket.emit("join me to a room please", this.props.game)
     })
+    this.socket.on("game started", game => {
+      this.props.setCurrentGame(game)
+    })
   }
 
   componentWillUnmount() {
