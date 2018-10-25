@@ -29,12 +29,39 @@ module.exports = function (io) {
               nextPlayer: game.player1.id,
               boardState: game.boardState.concat("?????????"),
               'player1.symbol': "X",
-              'player2.symbol': "Y"
+              'player2.symbol': "O"
             }
           },
           { new: true }
         ).then(next => gameIo.to(game._id).emit("game started", next))
       }
+    })
+
+    socket.on("move", game => {
+      let currentPlayer;
+      let nextPlayer;
+      if (game.player1.id === game.nextPlayer) {
+        currentPlayer = game.player1;
+        nextPlayer = game.player2.id;
+      } else {
+        currentPlayer = game.player2;
+        nextPlayer = game.player1.id;
+      }
+
+      let newBoardState = game.boardState[game.boardState.length - 1].split("");
+      newBoardState[game.move] = currentPlayer.symbol;
+      newBoardState = newBoardState.join("")
+
+      TicTacToe.findOneAndUpdate(
+        { _id: game._id },
+        {
+          $set: {
+            boardState: game.boardState.concat(newBoardState),
+            nextPlayer: nextPlayer
+          }
+        },
+        { new: true }
+      ).then(next => gameIo.to(game._id).emit("move", next))
     })
   })
 }
