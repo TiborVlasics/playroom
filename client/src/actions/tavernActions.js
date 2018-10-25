@@ -11,10 +11,8 @@ export const fetchGames = () => dispatch => {
   dispatch(setLoading());
   axios
     .get("/api/games/")
-    .then(res => {
-      dispatch({ type: FETCH_GAMES, payload: res.data });
-    })
-    .catch(err => dispatch({ type: GET_ERRORS, payload: err.response.data }));
+    .then(res => dispatch({ type: FETCH_GAMES, payload: res.data }))
+    .catch(err => dispatch({ type: GET_ERRORS, payload: err }));
 };
 
 export const loadNewGame = game => dispatch => {

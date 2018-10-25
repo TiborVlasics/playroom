@@ -2,18 +2,13 @@ import axios from "axios";
 import { SET_CURRENT_GAME } from "./types"
 
 export const getCurrentGame = () => dispatch => {
-  axios
-    .get("/api/user/current")
+  axios.get("/api/user/current")
     .then(res => {
       if (res.data.currentGame === null) {
-        setCurrentGame({})
+        dispatch(setCurrentGame({}))
       } else {
-        axios
-          .get(`/api/games/${res.data.currentGame}`)
-          .then(resp => {
-            console.log(resp.data)
-            dispatch(setCurrentGame(resp.data))
-          })
+        axios.get(`/api/games/${res.data.currentGame}`)
+          .then(resp => dispatch(setCurrentGame(resp.data)))
           .catch(err => console.log(err))
       }
     })
