@@ -31,24 +31,24 @@ describe('Map game string to two dimensional array', function () {
   it("A 9 character string should be mapped to a matrix with the first item of 3 x's", () => {
     const gameString = "xxxxxxxxx";
     const game = ticTacToeHelper.mapGameStringToArray(gameString)
-    assert.equal(game[0], ["x", "x", "x"]);
+    assert.deepEqual(game[0], ["x", "x", "x"]);
   });
 
   it("A 16 character string should be mapped to a matrix with the first item of 4 x's", () => {
     const gameString = "xxxxxxxxxxxxxxxx";
     const game = ticTacToeHelper.mapGameStringToArray(gameString)
-    assert.equal(game[0], ["x", "x", "x", "x"]);
+    assert.deepEqual(game[0], ["x", "x", "x", "x"]);
   });
 
   it("A 25 character string should be mapped to a matrix with the first item of 5 x's", () => {
-    const gameString = "xxxxxxxxxxxxxxxx";
+    const gameString = "xxxxxxxxxxxxxxxxxxxxxxxxx";
     const game = ticTacToeHelper.mapGameStringToArray(gameString)
-    assert.equal(game[0], ["x", "x", "x", "x", "x"]);
+    assert.deepEqual(game[0], ["x", "x", "x", "x", "x"]);
   });
 
   it("A 32 character string should be mapped to a matrix with the first item of 6 x's", () => {
     const gameString = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
     const game = ticTacToeHelper.mapGameStringToArray(gameString)
-    assert.equal(game[0], ["x", "x", "x", "x", "x", "x"]);
+    assert.deepEqual(game[0], ["x", "x", "x", "x", "x", "x"]);
   });
 });
