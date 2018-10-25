@@ -36,11 +36,13 @@ class ChatTable extends React.Component {
               alt="thumbnail"
             />
             <div className="message-name">{message.author.name + ":"}</div>
-            {message.text.map((text, index) => (
-              <div key={index} className="message-text">
-                {text}
-              </div>
-            ))}
+            <div className="message-box">
+              {message.text.map((text, index) => (
+                <div key={index} className="message-text">
+                  {text}
+                </div>
+              ))}
+            </div>
             <div className="message-date">{message.createdDate}</div>
           </div>
         ))}
