@@ -42,9 +42,65 @@ const mapMoveToIndexes = (game) => {
   }
 }
 
+function evaluateGame(game) {
+  const move = game.move;
+  const matrix = game.gameMatrix;
+  const symbol = matrix[move.x][move.y]
+
+  for (let i = 0; i < 3; i++) {
+    try {
+      if (matrix[move.x + 2 - i][move.y] === symbol
+        && matrix[move.x + 1 - i][move.y] === symbol
+        && matrix[move.x - i][move.y] === symbol) {
+        return { ...game, winner: game.nextPlayer }
+      }
+    } catch (err) {
+      continue;
+    }
+  }
+
+  for (let i = 0; i < 3; i++) {
+    try {
+      if (matrix[move.x + 2 - i][move.y - 2 + i] === symbol
+        && matrix[move.x + 1 - i][move.y - 1 + i] === symbol
+        && matrix[move.x - i][move.y + i] === symbol) {
+        return { ...game, winner: nextPlayer }
+      }
+    } catch (err) {
+      continue;
+    }
+  }
+
+  for (let i = 0; i < 3; i++) {
+    try {
+      if (matrix[move.x][move.y - 2 + i] === symbol
+        && matrix[move.x][move.y - 1 + i] === symbol
+        && matrix[move.x][move.y + i] === symbol) {
+        return { ...game, winner: nextPlayer }
+      }
+    } catch (err) {
+      continue;
+    }
+  }
+
+  for (let i = 0; i < 3; i++) {
+    try {
+      if (matrix[move.x - 2 + i][move.y - 2 + i] === symbol
+        && matrix[move.x - 1 + i][move.y - 1 + i] === symbol
+        && matrix[move.x + i][move.y + i] === symbol) {
+        return { ...game, winner: nextPlayer }
+      }
+    } catch (err) {
+      continue;
+    }
+  }
+  return { ...game }
+}
+
 module.exports = {
   mapGameArrayToMatrix,
   mapGameStringToArray,
   applyMove,
-  mapMoveToIndexes
+  mapMoveToIndexes,
+  evaluateGame
 }
