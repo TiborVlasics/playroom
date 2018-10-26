@@ -1,7 +1,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 const assert = chai.assert;
-const { mapGameStringToMatrix } = require("../helper/ticTacToe.helper");
+const { mapGameArrayToMatrix } = require("../helper/ticTacToe.helper");
 
 describe("Map game's latest state to a matrix, and include it in the returned game object", function () {
 
@@ -9,34 +9,31 @@ describe("Map game's latest state to a matrix, and include it in the returned ga
 
   beforeEach(() => {
     game = {
-      boardState: ['?????????',
-        '?X???????',
-        '?X?O?????',
-        'OXX???XXX']
+      gameArray: ["O", "X", "X", "?", "?", "?", "X", "X", "X"]
     }
   })
 
   it('Game object should remain unmutated',
     () => {
-      const updatedGame = mapGameStringToMatrix(game)
+      const updatedGame = mapGameArrayToMatrix(game)
       expect(game).to.not.have.property("gameMatrix")
     });
 
   it('Updated game should have a gameMatrix property',
     () => {
-      const updatedGame = mapGameStringToMatrix(game)
+      const updatedGame = mapGameArrayToMatrix(game)
       expect(updatedGame).to.have.property("gameMatrix")
     });
 
   it('Updated game should still have a boardState property',
     () => {
-      const updatedGame = mapGameStringToMatrix(game)
-      expect(updatedGame).to.have.property("boardState")
+      const updatedGame = mapGameArrayToMatrix(game)
+      expect(updatedGame).to.have.property("gameArray")
     });
 
   it("Gamematrix property should be a matrix",
     () => {
-      const updatedGame = mapGameStringToMatrix(game)
+      const updatedGame = mapGameArrayToMatrix(game)
       const matrix = [["O", "X", "X"], ["?", "?", "?"], ["X", "X", "X"]]
       assert.deepEqual(updatedGame.gameMatrix, matrix);
     });
