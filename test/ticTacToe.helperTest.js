@@ -192,3 +192,33 @@ describe("Evaluate winning game", () => {
       assert.equal(updatedGame.winner, "5bd1cbc3e9f6ea38c32d649a");
     });
 });
+
+describe("Evaluate game to be continued", () => {
+  let game;
+
+  beforeEach(() => {
+    game = {
+      nextPlayer: '5bd1cbc3e9f6ea38c32d649a',
+      gameMatrix:
+        [
+          ["?", "X", "?"],
+          ["?", "X", "?"],
+          ["?", "O", "?"]
+        ],
+      move: { x: 1, y: 1 },
+      winner: null
+    }
+  })
+
+  it("Updated game should have gameMatrix property'",
+    () => {
+      const updatedGame = evaluateGame(game)
+      expect(updatedGame).to.have.property("gameMatrix")
+    });
+
+  it("Winner should be null",
+    () => {
+      const updatedGame = evaluateGame(game)
+      assert.equal(updatedGame.winner, null);
+    });
+});
