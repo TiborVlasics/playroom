@@ -6,6 +6,16 @@ const mapGameStringToArray = (game) => {
   return { ...game, gameArray: gameArray }
 }
 
+const applyMove = (game) => {
+  const gameArray = game.gameArray.slice();
+  if (game.player1.id === game.nextPlayer) {
+    gameArray[game.move] = game.player1.symbol;
+  } else {
+    gameArray[game.move] = game.player2.symbol;
+  }
+  return { ...game, gameArray: gameArray }
+}
+
 const mapGameArrayToMatrix = (game) => {
   const rows = Math.sqrt(game.gameArray.length);
   const gameMatrix = game.gameArray.reduce((acc, currValue, index) => {
@@ -21,4 +31,4 @@ const mapGameArrayToMatrix = (game) => {
 }
 
 
-module.exports = { mapGameArrayToMatrix, mapGameStringToArray }
+module.exports = { mapGameArrayToMatrix, mapGameStringToArray, applyMove }
