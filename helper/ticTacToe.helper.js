@@ -30,5 +30,21 @@ const mapGameArrayToMatrix = (game) => {
   return { ...game, gameMatrix: gameMatrix }
 }
 
+const mapMoveToIndexes = (game) => {
+  count = 0
+  for (let i = 0; i < game.gameMatrix.length; i++) {
+    for (let j = 0; j < game.gameMatrix[i].length; j++) {
+      if (count === game.move) {
+        return { ...game, move: { x: i, y: j } }
+      }
+      ++count;
+    }
+  }
+}
 
-module.exports = { mapGameArrayToMatrix, mapGameStringToArray, applyMove }
+module.exports = {
+  mapGameArrayToMatrix,
+  mapGameStringToArray,
+  applyMove,
+  mapMoveToIndexes
+}
