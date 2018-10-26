@@ -34,21 +34,10 @@ describe("Map game's latest state to a matrix, and include it in the returned ga
       expect(updatedGame).to.have.property("boardState")
     });
 
-  it('GameMatrix should have a length of 3',
+  it("Gamematrix property should be a matrix",
     () => {
       const updatedGame = mapGameStringToMatrix(game)
-      assert.equal(updatedGame.gameMatrix.length, 3);
-    });
-
-  it("A 9 character string should be mapped to a matrix with the first row of 3 x's",
-    () => {
-      const updatedGame = mapGameStringToMatrix(game)
-      assert.deepEqual(updatedGame.gameMatrix[0], ["O", "X", "X"]);
-    });
-
-  it("A 9 character string should be mapped to a matrix with the last row of 3 x's",
-    () => {
-      const updatedGame = mapGameStringToMatrix(game)
-      assert.deepEqual(updatedGame.gameMatrix[2], ["X", "X", "X"]);
+      const matrix = [["O", "X", "X"], ["?", "?", "?"], ["X", "X", "X"]]
+      assert.deepEqual(updatedGame.gameMatrix, matrix);
     });
 });
