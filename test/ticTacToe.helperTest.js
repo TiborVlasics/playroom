@@ -5,7 +5,8 @@ const {
   mapGameArrayToMatrix,
   mapGameStringToArray,
   applyMove,
-  mapMoveToIndexes
+  mapMoveToIndexes,
+  evaluateGame
 } = require("../helper/ticTacToe.helper");
 
 
@@ -155,3 +156,39 @@ describe("Map move to indexes",
         assert.deepEqual(updatedGame.move, { x: 1, y: 0 });
       });
   });
+
+describe("Evaluate winning game", () => {
+  let game;
+
+  beforeEach(() => {
+    game = {
+      nextPlayer: '5bd1cbc3e9f6ea38c32d649a',
+      gameMatrix:
+        [
+          ["?", "X", "?"],
+          ["?", "X", "?"],
+          ["?", "X", "?"]
+        ],
+      move: { x: 1, y: 1 },
+      winner: null
+    }
+  })
+
+  it('Game object should not be mutated',
+    () => {
+      const updatedGame = evaluateGame(game)
+      assert.equal(game.winner, null)
+    });
+
+  it("Updated game should have gameMatrix property'",
+    () => {
+      const updatedGame = evaluateGame(game)
+      expect(updatedGame).to.have.property("gameMatrix")
+    });
+
+  it("Winner should be 'nextPlayer'",
+    () => {
+      const updatedGame = evaluateGame(game)
+      assert.equal(updatedGame.winner, "5bd1cbc3e9f6ea38c32d649a");
+    });
+});
