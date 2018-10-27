@@ -107,11 +107,24 @@ const checkIfGameIsADraw = game => {
   }
 }
 
+const setNextPlayer = game => {
+  if (game.winner === null) {
+    if (game.player1.id === game.nextPlayer) {
+      return { ...game, nextPlayer: game.player2.id }
+    } else {
+      return { ...game, nextPlayer: game.player1.id }
+    }
+  } else {
+    return { ...game, nextPlayer: null }
+  }
+}
+
 module.exports = {
   mapGameArrayToMatrix,
   mapGameStringToArray,
   applyMove,
   mapMoveToIndexes,
   evaluateGame,
-  checkIfGameIsADraw
+  checkIfGameIsADraw,
+  setNextPlayer
 }
