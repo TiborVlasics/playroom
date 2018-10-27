@@ -1,5 +1,7 @@
 const TicTacToe = require("../models/TicTacToe");
 const socketHelper = require("../helper/socketHelper")
+const { updateGame } = require("../helper/ticTacToe.helper")
+
 
 module.exports = function (io) {
   const gameIo = io.of("/tic-tac-toe");
@@ -39,36 +41,26 @@ module.exports = function (io) {
           },
           { new: true }
         )
-          .then(next => gameIo.to(game._id).emit("game started", next))
+          .then(updatedGame => gameIo.to(game._id).emit("game started", updatedGame))
           .catch(err => console.log(err))
       }
     })
 
     socket.on("move", game => {
-      let currentPlayer;
-      let nextPlayer;
-      if (game.player1.id === game.nextPlayer) {
-        currentPlayer = game.player1;
-        nextPlayer = game.player2.id;
-      } else {
-        currentPlayer = game.player2;
-        nextPlayer = game.player1.id;
-      }
-
-      let newBoardState = game.boardState[game.boardState.length - 1].split("");
-      newBoardState[game.move] = currentPlayer.symbol;
-      newBoardState = newBoardState.join("")
+      const updatedGame = updateGame(game)
 
       TicTacToe.findOneAndUpdate(
         { _id: game._id },
         {
           $set: {
-            boardState: game.boardState.concat(newBoardState),
-            nextPlayer: nextPlayer
+            boardState: game.boardState.concat(updatedGame.gameString),
+            nextPlayer: updatedGame.nextPlayer,
+            winner: updatedGame.winner,
+            isEnded: updatedGame.isEnded
           }
         },
         { new: true }
-      ).then(next => gameIo.to(game._id).emit("move", next))
+      ).then(updatedGame => gameIo.to(game._id).emit("move", updatedGame))
     })
   })
 }
