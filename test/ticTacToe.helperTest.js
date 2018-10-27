@@ -9,7 +9,8 @@ const {
   evaluateGame,
   checkIfGameIsADraw,
   setNextPlayer,
-  mapGameArrayToString
+  mapGameArrayToString,
+  updateGame
 } = require("../helper/ticTacToe.helper");
 
 
@@ -194,6 +195,12 @@ describe("Evaluate winning game", () => {
       const updatedGame = evaluateGame(game)
       assert.equal(updatedGame.winner, "5bd1cbc3e9f6ea38c32d649a");
     });
+
+  it("Is ended should be 'true'",
+    () => {
+      const updatedGame = evaluateGame(game)
+      assert.equal(updatedGame.isEnded, true);
+    });
 });
 
 describe("Evaluate game to be continued", () => {
@@ -246,6 +253,16 @@ describe("Check if a game is a draw", () => {
     const updatedGame = checkIfGameIsADraw(game)
     assert.equal(updatedGame.winner, "draw");
   });
+
+  it("Is ended should be true", () => {
+    game = {
+      gameArray: ["O", "X", "O", "O", "X", "X", "X", "O", "O"],
+      winner: null
+    }
+    const updatedGame = checkIfGameIsADraw(game)
+    assert.equal(updatedGame.isEnded, true);
+  });
+
 
   it("Winner should be null", () => {
     game = {
@@ -343,5 +360,68 @@ describe("Map game's gameArray to a string",
       () => {
         const updatedGame = mapGameArrayToString(game)
         assert.equal(updatedGame.gameString, "OXX???XXX");
+      });
+  });
+
+
+describe("Update game (calling all 8 functions composed)",
+  () => {
+    let game;
+
+    beforeEach(() => {
+      game = {
+        player1: {
+          id: '5bd1cbb4e9f6ea38c32d6498',
+          name: 'user',
+          avatar: 'https://api.adorable.io/avatars/141/user.png',
+          symbol: 'X'
+        },
+        player2: {
+          id: '5bd1cbc3e9f6ea38c32d649a',
+          name: 'user1',
+          avatar: 'https://api.adorable.io/avatars/141/user1.png',
+          symbol: 'O'
+        },
+        boardState: [
+          '?????????',
+          '?X???????',
+          '?X?O?????',
+          '?XXO?????',
+        ],
+        isStarted: true,
+        isEnded: false,
+        nextPlayer: '5bd1cbc3e9f6ea38c32d649a',
+        move: 0,
+        winner: null,
+        _id: '5bd1cbbbe9f6ea38c32d6499',
+        isFull: true,
+        createdDate: '2018-10-25T13:57:15.810Z',
+        __v: 0
+      }
+    })
+
+    it('Game object should remain unmutated',
+      () => {
+        const updatedGame = updateGame(game)
+        expect(game).to.not.have.property("gameString")
+      });
+
+    it("Should return a the updated game object",
+      () => {
+        const updatedGame = updateGame(game)
+        assert.deepEqual(
+          updatedGame,
+          {
+            isStarted: true,
+            gameString: "OXXO?????",
+            isEnded: false,
+            move: { x: 0, y: 0 },
+            nextPlayer: '5bd1cbb4e9f6ea38c32d6498',
+            winner: null,
+            _id: '5bd1cbbbe9f6ea38c32d6499',
+            isFull: true,
+            createdDate: '2018-10-25T13:57:15.810Z',
+            __v: 0
+          });
       });
   });
