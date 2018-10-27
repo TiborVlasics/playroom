@@ -17,34 +17,21 @@ async function create(user) {
     password: hash,
     avatar: user.avatar
   });
-
   return newUser.save();
 }
 
 async function authenticate(userData) {
   const name = userData.name;
   const password = userData.password;
-
   user = await User.findOne({ name: name });
-
   if (!user) throw "User not found";
-
   const isMatch = await bcrypt.compare(password, user.password);
   if (isMatch) {
-    const payload = {
-      id: user.id,
-      name: user.name,
-      avatar: user.avatar
-    };
-    const token = await jwt.sign(payload, process.env.SECRET_KEY, {
-      expiresIn: "365d"
-    });
-
-    return {
-      ...payload,
-      success: true,
-      token: "Bearer " + token
-    };
+    const payload = { id: user.id, name: user.name, avatar: user.avatar };
+    const token = await jwt.sign(payload,
+      process.env.SECRET_KEY, { expiresIn: "365d" }
+    );
+    return { ...payload, success: true, token: "Bearer " + token };
   } else {
     throw "Password is incorrect";
   }
