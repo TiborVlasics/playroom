@@ -6,11 +6,9 @@ const {
   mapGameStringToArray,
   applyMove,
   mapMoveToIndexes,
-  evaluateGame,
   checkIfGameIsADraw,
   setNextPlayer,
   mapGameArrayToString,
-  updateGame
 } = require("../helper/ticTacToe.helper");
 
 
@@ -161,78 +159,6 @@ describe("Map move to indexes",
       });
   });
 
-describe("Evaluate winning game", () => {
-  let game;
-
-  beforeEach(() => {
-    game = {
-      nextPlayer: '5bd1cbc3e9f6ea38c32d649a',
-      gameMatrix:
-        [
-          ["?", "X", "?"],
-          ["?", "X", "?"],
-          ["?", "X", "?"]
-        ],
-      move: { x: 1, y: 1 },
-      winner: null
-    }
-  })
-
-  it('Game object should not be mutated',
-    () => {
-      const updatedGame = evaluateGame(game)
-      assert.equal(game.winner, null)
-    });
-
-  it("Updated game should have gameMatrix property'",
-    () => {
-      const updatedGame = evaluateGame(game)
-      expect(updatedGame).to.have.property("gameMatrix")
-    });
-
-  it("Winner should be 'nextPlayer'",
-    () => {
-      const updatedGame = evaluateGame(game)
-      assert.equal(updatedGame.winner, "5bd1cbc3e9f6ea38c32d649a");
-    });
-
-  it("Is ended should be 'true'",
-    () => {
-      const updatedGame = evaluateGame(game)
-      assert.equal(updatedGame.isEnded, true);
-    });
-});
-
-describe("Evaluate game to be continued", () => {
-  let game;
-
-  beforeEach(() => {
-    game = {
-      nextPlayer: '5bd1cbc3e9f6ea38c32d649a',
-      gameMatrix:
-        [
-          ["?", "X", "?"],
-          ["?", "X", "?"],
-          ["?", "O", "?"]
-        ],
-      move: { x: 1, y: 1 },
-      winner: null
-    }
-  })
-
-  it("Updated game should have gameMatrix property'",
-    () => {
-      const updatedGame = evaluateGame(game)
-      expect(updatedGame).to.have.property("gameMatrix")
-    });
-
-  it("Winner should be null",
-    () => {
-      const updatedGame = evaluateGame(game)
-      assert.equal(updatedGame.winner, null);
-    });
-});
-
 describe("Check if a game is a draw", () => {
   let game;
 
@@ -303,7 +229,6 @@ describe("Set next player when game isn't over", () => {
   it("Next player should be player1",
     () => {
       const updatedGame = setNextPlayer(game)
-      const matrix = ["O", "X", "X", "O", "?", "?", "X", "X", "X"]
       assert.deepEqual(updatedGame.nextPlayer, "5bd1cbb4e9f6ea38c32d6498");
     });
 });
@@ -334,10 +259,9 @@ describe("Set next player when game is over", () => {
       assert.equal(game.nextPlayer, "5bd1cbc3e9f6ea38c32d649a")
     });
 
-  it("Next player shuld be null",
+  it("Next player should be null",
     () => {
       const updatedGame = setNextPlayer(game)
-      const matrix = ["O", "X", "X", "O", "?", "?", "X", "X", "X"]
       assert.deepEqual(updatedGame.nextPlayer, null);
     });
 });
@@ -360,68 +284,5 @@ describe("Map game's gameArray to a string",
       () => {
         const updatedGame = mapGameArrayToString(game)
         assert.equal(updatedGame.gameString, "OXX???XXX");
-      });
-  });
-
-
-describe("Update game (calling all 8 functions composed)",
-  () => {
-    let game;
-
-    beforeEach(() => {
-      game = {
-        player1: {
-          id: '5bd1cbb4e9f6ea38c32d6498',
-          name: 'user',
-          avatar: 'https://api.adorable.io/avatars/141/user.png',
-          symbol: 'X'
-        },
-        player2: {
-          id: '5bd1cbc3e9f6ea38c32d649a',
-          name: 'user1',
-          avatar: 'https://api.adorable.io/avatars/141/user1.png',
-          symbol: 'O'
-        },
-        boardState: [
-          '?????????',
-          '?X???????',
-          '?X?O?????',
-          '?XXO?????',
-        ],
-        isStarted: true,
-        isEnded: false,
-        nextPlayer: '5bd1cbc3e9f6ea38c32d649a',
-        move: 0,
-        winner: null,
-        _id: '5bd1cbbbe9f6ea38c32d6499',
-        isFull: true,
-        createdDate: '2018-10-25T13:57:15.810Z',
-        __v: 0
-      }
-    })
-
-    it('Game object should remain unmutated',
-      () => {
-        const updatedGame = updateGame(game)
-        expect(game).to.not.have.property("gameString")
-      });
-
-    it("Should return a the updated game object",
-      () => {
-        const updatedGame = updateGame(game)
-        assert.deepEqual(
-          updatedGame,
-          {
-            isStarted: true,
-            gameString: "OXXO?????",
-            isEnded: false,
-            move: { x: 0, y: 0 },
-            nextPlayer: '5bd1cbb4e9f6ea38c32d6498',
-            winner: null,
-            _id: '5bd1cbbbe9f6ea38c32d6499',
-            isFull: true,
-            createdDate: '2018-10-25T13:57:15.810Z',
-            __v: 0
-          });
       });
   });
