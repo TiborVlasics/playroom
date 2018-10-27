@@ -119,6 +119,11 @@ const setNextPlayer = game => {
   }
 }
 
+const mapGameArrayToString = game => {
+  const gameState = game.gameArray.join('');
+  return { ...game, gameString: gameState }
+}
+
 module.exports = {
   mapGameArrayToMatrix,
   mapGameStringToArray,
@@ -126,5 +131,6 @@ module.exports = {
   mapMoveToIndexes,
   evaluateGame,
   checkIfGameIsADraw,
-  setNextPlayer
+  setNextPlayer,
+  mapGameArrayToString
 }
