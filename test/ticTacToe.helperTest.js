@@ -8,6 +8,7 @@ const {
   mapMoveToIndexes,
   evaluateGame,
   checkIfGameIsADraw,
+  setNextPlayer
 } = require("../helper/ticTacToe.helper");
 
 
@@ -253,4 +254,72 @@ describe("Check if a game is a draw", () => {
     const updatedGame = checkIfGameIsADraw(game)
     assert.equal(updatedGame.winner, null);
   });
+});
+
+describe("Set next player when game isn't over", () => {
+  let game;
+
+  beforeEach(() => {
+    game = {
+      player1: {
+        id: '5bd1cbb4e9f6ea38c32d6498',
+        symbol: 'X'
+      },
+      player2: {
+        id: '5bd1cbc3e9f6ea38c32d649a',
+        symbol: 'O'
+      },
+      nextPlayer: '5bd1cbc3e9f6ea38c32d649a',
+      gameArray: ["O", "X", "X", "?", "?", "?", "X", "X", "X"],
+      move: 3,
+      winner: null
+    }
+  })
+
+  it('Game object should remain unmutated',
+    () => {
+      const updatedGame = setNextPlayer(game)
+      assert.equal(game.nextPlayer, "5bd1cbc3e9f6ea38c32d649a")
+    });
+
+  it("Next player should be player1",
+    () => {
+      const updatedGame = setNextPlayer(game)
+      const matrix = ["O", "X", "X", "O", "?", "?", "X", "X", "X"]
+      assert.deepEqual(updatedGame.nextPlayer, "5bd1cbb4e9f6ea38c32d6498");
+    });
+});
+
+describe("Set next player when game is over", () => {
+  let game;
+
+  beforeEach(() => {
+    game = {
+      player1: {
+        id: '5bd1cbb4e9f6ea38c32d6498',
+        symbol: 'X'
+      },
+      player2: {
+        id: '5bd1cbc3e9f6ea38c32d649a',
+        symbol: 'O'
+      },
+      nextPlayer: '5bd1cbc3e9f6ea38c32d649a',
+      gameArray: ["O", "X", "X", "?", "?", "?", "X", "X", "X"],
+      move: 3,
+      winner: "5bd1cbc3e9f6ea38c32d649a"
+    }
+  })
+
+  it('Game object should remain unmutated',
+    () => {
+      const updatedGame = setNextPlayer(game)
+      assert.equal(game.nextPlayer, "5bd1cbc3e9f6ea38c32d649a")
+    });
+
+  it("Next player shuld be null",
+    () => {
+      const updatedGame = setNextPlayer(game)
+      const matrix = ["O", "X", "X", "O", "?", "?", "X", "X", "X"]
+      assert.deepEqual(updatedGame.nextPlayer, null);
+    });
 });
