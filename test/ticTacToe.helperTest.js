@@ -6,7 +6,8 @@ const {
   mapGameStringToArray,
   applyMove,
   mapMoveToIndexes,
-  evaluateGame
+  evaluateGame,
+  checkIfGameIsADraw,
 } = require("../helper/ticTacToe.helper");
 
 
@@ -221,4 +222,35 @@ describe("Evaluate game to be continued", () => {
       const updatedGame = evaluateGame(game)
       assert.equal(updatedGame.winner, null);
     });
+});
+
+describe("Check if a game is a draw", () => {
+  let game;
+
+  it('Game object should not be mutated', () => {
+    game = {
+      gameArray: ["O", "X", "O", "O", "X", "X", "X", "O", "O"],
+      winner: null
+    }
+    const updatedGame = checkIfGameIsADraw(game)
+    assert.equal(game.winner, null)
+  });
+
+  it("Game should be a draw", () => {
+    game = {
+      gameArray: ["O", "X", "O", "O", "X", "X", "X", "O", "O"],
+      winner: null
+    }
+    const updatedGame = checkIfGameIsADraw(game)
+    assert.equal(updatedGame.winner, "draw");
+  });
+
+  it("Winner should be null", () => {
+    game = {
+      gameArray: ["?", "X", "O", "O", "X", "X", "X", "O", "O"],
+      winner: null
+    }
+    const updatedGame = checkIfGameIsADraw(game)
+    assert.equal(updatedGame.winner, null);
+  });
 });
