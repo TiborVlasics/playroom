@@ -64,7 +64,7 @@ const evaluateGame = game => {
       if (matrix[move.x + 2 - i][move.y - 2 + i] === symbol
         && matrix[move.x + 1 - i][move.y - 1 + i] === symbol
         && matrix[move.x - i][move.y + i] === symbol) {
-        return { ...game, winner: nextPlayer, isEnded: true }
+        return { ...game, winner: game.nextPlayer, isEnded: true }
       }
     } catch (err) {
       continue;
@@ -76,7 +76,7 @@ const evaluateGame = game => {
       if (matrix[move.x][move.y - 2 + i] === symbol
         && matrix[move.x][move.y - 1 + i] === symbol
         && matrix[move.x][move.y + i] === symbol) {
-        return { ...game, winner: nextPlayer, isEnded: true }
+        return { ...game, winner: game.nextPlayer, isEnded: true }
       }
     } catch (err) {
       continue;
@@ -88,7 +88,7 @@ const evaluateGame = game => {
       if (matrix[move.x - 2 + i][move.y - 2 + i] === symbol
         && matrix[move.x - 1 + i][move.y - 1 + i] === symbol
         && matrix[move.x + i][move.y + i] === symbol) {
-        return { ...game, winner: nextPlayer, isEnded: true }
+        return { ...game, winner: game.nextPlayer, isEnded: true }
       }
     } catch (err) {
       continue;
@@ -104,6 +104,8 @@ const checkIfGameIsADraw = game => {
     } else {
       return { ...game, winner: "draw", isEnded: true }
     }
+  } else {
+    return { ...game }
   }
 }
 
