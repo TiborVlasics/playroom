@@ -8,7 +8,8 @@ const {
   mapMoveToIndexes,
   evaluateGame,
   checkIfGameIsADraw,
-  setNextPlayer
+  setNextPlayer,
+  mapGameArrayToString
 } = require("../helper/ticTacToe.helper");
 
 
@@ -323,3 +324,24 @@ describe("Set next player when game is over", () => {
       assert.deepEqual(updatedGame.nextPlayer, null);
     });
 });
+
+describe("Map game's gameArray to a string",
+  () => {
+    let game;
+
+    beforeEach(() => {
+      game = { gameArray: ["O", "X", "X", "?", "?", "?", "X", "X", "X"] }
+    })
+
+    it('Game object should remain unmutated',
+      () => {
+        const updatedGame = mapGameArrayToString(game)
+        expect(game).to.not.have.property("gameString")
+      });
+
+    it("GameState property should be a string of the game",
+      () => {
+        const updatedGame = mapGameArrayToString(game)
+        assert.equal(updatedGame.gameString, "OXX???XXX");
+      });
+  });
