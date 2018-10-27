@@ -52,7 +52,7 @@ const evaluateGame = game => {
       if (matrix[move.x + 2 - i][move.y] === symbol
         && matrix[move.x + 1 - i][move.y] === symbol
         && matrix[move.x - i][move.y] === symbol) {
-        return { ...game, winner: game.nextPlayer }
+        return { ...game, winner: game.nextPlayer, isEnded: true }
       }
     } catch (err) {
       continue;
@@ -64,7 +64,7 @@ const evaluateGame = game => {
       if (matrix[move.x + 2 - i][move.y - 2 + i] === symbol
         && matrix[move.x + 1 - i][move.y - 1 + i] === symbol
         && matrix[move.x - i][move.y + i] === symbol) {
-        return { ...game, winner: nextPlayer }
+        return { ...game, winner: nextPlayer, isEnded: true }
       }
     } catch (err) {
       continue;
@@ -76,7 +76,7 @@ const evaluateGame = game => {
       if (matrix[move.x][move.y - 2 + i] === symbol
         && matrix[move.x][move.y - 1 + i] === symbol
         && matrix[move.x][move.y + i] === symbol) {
-        return { ...game, winner: nextPlayer }
+        return { ...game, winner: nextPlayer, isEnded: true }
       }
     } catch (err) {
       continue;
@@ -88,7 +88,7 @@ const evaluateGame = game => {
       if (matrix[move.x - 2 + i][move.y - 2 + i] === symbol
         && matrix[move.x - 1 + i][move.y - 1 + i] === symbol
         && matrix[move.x + i][move.y + i] === symbol) {
-        return { ...game, winner: nextPlayer }
+        return { ...game, winner: nextPlayer, isEnded: true }
       }
     } catch (err) {
       continue;
@@ -102,7 +102,7 @@ const checkIfGameIsADraw = game => {
     if (game.gameArray.some(symbol => symbol === "?")) {
       return { ...game }
     } else {
-      return { ...game, winner: "draw" }
+      return { ...game, winner: "draw", isEnded: true }
     }
   }
 }
@@ -124,13 +124,68 @@ const mapGameArrayToString = game => {
   return { ...game, gameString: gameState }
 }
 
-module.exports = {
-  mapGameArrayToMatrix,
+/**
+ * TODO: write unit tests
+ * @param {*} game 
+ */
+const removeGameArrayAndMatrixFromGameObject = game => {
+  const { "gameMatrix": omit, "gameArray": omit1, ...gameWithoutArrays } = game;
+  return gameWithoutArrays;
+}
+
+/**
+ * TODO: write unit tests
+ * @param {*} game 
+ */
+const removePlayersFromGameObject = game => {
+  const { "player1": omit, "player2": omit1, ...gameWithoutPlayers } = game;
+  return gameWithoutPlayers;
+}
+
+/**
+ * TODO: write unit tests
+ * @param {*} game 
+ */
+const removeBoardStateFromGameObject = game => {
+  const { "boardState": omit, ...updatedGame } = game;
+  return updatedGame;
+}
+
+const compose = (...fns) =>
+  (arg) =>
+    fns.reduce(
+      (composed, f) => f(composed),
+      arg
+    )
+
+/**
+ * @desc Composing tictactoe evaluator functions together, and they get called
+ * with the value returned by the previous function. The first get called 
+ * with an initial game parameter
+ * @returns a new function with awaiting a Game object as param
+ */
+const updateGame = compose(
   mapGameStringToArray,
   applyMove,
+  mapGameArrayToMatrix,
   mapMoveToIndexes,
   evaluateGame,
   checkIfGameIsADraw,
   setNextPlayer,
-  mapGameArrayToString
+  mapGameArrayToString,
+  removeGameArrayAndMatrixFromGameObject,
+  removePlayersFromGameObject,
+  removeBoardStateFromGameObject
+)
+
+module.exports = {
+  mapGameStringToArray,
+  applyMove,
+  mapGameArrayToMatrix,
+  mapMoveToIndexes,
+  evaluateGame,
+  checkIfGameIsADraw,
+  setNextPlayer,
+  mapGameArrayToString,
+  updateGame
 }
