@@ -42,7 +42,7 @@ const mapMoveToIndexes = (game) => {
   }
 }
 
-function evaluateGame(game) {
+const evaluateGame = game => {
   const move = game.move;
   const matrix = game.gameMatrix;
   const symbol = matrix[move.x][move.y]
@@ -97,10 +97,21 @@ function evaluateGame(game) {
   return { ...game }
 }
 
+const checkIfGameIsADraw = game => {
+  if (game.winner === null) {
+    if (game.gameArray.some(symbol => symbol === "?")) {
+      return { ...game }
+    } else {
+      return { ...game, winner: "draw" }
+    }
+  }
+}
+
 module.exports = {
   mapGameArrayToMatrix,
   mapGameStringToArray,
   applyMove,
   mapMoveToIndexes,
-  evaluateGame
+  evaluateGame,
+  checkIfGameIsADraw
 }
