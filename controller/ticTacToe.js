@@ -1,4 +1,5 @@
 const TicTacToe = require("../models/TicTacToe");
+const User = require("../models/User");
 const socketHelper = require("../helper/socketHelper")
 const { updateGame } = require("../helper/ticTacToe.helper")
 
@@ -60,7 +61,17 @@ module.exports = function (io) {
           }
         },
         { new: true }
-      ).then(updatedGame => gameIo.to(game._id).emit("move", updatedGame))
+      ).then(updatedGame => {
+        gameIo.to(game._id).emit("move", updatedGame)
+
+        if (updatedGame.isEnded) {
+          User.updateMany(
+            { currentGame: updatedGame._id },
+            { $set: { currentGame: null } }
+          ).then(gameIo.to(game._id).emit("game ended"))
+            .catch(err => console.log(err))
+        }
+      }).catch(err => console.log(err))
     })
   })
 }
