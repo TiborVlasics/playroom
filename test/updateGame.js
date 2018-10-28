@@ -180,7 +180,7 @@ describe("Update game (calling all 11 functions composed)", () => {
         isEnded: true,
         move: { x: 2, y: 2 },
         nextPlayer: null,
-        winner: "draw",
+        winner: null,
         _id: '5bd1cbbbe9f6ea38c32d6499',
         isFull: true,
         createdDate: '2018-10-25T13:57:15.810Z',

@@ -177,7 +177,7 @@ describe("Check if a game is a draw", () => {
       winner: null
     }
     const updatedGame = checkIfGameIsADraw(game)
-    assert.equal(updatedGame.winner, "draw");
+    assert.equal(updatedGame.winner, null);
   });
 
   it("Is ended should be true", () => {
@@ -216,7 +216,8 @@ describe("Set next player when game isn't over", () => {
       nextPlayer: '5bd1cbc3e9f6ea38c32d649a',
       gameArray: ["O", "X", "X", "?", "?", "?", "X", "X", "X"],
       move: 3,
-      winner: null
+      winner: null,
+      isEnded: false
     }
   })
 

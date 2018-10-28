@@ -102,7 +102,7 @@ const checkIfGameIsADraw = game => {
     if (game.gameArray.some(symbol => symbol === "?")) {
       return { ...game }
     } else {
-      return { ...game, winner: "draw", isEnded: true }
+      return { ...game, winner: null, isEnded: true }
     }
   } else {
     return { ...game }
@@ -110,7 +110,7 @@ const checkIfGameIsADraw = game => {
 }
 
 const setNextPlayer = game => {
-  if (game.winner === null) {
+  if (game.isEnded === false) {
     if (game.player1.id === game.nextPlayer) {
       return { ...game, nextPlayer: game.player2.id }
     } else {
