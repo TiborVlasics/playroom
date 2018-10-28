@@ -31,6 +31,15 @@ class TicTacToe extends Component {
     this.socket.on("move", game => {
       this.props.setCurrentGame(game)
     })
+
+    this.socket.on("game ended", () => {
+      setTimeout(() => this.props.setCurrentGame({}), 4000)
+    })
+  }
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.game.hasOwnProperty("_id")) {
+      this.props.history.push("/dashboard")
+    }
   }
 
   componentWillUnmount() {
@@ -38,31 +47,55 @@ class TicTacToe extends Component {
   }
 
   move(game, index) {
-    let data = { ...game, move: index }
+    const data = { ...game, move: index }
     this.socket.emit("move", data)
   }
 
   render() {
-    let game = this.props.game;
-    let content = game.isStarted
+    const auth = this.props.auth;
+    const game = this.props.game;
+    const board = game.isStarted
       ? game.boardState[game.boardState.length - 1]
         .split('')
         .map((col, index) => {
           if (game.nextPlayer === this.props.auth.user.id && col === "?") {
-            return <div key={index} onClick={() => this.move(game, index)}>{col}</div>
+            return <div
+              key={index}
+              onClick={() => this.move(game, index)}>
+              {col !== "?" ? col : null
+              }
+            </div>
           } else {
-            return <div key={index}>{col}</div>
+            return <div key={index}>
+              {col !== "?" ? col : null}
+            </div>
           }
         })
       : <Spinner />
 
+    let message;
+    if (game.isEnded) {
+      if (game.winner === "draw") {
+        message = "It's a  draw (O_O)"
+      } else if (game.winner === auth.user.id) {
+        message = "You won :-D"
+      } else {
+        message = "Looser..."
+      }
+    } else {
+      if (game.nextPlayer === auth.user.id) {
+        message = "It's your turn"
+      } else {
+        message = "It's your opponents turn"
+      }
+    }
+
     return (
       <div className="tic-tac-toe">
-        <div className="player1"></div>
+        <p>{message}</p>
         <div className="game-board">
-          {content}
+          {board}
         </div>
-        <div className="player2"></div>
       </div>
     )
   }
