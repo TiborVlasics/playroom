@@ -23,7 +23,6 @@ class ChatRoom extends React.Component {
 
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.putUserToState = this.putUserToState.bind(this);
   }
 
   componentDidMount() {
@@ -74,17 +73,10 @@ class ChatRoom extends React.Component {
     this.socket.close();
   }
 
-  putUserToState(user) {
-    this.setState({ user: user });
-  }
-
   render() {
     return (
       <div className="container">
         <div>
-          {this.state.user ? (
-            <ChatWindow socket={this.socket} user={this.state.user} />
-          ) : null}
           <div className="chat-wrapper">
             <ChatUsers users={this.state.users} />
             <ChatTable />
