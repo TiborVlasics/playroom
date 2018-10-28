@@ -5,7 +5,6 @@ import io from "socket.io-client";
 
 import ChatTable from "./ChatTable";
 import ChatUsers from "./ChatUsers";
-import ChatWindow from "./ChatWindow";
 import { addMessage } from "../../actions/chatActions";
 
 class ChatRoom extends React.Component {
@@ -70,6 +69,10 @@ class ChatRoom extends React.Component {
   }
 
   componentWillUnmount() {
+    this.socket.emit("user typing", {
+      name: this.props.auth.user.name,
+      isTyping: false
+    });
     this.socket.close();
   }
 
