@@ -11,18 +11,16 @@ import { addMessage } from "../../actions/chatActions";
 class ChatRoom extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       newMessage: "",
       usersTyping: {},
-      user: null,
-      privateMsg: "POOP",
-      chatWindows: []
+      users: []
     };
-    this.socket = io("/chat", {
-      transports: ["polling"],
+    this.socket = io.connect("/chat", {
+      transports: ["polling", "websocket"],
       query: { token: localStorage.jwtToken }
     });
+
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.putUserToState = this.putUserToState.bind(this);
@@ -51,6 +49,22 @@ class ChatRoom extends React.Component {
       this.setState({ usersTyping: newState });
     });
 
+    this.socket.on("users", users => {
+      this.setState({ users: users });
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+
+    this.socket.emit("get users");
+
+    this.socket.on("user joined", user => {
+      this.setState({ users: this.state.users.concat(user) });
+    });
+
+    this.socket.on("user left", userData => {
+      let users = this.state.users.filter(user => user.id !== userData.id);
+      this.setState({ users: users });
+    });
+
     this.socket.on("private", data => {
       this.setState({ privateMsg: data.msg });
     });
@@ -72,7 +86,7 @@ class ChatRoom extends React.Component {
             <ChatWindow socket={this.socket} user={this.state.user} />
           ) : null}
           <div className="chat-wrapper">
-            <ChatUsers socket={this.socket} onClick={this.putUserToState} />
+            <ChatUsers users={this.state.users} />
             <ChatTable />
             <div className="shadow-messages">
               {Object.keys(this.state.usersTyping).map((user, index) => (
@@ -155,7 +169,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(
-  mapStateToProps,
-  { addMessage }
-)(ChatRoom);
+export default connect(mapStateToProps, { addMessage })(ChatRoom);
