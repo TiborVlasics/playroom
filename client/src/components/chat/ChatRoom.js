@@ -24,7 +24,16 @@ class ChatRoom extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentCleanup() {
+    this.socket.emit("user typing", {
+      name: this.props.auth.user.name,
+      isTyping: false
+    });
+  }
+
   componentDidMount() {
+    window.addEventListener('beforeunload', this.componentCleanup);
+
     this.socket.on("chat", message => {
       this.props.addMessage(message);
     });
