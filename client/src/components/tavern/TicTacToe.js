@@ -54,28 +54,26 @@ class TicTacToe extends Component {
   render() {
     const auth = this.props.auth;
     const game = this.props.game;
-    const board = game.isStarted
-      ? game.boardState[game.boardState.length - 1]
-        .split('')
-        .map((col, index) => {
-          if (game.nextPlayer === this.props.auth.user.id && col === "?") {
-            return <div
-              key={index}
-              onClick={() => this.move(game, index)}>
-              {col !== "?" ? col : null
-              }
-            </div>
-          } else {
-            return <div key={index}>
-              {col !== "?" ? col : null}
-            </div>
-          }
-        })
-      : <Spinner />
+    const board = game.isStarted ? game.boardState[game.boardState.length - 1]
+      .split('')
+      .map((col, index) => {
+        if (game.nextPlayer === this.props.auth.user.id && col === "?") {
+          return <div
+            key={index}
+            onClick={() => this.move(game, index)}>
+            {col !== "?" ? col : null
+            }
+          </div>
+        } else {
+          return <div key={index}>
+            {col !== "?" ? col : null}
+          </div>
+        }
+      }) : null
 
     let message;
     if (game.isEnded) {
-      if (game.winner === "draw") {
+      if (game.winner === null) {
         message = "It's a  draw (O_O)"
       } else if (game.winner === auth.user.id) {
         message = "You won :-D"
@@ -93,9 +91,10 @@ class TicTacToe extends Component {
     return (
       <div className="tic-tac-toe">
         <p>{message}</p>
-        <div className="game-board">
-          {board}
-        </div>
+        {game.isStarted ?
+          <div className="game-board">
+            {board}
+          </div> : <Spinner />}
       </div>
     )
   }
