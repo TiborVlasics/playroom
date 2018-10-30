@@ -8,13 +8,17 @@ import Spinner from "../common/Spinner";
 class TicTacToe extends Component {
   constructor() {
     super();
+
     this.socket = io("/tic-tac-toe", {
       transports: ["polling"],
       query: { token: localStorage.jwtToken }
     });
 
+    this.state = { replayBoard: null, }
+
     this.move = this.move.bind(this)
     this.leaveGame = this.leaveGame.bind(this)
+    this.replay = this.replay.bind(this)
   }
 
   componentDidMount() {
@@ -56,25 +60,38 @@ class TicTacToe extends Component {
     this.props.setCurrentGame({})
   }
 
+  replay(index) {
+    setTimeout(() => {
+      this.setState({ replayBoard: this.props.game.boardState[index] })
+      if (this.props.game.boardState.length >= index - 1) {
+        this.replay(index + 1);
+      }
+    }, 1000);
+  }
+
   render() {
     const auth = this.props.auth;
     const game = this.props.game;
-    const board = game.isStarted ? game.boardState[game.boardState.length - 1]
-      .split('')
-      .map((col, index) => {
-        if (game.nextPlayer === this.props.auth.user.id && col === "?") {
-          return <div
-            key={index}
-            onClick={() => this.move(game, index)}>
-            {col !== "?" ? col : null
+    const board = this.state.replayBoard
+      ? this.state.replayBoard.split("").map(col => <div>{col !== "?" ? col : null}</div>)
+      : game.isStarted
+        ? game.boardState[game.boardState.length - 1]
+          .split('')
+          .map((col, index) => {
+            if (game.nextPlayer === this.props.auth.user.id && col === "?") {
+              return <div
+                key={index}
+                onClick={() => this.move(game, index)}>
+                {col !== "?" ? col : null
+                }
+              </div>
+            } else {
+              return <div key={index}>
+                {col !== "?" ? col : null}
+              </div>
             }
-          </div>
-        } else {
-          return <div key={index}>
-            {col !== "?" ? col : null}
-          </div>
-        }
-      }) : null
+          })
+        : null
 
     let message;
     if (game.isEnded) {
@@ -94,7 +111,7 @@ class TicTacToe extends Component {
     }
 
     const endGamePanel = <div>
-      <button>Replay</button>
+      <button onClick={() => this.replay(0)}>Replay</button>
       <button onClick={this.leaveGame}>Leave</button>
     </div>
 
