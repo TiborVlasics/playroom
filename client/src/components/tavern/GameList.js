@@ -1,6 +1,6 @@
 import React from 'react'
 
-const GameList = ({ games, currentGame, joinGame }) => {
+const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
   return (
     <div>
       {games.map((game, index) => {
@@ -27,6 +27,7 @@ const GameList = ({ games, currentGame, joinGame }) => {
             <div className="card-header">
               {game._id === currentGame._id
                 ? <button
+                  onClick={() => deleteGame(game)}
                   className="btn btn-danger"
                   style={{ fontSize: "20px", float: "right" }}>
                   &times;
