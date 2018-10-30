@@ -190,7 +190,13 @@ body {
 *Tic tac toe game
 */
 .tic-tac-toe {
+  display: flex;
   margin-top: 50px;
+  justify-content: center;
+}
+
+.tic-tac-toe .opponent {
+  margin: 0 30px 30px 60px;
 }
 
 .tic-tac-toe .game-board {

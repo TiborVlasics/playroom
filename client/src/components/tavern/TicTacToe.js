@@ -75,13 +75,17 @@ class TicTacToe extends Component {
   render() {
     const auth = this.props.auth;
     const game = this.props.game;
+    const opponent = game.player1 && game.player1.id === auth.user.id
+      ? game.player2
+      : game.player1
+
     const board = this.state.replayBoard
       ? this.state.replayBoard.split("").map(col => <div>{col !== "?" ? col : null}</div>)
       : game.isStarted
         ? game.boardState[game.boardState.length - 1]
           .split('')
           .map((col, index) => {
-            if (game.nextPlayer === this.props.auth.user.id && col === "?") {
+            if (game.nextPlayer === auth.user.id && col === "?") {
               return <div
                 key={index}
                 onClick={() => this.move(game, index)}>
@@ -113,17 +117,26 @@ class TicTacToe extends Component {
       }
     }
 
-    const endGamePanel = <div>
-      <button onClick={() => this.replay(0)}>Replay</button>
-      <button onClick={this.leaveGame}>Leave</button>
-    </div>
+    const endGamePanel = (
+      <div>
+        <button onClick={() => this.replay(0)}>Replay</button>
+        <button onClick={this.leaveGame}>Leave</button>
+      </div>)
 
     return (
       <div className="tic-tac-toe">
-        <p>{message}</p>
+        {opponent ? <div className="opponent">
+          <p>Your opponent:</p>
+          <p>{opponent.name}</p>
+          <img src={opponent.avatar} alt="user avatar" style={{ width: "50px" }} />
+        </div> : null}
+
         {game.isStarted ?
-          <div className="game-board">
-            {board}
+          <div className="game">
+            <p>{message}</p>
+            <div className="game-board">
+              {board}
+            </div>
           </div> : <Spinner />}
         {game.isEnded && !this.state.isReplaying ? endGamePanel : null}
       </div>
