@@ -35,6 +35,21 @@ module.exports = function (io) {
     });
 
     /**
+     * @desc Deletes game from tavern and updates player1's current game to null
+     * emits 'unload game' with the deleted game object
+     */
+    socket.on("delete game", game => {
+      TicTacToe.findOneAndDelete({ _id: game._id })
+        .then(game => {
+          User.findOneAndUpdate(
+            { _id: game.player1.id },
+            { $set: { currentGame: null } })
+            .then(() => tavern.emit("unload game", game))
+        })
+        .catch(err => console.log(err))
+    })
+
+    /**
      * 
      * @desc Puts user to the already existing game object as player2
      * Joining player1 and player2 to a room named of the game's id
