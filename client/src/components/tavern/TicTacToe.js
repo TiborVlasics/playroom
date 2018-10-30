@@ -14,7 +14,7 @@ class TicTacToe extends Component {
       query: { token: localStorage.jwtToken }
     });
 
-    this.state = { replayBoard: null, }
+    this.state = { isReplaying: false, replayBoard: null }
 
     this.move = this.move.bind(this)
     this.leaveGame = this.leaveGame.bind(this)
@@ -62,9 +62,12 @@ class TicTacToe extends Component {
 
   replay(index) {
     setTimeout(() => {
+      if (!this.state.isReplaying) this.setState({ isReplaying: true })
       this.setState({ replayBoard: this.props.game.boardState[index] })
       if (this.props.game.boardState.length >= index - 1) {
         this.replay(index + 1);
+      } else {
+        this.setState({ isReplaying: false })
       }
     }, 1000);
   }
@@ -122,7 +125,7 @@ class TicTacToe extends Component {
           <div className="game-board">
             {board}
           </div> : <Spinner />}
-        {game.isEnded ? endGamePanel : null}
+        {game.isEnded && !this.state.isReplaying ? endGamePanel : null}
       </div>
     )
   }
