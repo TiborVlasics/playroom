@@ -12,11 +12,14 @@ class TicTacToe extends Component {
       transports: ["polling"],
       query: { token: localStorage.jwtToken }
     });
+
     this.move = this.move.bind(this)
+    this.leaveGame = this.leaveGame.bind(this)
   }
 
   componentDidMount() {
     this.props.getCurrentGame();
+
     if (!this.props.game.hasOwnProperty("_id")) {
       this.props.history.push("/dashboard")
     }
@@ -24,6 +27,7 @@ class TicTacToe extends Component {
     this.socket.on("connect", () => {
       this.socket.emit("join me to a room please", this.props.game)
     })
+
     this.socket.on("game started", game => {
       this.props.setCurrentGame(game)
     })
@@ -31,11 +35,8 @@ class TicTacToe extends Component {
     this.socket.on("move", game => {
       this.props.setCurrentGame(game)
     })
-
-    this.socket.on("game ended", () => {
-      setTimeout(() => this.props.setCurrentGame({}), 4000)
-    })
   }
+
   componentWillReceiveProps(nextProps) {
     if (!nextProps.game.hasOwnProperty("_id")) {
       this.props.history.push("/dashboard")
@@ -49,6 +50,10 @@ class TicTacToe extends Component {
   move(game, index) {
     const data = { ...game, move: index }
     this.socket.emit("move", data)
+  }
+
+  leaveGame() {
+    this.props.setCurrentGame({})
   }
 
   render() {
@@ -88,6 +93,11 @@ class TicTacToe extends Component {
       }
     }
 
+    const endGamePanel = <div>
+      <button>Replay</button>
+      <button onClick={this.leaveGame}>Leave</button>
+    </div>
+
     return (
       <div className="tic-tac-toe">
         <p>{message}</p>
@@ -95,6 +105,7 @@ class TicTacToe extends Component {
           <div className="game-board">
             {board}
           </div> : <Spinner />}
+        {game.isEnded ? endGamePanel : null}
       </div>
     )
   }
