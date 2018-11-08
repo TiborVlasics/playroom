@@ -16,7 +16,6 @@ class NewGameForm extends Component {
     event.preventDefault();
     this.props.socket.emit("new game", {
       game: this.state.game,
-      user: this.props.auth.user
     });
   }
 
