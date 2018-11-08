@@ -15,9 +15,9 @@ export const getCurrentGame = () => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const setCurrentGame = game => {
-  return {
+export const setCurrentGame = game => dispatch => {
+  return dispatch({
     type: SET_CURRENT_GAME,
     payload: game
-  }
+  })
 }
