@@ -14,13 +14,11 @@ class ChatWindow extends Component {
 
   componentDidMount() {
     this.props.socket.on("private", data => {
-      console.log(data);
       this.setState({ messages: this.state.messages.concat(data.msg) });
     });
   }
 
   render() {
-    const user = this.props.user;
     const { messages } = this.state;
     return (
       <div id="myNav" className="overlay">
