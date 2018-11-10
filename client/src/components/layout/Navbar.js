@@ -14,81 +14,58 @@ class Navbar extends Component {
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <span className="nav-link" style={{ marginRight: 10 }}>
-            {user.name}
-          </span>
-        </li>
-        <li>
-          <img
-            src={user.avatar}
-            className="rounded nav-link"
-            alt={user.name}
-            style={{ width: "50px", height: "50px" }}
-          />
-        </li>
-        <li className="nav-item">
-          <a
-            href=""
-            className="nav-link"
-            onClick={this.onLogoutClick.bind(this)}
-          >
-            Logout
-          </a>
-        </li>
-      </ul>
+      <div className="nav-links">
+        <span className="nav-item">
+          <Link to="/chat">Chat</Link>
+        </span>
+        <span className="nav-item">
+          <Link to="/tavern">Tavern</Link>
+        </span>
+      </div>
     );
 
-    const authFunctions = (
-      <ul className="navbar-nav mr-auto">
-        <li className="nav-item">
-          <Link className="nav-link" to="/chat">
-            Chat
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/tavern">
-            Tavern
-          </Link>
-        </li>
-      </ul>
+    const userLinks = (
+      <div className="nav-links">
+        <span className="nav-item" style={{ marginRight: 10 }}>
+          {user.name}
+        </span>
+        <img
+          className="nav-item"
+          src={user.avatar}
+          alt={user.name}
+          style={{ width: "50px", height: "50px" }}
+        />
+        <span className="nav-item">
+          <a href="" onClick={this.onLogoutClick.bind(this)}>
+            Logout
+          </a>
+        </span>
+      </div>
     );
 
     const guestLinks = (
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
+      <div className="nav-links">
+        <span className="nav-item">
           <Link className="nav-link" to="/register">
             Sign Up
           </Link>
-        </li>
-        <li className="nav-item">
+        </span>
+        <span className="nav-item">
           <Link className="nav-link" to="/login">
             Login
           </Link>
-        </li>
-      </ul>
+        </span>
+      </div>
     );
 
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-dark mb-4 fixed-top">
-        <div className="container">
-          <Link className="navbar-brand" to="/dashboard">
-            Gaming app
+      <nav className="nav">
+        <div className="nav-content">
+          <Link to="/dashboard">
+            <img className="game-house" src="minecraft.png" alt="logo" />
           </Link>
-          {isAuthenticated ? authFunctions : null}
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#mobile-nav"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
-
-          <div className="collapse navbar-collapse" id="mobile-nav">
-            {isAuthenticated ? authLinks : guestLinks}
-          </div>
+          {isAuthenticated ? authLinks : guestLinks}
+          {isAuthenticated ? userLinks : null}
         </div>
       </nav>
     );
