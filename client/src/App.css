@@ -1,4 +1,6 @@
 .App {
+  width: 1000px;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -493,4 +495,48 @@ body {
     top: 15px;
     right: 35px;
   }
+}
+
+.login-logo {
+  width: 700px;
+  margin-bottom: 40px;
+}
+
+form {
+  width: 65%;
+  margin: 0 auto;
+}
+
+form input[type="submit"] {
+  width: 90%;
+  background-color: #6860b4;
+  border: none;
+  color: white;
+  padding: 12px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: box-shadow 0.3s ease-in-out;
+  transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+form input[type="submit"]:hover {
+  background-color: #7870b4;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05, 1.05);
+}
+form input[type="submit"]:focus {
+  outline: 0;
+}
+
+form input {
+  outline: 0;
+}
+
+.sign-up {
+  margin-top: 25px;
 }

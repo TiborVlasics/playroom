@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+import { Link } from "react-router-dom";
 
 class Register extends Component {
   constructor() {
@@ -50,39 +51,42 @@ class Register extends Component {
 
     return (
       <div className="register">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-5 text-center">Sign Up</h1>
-              <p className="lead text-center">Create your account</p>
-              <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder="Name"
-                  name="name"
-                  type="name"
-                  value={this.state.name}
-                  onChange={this.onChange}
-                  error={errors.name}
-                />
-                <TextFieldGroup
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={errors.password}
-                />
-                <TextFieldGroup
-                  placeholder="Confirm password"
-                  name="password2"
-                  type="password"
-                  value={this.state.password2}
-                  onChange={this.onChange}
-                  error={errors.password2}
-                />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
-            </div>
+        <img className="login-logo" src="playhouse.png" alt="logo" />
+
+        <div className="row">
+          <div className="col-md-8 m-auto">
+            <h1 className="display-5 text-center">Sign Up</h1>
+            <p className="lead text-center">Create your account</p>
+            <form noValidate onSubmit={this.onSubmit}>
+              <TextFieldGroup
+                placeholder="Name"
+                name="name"
+                type="name"
+                value={this.state.name}
+                onChange={this.onChange}
+                error={errors.name}
+              />
+              <TextFieldGroup
+                placeholder="Password"
+                name="password"
+                type="password"
+                value={this.state.password}
+                onChange={this.onChange}
+                error={errors.password}
+              />
+              <TextFieldGroup
+                placeholder="Confirm password"
+                name="password2"
+                type="password"
+                value={this.state.password2}
+                onChange={this.onChange}
+                error={errors.password2}
+              />
+              <input type="submit" />
+              <p class="sign-up">
+                Already have an account? <Link to="/login">Log in</Link>
+              </p>
+            </form>
           </div>
         </div>
       </div>

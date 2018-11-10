@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
+import { Link } from "react-router-dom";
 
 class Login extends Component {
   constructor() {
@@ -53,31 +54,33 @@ class Login extends Component {
 
     return (
       <div className="login">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <h1 className="display-5 text-center">Log In</h1>
-              <p className="lead text-center">Sign in to your account</p>
-              <form noValidate onSubmit={this.onSubmit}>
-                <TextFieldGroup
-                  placeholder="Name"
-                  name="name"
-                  type="name"
-                  value={this.state.name}
-                  onChange={this.onChange}
-                  error={errors.name}
-                />
-                <TextFieldGroup
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={errors.password}
-                />
-                <input type="submit" className="btn btn-info btn-block mt-4" />
-              </form>
-            </div>
+        <img className="login-logo" src="playhouse.png" alt="logo" />
+        <div className="row">
+          <div className="col-md-8 m-auto">
+            <h1 className="header">Login</h1>
+            <form noValidate onSubmit={this.onSubmit}>
+              <TextFieldGroup
+                placeholder="Name"
+                name="name"
+                type="name"
+                value={this.state.name}
+                onChange={this.onChange}
+                error={errors.name}
+              />
+              <TextFieldGroup
+                placeholder="Password"
+                name="password"
+                type="password"
+                value={this.state.password}
+                onChange={this.onChange}
+                error={errors.password}
+              />
+              <input type="submit"/>
+              <p class="sign-up">
+                Or <Link to="/register">sign up</Link>, if you don't have an
+                account yet
+              </p>
+            </form>
           </div>
         </div>
       </div>
