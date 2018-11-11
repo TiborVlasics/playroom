@@ -23,30 +23,48 @@ body {
   left: 0;
   width: 100%;
   height: 80px;
-  font-family: "Monserrat";
   padding: 10px;
   box-shadow: 10px -1px 140px rgba(0, 0, 0, 0.6);
-  vertical-align: bottom;
+  font-family: "Raleway";
 }
 
 .nav-content {
   margin: 0 auto;
-  width: 1300px;
+  width: 1200px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.user-links {
+  display: flex;
+  align-items: flex-end;
+}
+
+.nav-img {
+  border-radius: 50px;
 }
 
 .nav-links {
   vertical-align: bottom;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.nav-logo {
+  font-size: 30px;
+  align-items: flex-end;
+}
+
+.nav-item {
+  font-size: 22px;
+  margin-right: 30px;
 }
 
 .nav-item a {
   text-decoration: underline;
   color: #000;
-  font-family: "Montserrant";
-  font-size: 20px;
 }
 
 .card {
@@ -65,24 +83,6 @@ body {
 
 .hidden-button {
   display: none;
-}
-
-.landing {
-  position: relative;
-  background: url("http://www.ingrammicrocloud.me/wp-content/uploads/sites/73/2015/06/landing-page-background-5_1900x765.png")
-    no-repeat;
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
-  margin-top: -45px;
-  margin-bottom: -50px;
-}
-
-.landing-inner {
-  position: relative;
-  top: 100px;
-  right: 200px;
-  text-align: left;
 }
 
 .chat-input {
@@ -552,4 +552,5 @@ form input[type="text"]:focus {
 .login,
 .register {
   margin-top: 40px;
+  font-family: "Griffy";
 }

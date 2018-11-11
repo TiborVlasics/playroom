@@ -21,25 +21,22 @@ class Navbar extends Component {
         <span className="nav-item">
           <Link to="/tavern">Tavern</Link>
         </span>
-      </div>
-    );
-
-    const userLinks = (
-      <div className="nav-links">
-        <span className="nav-item" style={{ marginRight: 10 }}>
-          {user.name}
-        </span>
-        <img
-          className="nav-item"
-          src={user.avatar}
-          alt={user.name}
-          style={{ width: "50px", height: "50px" }}
-        />
-        <span className="nav-item">
-          <a href="" onClick={this.onLogoutClick.bind(this)}>
-            Logout
-          </a>
-        </span>
+        <div className="user-links">
+          <span className="nav-item" style={{ marginRight: 10 }}>
+            {user.name}
+          </span>
+          <img
+            className="nav-item nav-img"
+            src={user.avatar}
+            alt={user.name}
+            style={{ width: "50px", height: "50px" }}
+          />
+          <span className="nav-item">
+            <a href="" onClick={this.onLogoutClick.bind(this)}>
+              Logout
+            </a>
+          </span>
+        </div>
       </div>
     );
 
@@ -61,11 +58,10 @@ class Navbar extends Component {
     return (
       <nav className="nav">
         <div className="nav-content">
-          <Link to="/dashboard">
-            <img className="game-house" src="minecraft.png" alt="logo" />
-          </Link>
+          <div className="nav-logo">
+            <Link to="/dashboard">Tic-tac-toe Playroom</Link>
+          </div>
           {isAuthenticated ? authLinks : guestLinks}
-          {isAuthenticated ? userLinks : null}
         </div>
       </nav>
     );
