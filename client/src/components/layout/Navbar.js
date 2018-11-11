@@ -22,15 +22,8 @@ class Navbar extends Component {
           <Link to="/tavern">Tavern</Link>
         </span>
         <div className="user-links">
-          <span className="nav-item" style={{ marginRight: 10 }}>
-            {user.name}
-          </span>
-          <img
-            className="nav-item nav-img"
-            src={user.avatar}
-            alt={user.name}
-            style={{ width: "50px", height: "50px" }}
-          />
+          <span className="nav-item">{user.name}</span>
+          <img className="nav-item nav-img" src={user.avatar} alt={user.name} />
           <span className="nav-item">
             <a href="" onClick={this.onLogoutClick.bind(this)}>
               Logout
