@@ -15,10 +15,13 @@ class ChatRoom extends React.Component {
       usersTyping: {},
       users: []
     };
-    this.socket = io.connect("/chat", {
-      transports: ["polling", "websocket"],
-      query: { token: localStorage.jwtToken }
-    });
+    this.socket = io.connect(
+      "/chat",
+      {
+        transports: ["polling", "websocket"],
+        query: { token: localStorage.jwtToken }
+      }
+    );
 
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -32,7 +35,7 @@ class ChatRoom extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('beforeunload', this.componentCleanup);
+    window.addEventListener("beforeunload", this.componentCleanup);
 
     this.socket.on("chat", message => {
       this.props.addMessage(message);
@@ -87,7 +90,7 @@ class ChatRoom extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div>
         <div>
           <div className="chat-wrapper">
             <ChatUsers users={this.state.users} />
@@ -110,19 +113,17 @@ class ChatRoom extends React.Component {
           </div>
         </div>
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <input
-              className="chat-input form-control"
-              id="message"
-              type="text"
-              label="Message"
-              placeholder="Type your message ..."
-              onChange={this.setNewMessage}
-              value={this.state.newMessage}
-              autoComplete="off"
-              autoFocus
-            />
-          </div>
+          <input
+            className="chat-input"
+            id="message"
+            type="text"
+            label="Message"
+            placeholder="Type your message ..."
+            onChange={this.setNewMessage}
+            value={this.state.newMessage}
+            autoComplete="off"
+            autoFocus
+          />
         </form>
       </div>
     );
@@ -173,4 +174,7 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { addMessage })(ChatRoom);
+export default connect(
+  mapStateToProps,
+  { addMessage }
+)(ChatRoom);
