@@ -2,12 +2,17 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import io from "socket.io-client";
-import { fetchGames, loadNewGame, unloadGame, clearGames } from "../../actions/tavernActions";
-import { setCurrentGame } from "../../actions/gameActions"
+import {
+  fetchGames,
+  loadNewGame,
+  unloadGame,
+  clearGames
+} from "../../actions/tavernActions";
+import { setCurrentGame } from "../../actions/gameActions";
 
 import Spinner from "../common/Spinner";
 import NewGameForm from "./NewGameForm";
-import GameList from "./GameList"
+import GameList from "./GameList";
 
 class Tavern extends Component {
   constructor() {
@@ -17,8 +22,8 @@ class Tavern extends Component {
       query: { token: localStorage.jwtToken }
     });
 
-    this.joinGame = this.joinGame.bind(this)
-    this.deleteGame = this.deleteGame.bind(this)
+    this.joinGame = this.joinGame.bind(this);
+    this.deleteGame = this.deleteGame.bind(this);
   }
 
   pushUserToGame(game) {
@@ -41,15 +46,15 @@ class Tavern extends Component {
     this.socket.on("unload game", game => {
       this.props.unloadGame(game);
       this.props.setCurrentGame({});
-    })
+    });
 
     this.socket.on("game is ready to start", game => {
-      this.props.setCurrentGame(game)
-    })
+      this.props.setCurrentGame(game);
+    });
   }
 
   componentWillReceiveProps(nextProps) {
-    this.pushUserToGame(nextProps.currentGame)
+    this.pushUserToGame(nextProps.currentGame);
   }
 
   componentWillUnmount() {
@@ -58,20 +63,19 @@ class Tavern extends Component {
   }
 
   joinGame(game) {
-    this.socket.emit("join game", game)
+    this.socket.emit("join game", game);
   }
 
   deleteGame(game) {
-    this.socket.emit("delete game", game)
+    this.socket.emit("delete game", game);
   }
 
   render() {
     const tavernContent = (
-      <div className="container cards">
-        {this.props.currentGame.hasOwnProperty("_id")
-          ? null
-          : (<NewGameForm socket={this.socket} />)
-        }
+      <div className="cards">
+        {this.props.currentGame.hasOwnProperty("_id") ? null : (
+          <NewGameForm socket={this.socket} />
+        )}
         <GameList
           games={this.props.tavern.games}
           joinGame={this.joinGame}
