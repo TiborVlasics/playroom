@@ -129,19 +129,30 @@ body {
 * Chat left bar
 */
 
-.usersBar {
+.users-bar {
   height: 100vh;
   z-index: -1;
   padding: 100px 30px;
   position: fixed;
   top: 0;
   left: 0;
-  color: white;
-  background: #434753;
+  color: #000;
+  background: #e8eaed;
+  font-weight: 100;
 }
 
-.usersBar .user {
-  padding: 9px 17px 9px 17px;
+.users-bar .user {
+  padding: 9px 0px 9px 10px;
+}
+
+.user div {
+  display: inline;
+  margin-right: 10px;
+}
+
+.user img {
+  border-radius: 50px;
+  width: 30px;
 }
 
 /**

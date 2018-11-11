@@ -1,7 +1,7 @@
 import React from "react";
 
 const ChatUsers = ({ users }) => (
-  <div className="usersBar">
+  <div className="users-bar">
     <p>online users:</p>
     {users.map((user, index) => {
       return (
@@ -10,18 +10,8 @@ const ChatUsers = ({ users }) => (
           key={index}
           onClick={() => this.props.onClick(user)}
         >
-          <div style={{ display: "inline-block", marginRight: "20px" }}>
-            {user.name}
-          </div>
-          <img
-            src={user.avatar}
-            alt="user avatar"
-            style={{
-              maxWidth: "20px",
-              borderRadius: "50%",
-              display: "inline-block"
-            }}
-          />
+          <div>{user.name}</div>
+          <img src={user.avatar} alt="user avatar" />
         </div>
       );
     })}
