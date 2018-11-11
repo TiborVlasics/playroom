@@ -548,3 +548,8 @@ form input[type="text"]:focus {
 .game-house {
   width: 250px;
 }
+
+.login,
+.register {
+  margin-top: 40px;
+}
