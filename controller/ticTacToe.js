@@ -73,5 +73,10 @@ module.exports = function (io) {
         }
       }).catch(err => console.log(err))
     })
+
+    socket.on("message", msg => {
+      socket.broadcast.to(msg.to).emit('message', msg.text);
+    })
+
   })
 }
