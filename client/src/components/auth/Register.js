@@ -51,8 +51,6 @@ class Register extends Component {
 
     return (
       <div className="register">
-        <img className="login-logo" src="playhouse.png" alt="logo" />
-
         <div className="row">
           <div className="col-md-8 m-auto">
             <h1 className="display-5 text-center">Sign Up</h1>

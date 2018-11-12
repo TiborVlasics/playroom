@@ -54,7 +54,6 @@ class Login extends Component {
 
     return (
       <div className="login">
-        <img className="login-logo" src="playhouse.png" alt="logo" />
         <div className="row">
           <div className="col-md-8 m-auto">
             <h1 className="header">Login</h1>
@@ -75,7 +74,7 @@ class Login extends Component {
                 onChange={this.onChange}
                 error={errors.password}
               />
-              <input type="submit"/>
+              <input type="submit" />
               <p class="sign-up">
                 Or <Link to="/register">sign up</Link>, if you don't have an
                 account yet
