@@ -79,7 +79,6 @@ body {
 }
 
 .card {
-  background: url("tic-tac-toe.jpg");
   margin: 0 auto;
   margin-bottom: 30px;
   color: black;
