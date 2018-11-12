@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Message = require("../models/Message");
+const Message = require("../../models/Message");
 const passport = require("passport");
 
 /**
@@ -17,6 +17,7 @@ router.get(
       .sort({ createdDate: 1 })
       .then(data => res.status(200).json(data))
       .catch(err => console.log(err));
-  });
+  }
+);
 
 module.exports = router;

@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const validateRegisterInput = require("../validation/register");
-const validateLoginInput = require("../validation/login");
-const userService = require("../services/userService");
+const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
+const userService = require("../../services/userService");
 const passport = require("passport");
-require("../config/passport")(passport);
+require("../../config/passport")(passport);
 
 /**
  * @route   POST api/user/register

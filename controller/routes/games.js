@@ -1,19 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const TicTacToe = require("../models/TicTacToe");
+const TicTacToe = require("../../models/TicTacToe");
 const passport = require("passport");
-require("../config/passport")(passport);
+require("../../config/passport")(passport);
 
 /**
  * @route   GET api/games/
  * @desc    Get all games that are not finished yet
  * @access  Private
  */
-router.get("/", passport.authenticate("jwt", { session: false }), (req, res) => {
-  TicTacToe.find({ isEnded: false })
-    .then(game => res.status(200).json(game))
-    .catch(err => console.log(err));
-});
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    TicTacToe.find({ isEnded: false })
+      .then(game => res.status(200).json(game))
+      .catch(err => console.log(err));
+  }
+);
 
 /**
  * @route   GET api/games/:id
@@ -27,6 +31,7 @@ router.get(
     TicTacToe.findOne({ _id: req.params.id })
       .then(game => res.status(200).json(game))
       .catch(err => console.log(err));
-  });
+  }
+);
 
 module.exports = router;

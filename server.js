@@ -11,14 +11,14 @@ require("dotenv").config();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/api/user", require("./routes/users"));
-app.use("/api/messages", require("./routes/chatMessages"));
-app.use("/api/games", require("./routes/games"));
+app.use("/api/user", require("./controller/routes/users"));
+app.use("/api/messages", require("./controller/routes/chatMessages"));
+app.use("/api/games", require("./controller/routes/games"));
 
 mongoose
   .connect(
     `mongodb://${process.env.DB_USERNAME}:${
-    process.env.DB_PASSWORD
+      process.env.DB_PASSWORD
     }@cluster0-shard-00-00-52ie2.mongodb.net:27017,cluster0-shard-00-01-52ie2.mongodb.net:27017,cluster0-shard-00-02-52ie2.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true`,
     { useNewUrlParser: true }
   )
