@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
   return (
@@ -7,7 +7,7 @@ const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
         let player2;
 
         if (game.hasOwnProperty("player2")) {
-          player2 =
+          player2 = (
             <p className="card-text">
               player2: {game.player2.name}
               <img
@@ -16,6 +16,7 @@ const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
                 alt="user avatar"
               />
             </p>
+          );
         }
 
         return (
@@ -25,15 +26,15 @@ const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
             style={{ backgroundColor: "rgba(100, 10, 10, 0.2)" }}
           >
             <div className="card-header">
-              {game._id === currentGame._id
-                ? <button
+              {game._id === currentGame._id ? (
+                <button
                   onClick={() => deleteGame(game)}
                   className="btn btn-danger"
-                  style={{ fontSize: "20px", float: "right" }}>
+                  style={{ fontSize: "20px", float: "right" }}
+                >
                   &times;
-                  </button>
-                : null
-              }
+                </button>
+              ) : null}
               <h5 className="card-title">tictactoe</h5>
             </div>
             <div className="card-body">
@@ -41,7 +42,11 @@ const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
                 player1: {game.player1.name}
                 <img
                   src={game.player1.avatar}
-                  style={{ maxWidth: "40px", borderRadius: "100%", marginLeft: "10px" }}
+                  style={{
+                    maxWidth: "40px",
+                    borderRadius: "100%",
+                    marginLeft: "10px"
+                  }}
                   alt="user avatar"
                 />
               </p>
@@ -51,16 +56,21 @@ const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
                 <small className="text-text">Created: {game.createdDate}</small>
               </p>
               <button
-                className={currentGame.hasOwnProperty("_id") || game.isFull
-                  ? "btn btn-success hidden-button"
-                  : "btn btn-success"}
-                onClick={() => joinGame(game)}>Join game</button>
+                className={
+                  currentGame.hasOwnProperty("_id") || game.isFull
+                    ? "btn btn-success hidden-button"
+                    : "btn btn-success"
+                }
+                onClick={() => joinGame(game)}
+              >
+                Join game
+              </button>
             </div>
           </div>
-        )
+        );
       })}
     </div>
-  )
-}
+  );
+};
 
 export default GameList;
