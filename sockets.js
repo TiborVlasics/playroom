@@ -20,7 +20,7 @@ module.exports = function(server) {
     }
   });
 
-  require("./controller/chatSocket")(io);
+  require("./chat/chat.socket")(io);
   require("./controller/gameSocket")(io);
   require("./tic-tac-toe/ticTacToe.socket")(io);
 

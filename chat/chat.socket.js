@@ -1,4 +1,4 @@
-const Message = require("../models/Message");
+const Message = require("./Message");
 const socketHelper = require("../helper/socketHelper")
 
 module.exports = function (io) {
