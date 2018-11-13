@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const TicTacToe = require("../../models/TicTacToe");
+const TicTacToe = require("../../tic-tac-toe/TicTacToe.model");
 const passport = require("passport");
 require("../../config/passport")(passport);
 

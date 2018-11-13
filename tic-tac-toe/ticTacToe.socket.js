@@ -1,8 +1,8 @@
-const TicTacToe = require("../models/TicTacToe");
+const TicTacToe = require("./TicTacToe.model");
 const User = require("../models/User");
 const Userlog = require("../models/Userlog");
 const socketHelper = require("../helper/socketHelper");
-const { updateGame } = require("../helper/ticTacToe.helper");
+const { updateGame } = require("./ticTacToe.functions");
 
 module.exports = function(io) {
   const gameIo = io.of("/tic-tac-toe");

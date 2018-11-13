@@ -1,12 +1,10 @@
-"use strict";
-
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 5000;
 const server = app.listen(port, () => console.log(`Server running on ${port}`));
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-require("./controller/sockets")(server);
+require("./sockets")(server);
 require("dotenv").config();
 
 app.use(bodyParser.urlencoded({ extended: false }));

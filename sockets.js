@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-module.exports = function (server) {
+module.exports = function(server) {
   const io = require("socket.io")(server, {
     transports: ["polling", "websocket"]
   });
@@ -20,9 +20,9 @@ module.exports = function (server) {
     }
   });
 
-  require("./chatSocket")(io);
-  require("./gameSocket")(io);
-  require("./ticTacToe")(io);
+  require("./controller/chatSocket")(io);
+  require("./controller/gameSocket")(io);
+  require("./tic-tac-toe/ticTacToe.socket")(io);
 
   return io;
 };
