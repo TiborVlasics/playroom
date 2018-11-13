@@ -9,7 +9,7 @@ require("dotenv").config();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/api/user", require("./controller/routes/users"));
+app.use("/api/user", require("./user/user.routes"));
 app.use("/api/messages", require("./controller/routes/chatMessages"));
 app.use("/api/games", require("./controller/routes/games"));
 

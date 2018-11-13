@@ -1,5 +1,5 @@
 const TicTacToe = require("./TicTacToe.model");
-const User = require("../models/User");
+const User = require("../user/User.model");
 const Userlog = require("../models/Userlog");
 const socketHelper = require("../helper/socketHelper");
 const { updateGame } = require("./ticTacToe.functions");
