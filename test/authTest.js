@@ -5,7 +5,7 @@ const expect = require("chai").expect;
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 const app = require("../server");
-const User = require("../user/User.model");
+const User = require("../user/User");
 
 describe("POST /api/user/register", () => {
   after(() => {

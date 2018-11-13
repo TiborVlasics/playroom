@@ -3,7 +3,7 @@ const router = express.Router();
 const validateRegisterInput = require("../validation/register");
 const validateLoginInput = require("../validation/login");
 const userService = require("./user.functions");
-const Userlog = require("../models/Userlog");
+const Userlog = require("./Userlog");
 const passport = require("passport");
 require("../config/passport")(passport);
 

@@ -1,5 +1,5 @@
 const TicTacToe = require("../tic-tac-toe/TicTacToe.model");
-const User = require("../user/User.model");
+const User = require("../user/User");
 const socketHelper = require("../helper/socketHelper");
 
 module.exports = function(io) {
