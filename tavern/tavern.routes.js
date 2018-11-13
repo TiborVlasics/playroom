@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const TicTacToe = require("../../tic-tac-toe/TicTacToe.model");
+const TicTacToe = require("../tic-tac-toe/TicTacToe.model");
 const passport = require("passport");
-require("../../config/passport")(passport);
+require("../config/passport")(passport);
 
 /**
  * @route   GET api/games/

@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use("/api/user", require("./user/user.routes"));
 app.use("/api/messages", require("./chat/chat.routes"));
-app.use("/api/games", require("./controller/routes/games"));
+app.use("/api/games", require("./tavern/tavern.routes"));
 
 mongoose
   .connect(

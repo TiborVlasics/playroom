@@ -21,7 +21,7 @@ module.exports = function(server) {
   });
 
   require("./chat/chat.socket")(io);
-  require("./controller/gameSocket")(io);
+  require("./tavern/tavern.socket")(io);
   require("./tic-tac-toe/ticTacToe.socket")(io);
 
   return io;
