@@ -1,6 +1,10 @@
 const TicTacToe = require("../tic-tac-toe/TicTacToe.model");
 const User = require("../user/User");
 const socketHelper = require("../helper/socketHelper");
+const {
+  createTicTacToe,
+  updateUsersCurrentGame
+} = require("./tavern.functions");
 
 module.exports = function(io) {
   const tavern = io.of("/tavern");
@@ -8,6 +12,7 @@ module.exports = function(io) {
 
   tavern.on("connection", function(socket) {
     const user = socket.handshake.headers.user;
+
     socketHelper.addSocketToConnections(
       currentConnections,
       user,
@@ -26,26 +31,17 @@ module.exports = function(io) {
       );
     });
 
-    /**
-     * @desc Makes a new game and puts the user who requested to it as player1
-     * Sets game as user's current game
-     * Sends the game back for all users in the tavern to be able to join it
-     */
-    socket.on("new game", async function() {
-      try {
-        const game = await new TicTacToe({
-          player1: user,
-          isFull: false
-        }).save();
-        await User.findOneAndUpdate(
-          { _id: user.id },
-          { $set: { currentGame: game._id } },
-          { new: true }
-        );
-        await tavern.emit("new game", game);
-      } catch (err) {
-        console.log(err);
-        tavern.emit("error", err);
+    socket.on("new game", game => {
+      if (game === "tictactoe") {
+        createTicTacToe(user)
+          .then(game =>
+            updateUsersCurrentGame(game, user)
+              .then(() => tavern.emit("new game", game))
+              .catch(err => console.log(err))
+          )
+          .catch(err => console.log(err));
+      } else {
+        console.log("Its pong");
       }
     });
 
