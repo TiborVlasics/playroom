@@ -3,6 +3,7 @@ const router = express.Router();
 const validateRegisterInput = require("../../validation/register");
 const validateLoginInput = require("../../validation/login");
 const userService = require("../../services/userService");
+const Userlog = require("../../models/Userlog");
 const passport = require("passport");
 require("../../config/passport")(passport);
 
@@ -52,9 +53,22 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     User.findOne({ _id: req.user.id })
-      .then(user => {
-        res.status(200).json(user);
-      })
+      .then(user => res.status(200).json(user))
+      .catch(err => console.log(err));
+  }
+);
+
+/**
+ * @route   GET api/user/current/history
+ * @desc    Get current user's history
+ * @access  Private
+ */
+router.get(
+  "/current/logs",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Userlog.find({ userId: req.user.id })
+      .then(logs => res.status(200).json(logs))
       .catch(err => console.log(err));
   }
 );

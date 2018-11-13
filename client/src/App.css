@@ -1,5 +1,5 @@
 .App {
-  width: 1000px;
+  width: 1100px;
   margin: 0 auto;
   text-align: center;
 }
@@ -29,7 +29,7 @@ body {
   height: 60px;
   padding: 10px;
   box-shadow: 10px -3px 100px rgba(0, 0, 0, 0.6);
-  font-family: "Raleway";
+  font-family: "Open Sans";
 }
 
 .nav-content {
@@ -105,15 +105,11 @@ body {
   padding-left: 28px;
   height: 70px;
   font-size: 20px;
-  font-family: "Monserrat";
+  font-family: "Raleway";
 }
 
 .chat-input:focus {
   outline: 0;
-}
-
-.container {
-  margin-left: 110px;
 }
 
 .chat-wrapper {
@@ -213,6 +209,10 @@ body {
 
 .message-text:last-child {
   border-radius: 0 0 15px 15px;
+}
+
+.message-text:only-child {
+  border-radius: 15px 15px 15px 15px;
 }
 
 .own-message .message-text {
@@ -574,4 +574,33 @@ form input[type="text"]:focus {
 .register {
   margin-top: 40px;
   font-family: "Griffy";
+}
+
+.login input {
+  font-family: "Spicy Rice";
+}
+
+.history-item {
+  border-bottom: 1px solid black;
+  padding: 10px;
+}
+
+.history-item span {
+  margin: 10px;
+}
+
+.history {
+  background: white;
+  float: left;
+  width: 55%;
+}
+
+.statistics {
+  float: right;
+  width: 45%;
+}
+
+.rewards {
+  clear: both;
+  padding: 20px;
 }
