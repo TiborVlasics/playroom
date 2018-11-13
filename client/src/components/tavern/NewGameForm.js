@@ -9,13 +9,18 @@ class NewGameForm extends Component {
       game: "tictactoe"
     };
 
+    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  onChange(event) {
+    this.setState({ game: event.target.value });
   }
 
   onSubmit(event) {
     event.preventDefault();
     this.props.socket.emit("new game", {
-      game: this.state.game,
+      game: this.state.game
     });
   }
 
@@ -28,8 +33,14 @@ class NewGameForm extends Component {
         <div className="card-body">
           <h5 className="card-title">New Game</h5>
           <form onSubmit={this.onSubmit}>
-            <select name="game" className="form-control">
-              <option>Tictactoe</option>
+            <select
+              value={this.state.game}
+              onChange={this.onChange}
+              name="game"
+              className="form-control"
+            >
+              <option value="tictactoe">Tic-tac-toe</option>
+              <option value="pong">Pong</option>
             </select>
             <button className="btn btn-danger btn-sm mt-2">New Game</button>
           </form>
