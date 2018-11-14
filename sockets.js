@@ -23,6 +23,7 @@ module.exports = function(server) {
   require("./chat/chat.socket")(io);
   require("./tavern/tavern.socket")(io);
   require("./tic-tac-toe/ticTacToe.socket")(io);
+  require("./pong/pong.socket")(io);
 
   return io;
 };

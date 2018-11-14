@@ -1,4 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
+import io from "socket.io-client";
 
 class Pong extends Component {
   constructor() {
@@ -13,10 +17,15 @@ class Pong extends Component {
       xv: 4,
       yv: 4,
       bd: 5,
-      ais: 2,
+      // ais: 2,
       score1: 0,
       score2: 0
     };
+
+    this.socket = io("/pong", {
+      transports: ["polling", "websockets"],
+      query: { token: localStorage.jwtToken }
+    });
 
     this.onMouseMove = this.onMouseMove.bind(this);
   }
@@ -30,7 +39,6 @@ class Pong extends Component {
 
   onMouseMove(e) {
     this.setState({ p1y: e.clientY - 217 });
-    // p1y = e.clientY - ph / 2;
   }
 
   reset(c) {
@@ -78,12 +86,12 @@ class Pong extends Component {
         this.reset(c);
       }
     }
-    // AI  move
-    if (this.state.p2y + this.state.ph / 2 < this.state.by) {
-      this.setState({ p2y: this.state.p2y + this.state.ais });
-    } else {
-      this.setState({ p2y: this.state.p2y - this.state.ais });
-    }
+    // // AI  move
+    // if (this.state.p2y + this.state.ph / 2 < this.state.by) {
+    //   this.setState({ p2y: this.state.p2y + this.state.ais });
+    // } else {
+    //   this.setState({ p2y: this.state.p2y - this.state.ais });
+    // }
 
     cc.fillStyle = "black";
     cc.fillRect(0, 0, c.width, c.height);
@@ -123,4 +131,19 @@ class Pong extends Component {
   }
 }
 
-export default Pong;
+Pong.propTypes = {
+  auth: PropTypes.object.isRequired,
+  game: PropTypes.object.isRequired,
+  getCurrentGame: PropTypes.func.isRequired,
+  setCurrentGame: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+  game: state.currentGame
+});
+
+export default connect(
+  mapStateToProps,
+  { getCurrentGame, setCurrentGame }
+)(Pong);
