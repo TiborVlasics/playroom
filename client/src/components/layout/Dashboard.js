@@ -45,18 +45,20 @@ class Dashboard extends Component {
           </div>
           <div className="statistics">
             <table>
-              <tr>
-                <th>some</th>
-                <th>some</th>
-              </tr>
-              <tr>
-                <td>sosme statistics</td>
-                <td>sosme statistics</td>
-              </tr>
-              <tr>
-                <td>sosme statistics</td>
-                <td>sosme statistics</td>
-              </tr>
+              <tbody>
+                <tr>
+                  <th>some</th>
+                  <th>some</th>
+                </tr>
+                <tr>
+                  <td>sosme statistics</td>
+                  <td>sosme statistics</td>
+                </tr>
+                <tr>
+                  <td>sosme statistics</td>
+                  <td>sosme statistics</td>
+                </tr>
+              </tbody>
             </table>
           </div>
           <div className="rewards">
