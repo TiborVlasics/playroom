@@ -4,6 +4,16 @@ const options = { discriminatorKey: "kind" };
 
 const gameSchema = new Schema(
   {
+    player1: {
+      id: { type: Schema.Types.ObjectId, required: true, ref: "users" },
+      name: { type: Schema.Types.String, required: true, ref: "users" },
+      avatar: { type: Schema.Types.String, required: true, ref: "users" }
+    },
+    player2: {
+      id: { type: Schema.Types.ObjectId, required: false, ref: "users" },
+      name: { type: Schema.Types.String, required: false, ref: "users" },
+      avatar: { type: Schema.Types.String, required: false, ref: "users" }
+    },
     isFull: { type: Boolean, required: false },
     isStarted: { type: Boolean, default: false },
     isEnded: { type: Boolean, default: false },
