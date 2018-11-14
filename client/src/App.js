@@ -18,6 +18,7 @@ import Dashboard from "./components/layout/Dashboard";
 import ChatRoom from "./components/chat/ChatRoom";
 import Tavern from "./components/tavern/Tavern";
 import TicTacToe from "./components/tavern/TicTacToe";
+import Pong from "./components/tavern/Pong";
 import SecretRoute from "./components/SecretRoute";
 import Navbar from "./components/layout/Navbar";
 
@@ -43,6 +44,7 @@ class App extends Component {
               <SecretRoute exact path="/dashboard" component={Dashboard} />
               <SecretRoute exact path="/tavern" component={Tavern} />
               <SecretRoute exact path="/tictactoe/:id" component={TicTacToe} />
+              <SecretRoute exact path="/pong/:id" component={Pong} />
               <Route render={() => <Redirect to="/dashboard" />} />
             </Switch>
           </div>

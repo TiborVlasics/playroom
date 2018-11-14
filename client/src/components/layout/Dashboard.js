@@ -6,7 +6,11 @@ import { getUserHistory, clearUserHistory } from "../../actions/authActions";
 class Dashboard extends Component {
   pushUserToGame(game) {
     if (game.hasOwnProperty("_id") && game.isFull) {
-      this.props.history.push(`/tictactoe/${game._id}`);
+      if (game.kind === "tictactoes") {
+        this.props.history.push(`/tictactoe/${game._id}`);
+      } else if (game.kind === "pongs") {
+        this.props.history.push(`/pong/${game._id}`);
+      }
     }
   }
 
