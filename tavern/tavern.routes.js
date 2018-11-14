@@ -29,7 +29,7 @@ router.get(
   "/:id",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    TicTacToe.findOne({ _id: req.params.id })
+    Game.findOne({ _id: req.params.id })
       .then(game => res.status(200).json(game))
       .catch(err => console.log(err));
   }
