@@ -33,7 +33,7 @@ module.exports = function(io) {
      * If all player connected, sets the game to started,
      * and emits updated game object to all players with an initial state.
      */
-    socket.on("join me to a room please", game => {
+    socket.on("ready to start", game => {
       socket.join(game._id);
       let user1Connected = currentConnections.hasOwnProperty(game.player1.id);
       let user2Connected = currentConnections.hasOwnProperty(game.player2.id);
@@ -54,6 +54,10 @@ module.exports = function(io) {
           )
           .catch(err => console.log(err));
       }
+    });
+
+    socket.on("move", data => {
+      socket.broadcast.to(data.game).emit("move", data.coord);
     });
   });
 };

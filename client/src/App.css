@@ -612,3 +612,7 @@ form input[type="text"]:focus {
   clear: both;
   padding: 20px;
 }
+
+canvas {
+  border: 1px solid black;
+}

@@ -17,7 +17,6 @@ class Pong extends Component {
       xv: 4,
       yv: 4,
       bd: 5,
-      // ais: 2,
       score1: 0,
       score2: 0
     };
@@ -34,11 +33,55 @@ class Pong extends Component {
     const c = this.refs.gc;
     const cc = c.getContext("2d");
 
-    setInterval(() => this.update(c, cc), 1000 / 30);
+    this.props.getCurrentGame();
+
+    if (!this.props.game.hasOwnProperty("_id")) {
+      this.props.history.push("/dashboard");
+    }
+
+    this.socket.on("connect", () => {
+      this.socket.emit("ready to start", this.props.game);
+    });
+
+    this.socket.on("game started", game => {
+      this.props.setCurrentGame(game);
+    });
+
+    this.socket.on("move", move => {
+      this.setState(move);
+    });
+
+    if (this.props.game.isStarted === true) {
+      setInterval(() => this.update(c, cc), 1000 / 30);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.game.hasOwnProperty("_id")) {
+      this.props.history.push("/dashboard");
+    }
+  }
+
+  componentWillUnmount() {
+    this.socket.close();
   }
 
   onMouseMove(e) {
-    this.setState({ p1y: e.clientY - 217 });
+    if (this.props.auth.user.id === this.props.game.player1.id) {
+      const p1y = e.clientY - 217;
+      this.setState({ p1y: p1y });
+      this.socket.emit("move", {
+        coord: { p1y: p1y },
+        game: this.props.game._id
+      });
+    } else if (this.props.auth.user.id === this.props.game.player2.id) {
+      const p2y = e.clientY - 217;
+      this.setState({ p2y: p2y });
+      this.socket.emit("move", {
+        coord: { p2y: p2y },
+        game: this.props.game._id
+      });
+    }
   }
 
   reset(c) {
@@ -86,26 +129,17 @@ class Pong extends Component {
         this.reset(c);
       }
     }
-    // // AI  move
-    // if (this.state.p2y + this.state.ph / 2 < this.state.by) {
-    //   this.setState({ p2y: this.state.p2y + this.state.ais });
-    // } else {
-    //   this.setState({ p2y: this.state.p2y - this.state.ais });
-    // }
 
-    cc.fillStyle = "black";
-    cc.fillRect(0, 0, c.width, c.height);
     cc.fillStyle = "white";
-    // player1
+    cc.fillRect(0, 0, c.width, c.height);
+    cc.fillStyle = "black";
     cc.fillRect(0, this.state.p1y, this.state.pt, this.state.ph);
-    // player2
     cc.fillRect(
       c.width - this.state.pt,
       this.state.p2y,
       this.state.pt,
       this.state.ph
     );
-    // ball
     cc.fillRect(
       this.state.bx - this.state.bd / 2,
       this.state.by - this.state.bd / 2,
