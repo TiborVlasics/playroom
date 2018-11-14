@@ -1,4 +1,5 @@
 const TicTacToe = require("../tic-tac-toe/TicTacToe.model");
+const Pong = require("../pong/Pong");
 const User = require("../user/User");
 const socketHelper = require("../helper/socketHelper");
 const {
@@ -31,17 +32,22 @@ module.exports = function(io) {
       );
     });
 
-    socket.on("new game", game => {
-      if (game === "tictactoe") {
+    socket.on("new game", gameType => {
+      if (gameType === "tictactoe") {
         createTicTacToe(user)
-          .then(game =>
+          .then(game => {
+            game = game.toObject();
+            game.type = "tictactoe";
             updateUsersCurrentGame(game, user)
               .then(() => tavern.emit("new game", game))
-              .catch(err => console.log(err))
-          )
+              .catch(err => console.log(err));
+          })
           .catch(err => console.log(err));
       } else {
-        console.log("Its pong");
+        new Pong({ player1: user })
+          .save()
+          .then(game => console.log(game))
+          .catch(err => console.log(err));
       }
     });
 
@@ -68,11 +74,7 @@ module.exports = function(io) {
      * @param game  tictactoe object that stores players and game states
      */
     socket.on("join game", function(game) {
-      User.findOneAndUpdate(
-        { _id: user.id },
-        { $set: { currentGame: game._id } },
-        { new: true }
-      )
+      updateUsersCurrentGame(game, user)
         .then(
           TicTacToe.findOneAndUpdate(
             { _id: game._id },
