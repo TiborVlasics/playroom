@@ -614,5 +614,11 @@ form input[type="text"]:focus {
 }
 
 canvas {
-  border: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.pong-scores span {
+  margin: 10px;
+  font-size: 30px;
 }

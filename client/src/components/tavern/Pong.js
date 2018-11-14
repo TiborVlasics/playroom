@@ -16,7 +16,7 @@ class Pong extends Component {
       by: 50,
       xv: 4,
       yv: 4,
-      bd: 5,
+      bd: 7,
       score1: 0,
       score2: 0
     };
@@ -32,6 +32,7 @@ class Pong extends Component {
   componentDidMount() {
     const c = this.refs.gc;
     const cc = c.getContext("2d");
+    let run;
 
     this.props.getCurrentGame();
 
@@ -51,9 +52,19 @@ class Pong extends Component {
       this.setState(move);
     });
 
+    this.socket.on("ball to middle", data => {
+      this.setState(data.ballPosition);
+      this.setState(data.score);
+    });
+
     if (this.props.game.isStarted === true) {
-      setInterval(() => this.update(c, cc), 1000 / 30);
+      run = setInterval(() => this.update(c, cc), 1000 / 30);
     }
+
+    this.socket.on("game over", data => {
+      console.log(data);
+      clearInterval(run);
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -84,12 +95,12 @@ class Pong extends Component {
     }
   }
 
-  reset(c) {
-    this.setState({ bx: c.width / 2 });
-    this.setState({ by: c.height / 2 });
-    this.setState({ xv: -this.state.xv });
-    this.setState({ yv: 3 });
-  }
+  // reset(c) {
+  // this.setState({ bx: c.width / 2 });
+  // this.setState({ by: c.height / 2 });
+  // this.setState({ xv: -this.state.xv });
+  // this.setState({ yv: 3 });
+  // }
 
   update(c, cc) {
     this.setState({ bx: this.state.bx + this.state.xv });
@@ -112,7 +123,11 @@ class Pong extends Component {
         this.setState({ yv: dy * 0.3 });
       } else {
         this.setState({ score2: this.state.score2 + 1 });
-        this.reset(c);
+        // this.reset(c);
+        this.socket.emit("score", {
+          game: this.props.game._id,
+          score: { score2: this.state.score2 }
+        });
       }
     }
     if (this.state.bx > c.width) {
@@ -123,16 +138,20 @@ class Pong extends Component {
         this.setState({ xv: -this.state.xv });
 
         const dy = this.state.by - (this.state.p2y + this.state.ph / 2);
-        this.setState({ yv: dy * 3 });
+        this.setState({ yv: dy * 0.3 });
       } else {
         this.setState({ score1: this.state.score1 + 1 });
-        this.reset(c);
+        // this.reset(c);
+        this.socket.emit("score", {
+          game: this.props.game._id,
+          score: { score1: this.state.score1 }
+        });
       }
     }
 
-    cc.fillStyle = "white";
-    cc.fillRect(0, 0, c.width, c.height);
     cc.fillStyle = "black";
+    cc.fillRect(0, 0, c.width, c.height);
+    cc.fillStyle = "white";
     cc.fillRect(0, this.state.p1y, this.state.pt, this.state.ph);
     cc.fillRect(
       c.width - this.state.pt,
@@ -146,14 +165,15 @@ class Pong extends Component {
       this.state.bd,
       this.state.bd
     );
-    cc.fillText(this.state.score1, 100, 100);
-    cc.fillText(this.state.score2, c.width - 100, 100);
   }
 
   render() {
     return (
       <div>
-        <h1>helo pong</h1>
+        <div className="pong-scores">
+          <span>{this.state.score1}</span>
+          <span>{this.state.score2}</span>
+        </div>
         <canvas
           onMouseMove={this.onMouseMove}
           ref="gc"

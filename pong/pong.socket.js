@@ -59,5 +59,19 @@ module.exports = function(io) {
     socket.on("move", data => {
       socket.broadcast.to(data.game).emit("move", data.coord);
     });
+
+    socket.on("score", data => {
+      if (data.score.score2 >= 10 || data.score.score1 >= 10) {
+        return gameIo.to(data.game).emit("game over");
+      }
+
+      let ballPosition = { bx: 320, by: 240, xv: 4, yv: 4 };
+      if (data.score.score2) ballPosition.xv = -4;
+
+      gameIo.to(data.game).emit("ball to middle", {
+        ballPosition: ballPosition,
+        score: data.score
+      });
+    });
   });
 };
