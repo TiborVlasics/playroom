@@ -62,7 +62,27 @@ module.exports = function(io) {
 
     socket.on("score", data => {
       if (data.score.score2 >= 10 || data.score.score1 >= 10) {
-        return gameIo.to(data.game).emit("game over");
+        Pong.findOneAndUpdate(
+          { _id: data.game },
+          {
+            $set: {
+              // winner: updatedGame.winner,
+              isEnded: true
+            }
+          },
+          { new: true }
+        )
+          .then(updatedGame => {
+            User.updateMany(
+              { currentGame: data.game },
+              { $set: { currentGame: null } }
+            )
+              .then(() => {
+                return gameIo.to(data.game).emit("game over");
+              })
+              .catch(err => console.log(err));
+          })
+          .catch(err => console.log(err));
       }
 
       let ballPosition = { bx: 320, by: 240, xv: 4, yv: 4 };
@@ -75,3 +95,25 @@ module.exports = function(io) {
     });
   });
 };
+
+// Pong.findOneAndUpdate(
+//   { _id: game._id },
+//   {
+//     $set: {
+//       winner: updatedGame.winner,
+//       isEnded: true
+//     }
+//   },
+//   { new: true }
+// )
+//   .then(updatedGame => {
+//     User.updateMany(
+//       { currentGame: updatedGame._id },
+//       { $set: { currentGame: null } }
+//     )
+//       .then(() => {
+//         return gameIo.to(data.game).emit("game over");
+//       })
+//       .catch(err => console.log(err));
+//   })
+//   .catch(err => console.log(err));

@@ -584,8 +584,9 @@ form input[type="text"]:focus {
   font-family: "Griffy";
 }
 
-.login input {
-  font-family: "Spicy Rice";
+.login p,
+.register p {
+  font-family: "Open Sans";
 }
 
 .history-item {
@@ -611,11 +612,6 @@ form input[type="text"]:focus {
 .rewards {
   clear: both;
   padding: 20px;
-}
-
-canvas {
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
 }
 
 .pong-scores span {

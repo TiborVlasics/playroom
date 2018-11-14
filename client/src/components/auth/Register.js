@@ -57,6 +57,7 @@ class Register extends Component {
             <p className="lead text-center">Create your account</p>
             <form noValidate onSubmit={this.onSubmit}>
               <TextFieldGroup
+                autofocus="true"
                 placeholder="Name"
                 name="name"
                 type="name"
@@ -81,7 +82,7 @@ class Register extends Component {
                 error={errors.password2}
               />
               <input type="submit" />
-              <p class="sign-up">
+              <p className="sign-up">
                 Already have an account? <Link to="/login">Log in</Link>
               </p>
             </form>

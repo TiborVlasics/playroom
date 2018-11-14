@@ -51,12 +51,12 @@ class Dashboard extends Component {
                   <th>some</th>
                 </tr>
                 <tr>
-                  <td>sosme statistics</td>
-                  <td>sosme statistics</td>
+                  <td>some statistics</td>
+                  <td>some statistics</td>
                 </tr>
                 <tr>
-                  <td>sosme statistics</td>
-                  <td>sosme statistics</td>
+                  <td>some statistics</td>
+                  <td>some statistics</td>
                 </tr>
               </tbody>
             </table>
