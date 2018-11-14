@@ -36,6 +36,7 @@ module.exports = function(io) {
       if (gameType === "tictactoe") {
         createTicTacToe(user)
           .then(game => {
+            console.log(game);
             game = game.toObject();
             game.type = "tictactoe";
             updateUsersCurrentGame(game, user)

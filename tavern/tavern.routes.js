@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const TicTacToe = require("../tic-tac-toe/TicTacToe.model");
+const Game = require("./Game");
 const passport = require("passport");
 require("../config/passport")(passport);
 
@@ -13,7 +14,7 @@ router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    TicTacToe.find({ isEnded: false })
+    Game.find({ isEnded: false })
       .then(game => res.status(200).json(game))
       .catch(err => console.log(err));
   }

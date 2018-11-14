@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Game = require("../tavern/Game");
 
 const PongSchema = new Schema({
   player1: {
@@ -13,12 +14,7 @@ const PongSchema = new Schema({
     name: { type: Schema.Types.String, required: false, ref: "users" },
     avatar: { type: Schema.Types.String, required: false, ref: "users" },
     score: { type: Number, required: false }
-  },
-  isFull: { type: Boolean, default: false },
-  isStarted: { type: Boolean, default: false },
-  isEnded: { type: Boolean, default: false },
-  createdDate: { type: Date, default: Date.now },
-  winner: { type: Schema.Types.ObjectId, default: null }
+  }
 });
 
-module.exports = Pong = mongoose.model("pongs", PongSchema);
+module.exports = Pong = Game.discriminator("pongs", PongSchema);
