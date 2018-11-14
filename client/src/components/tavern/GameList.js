@@ -22,8 +22,7 @@ const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
         return (
           <div
             key={index}
-            className="card"
-            style={{ backgroundColor: "rgba(100, 10, 10, 0.2)" }}
+            className={game.kind === "pongs" ? "card pong" : "card tictactoe"}
           >
             <div className="card-header">
               {game._id === currentGame._id ? (
@@ -35,7 +34,7 @@ const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
                   &times;
                 </button>
               ) : null}
-              <h5 className="card-title">tictactoe</h5>
+              <h5 className="card-title">{game.kind}</h5>
             </div>
             <div className="card-body">
               <p className="card-text">
