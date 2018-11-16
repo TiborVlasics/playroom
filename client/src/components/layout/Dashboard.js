@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getUserHistory, clearUserHistory } from "../../actions/authActions";
+import History from "./History";
 
 class Dashboard extends Component {
   pushUserToGame(game) {
@@ -16,11 +15,6 @@ class Dashboard extends Component {
 
   componentDidMount() {
     this.pushUserToGame(this.props.currentGame);
-    this.props.getUserHistory();
-  }
-
-  componentWillUnmount() {
-    this.props.clearUserHistory();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,36 +22,18 @@ class Dashboard extends Component {
   }
 
   render() {
-    const auth = this.props.auth;
-    const history = auth.history;
-
     return (
       <div>
         <div className="dashboard">
-          <div className="history">
-            {history.map((log, index) => (
-              <div className="history-item" key={index}>
-                <span>{log.text}</span>
-                <span>{log.createdDate}</span>
-              </div>
-            ))}
-          </div>
+          <History />
         </div>
       </div>
     );
   }
 }
 
-Dashboard.propTypes = {
-  auth: PropTypes.object.isRequired
-};
-
 const mapStateToProps = state => ({
-  currentGame: state.currentGame,
-  auth: state.auth
+  currentGame: state.currentGame
 });
 
-export default connect(
-  mapStateToProps,
-  { getUserHistory, clearUserHistory }
-)(Dashboard);
+export default connect(mapStateToProps)(Dashboard);
