@@ -10,11 +10,13 @@ const TextFieldGroup = ({
   info,
   type,
   onChange,
-  disabled
+  disabled,
+  autofocus
 }) => {
   return (
     <div className="form-group">
       <input
+        autofocus={autofocus}
         type={type}
         className={
           error

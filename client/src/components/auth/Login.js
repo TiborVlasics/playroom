@@ -59,6 +59,7 @@ class Login extends Component {
             <h1 className="header">Login</h1>
             <form noValidate onSubmit={this.onSubmit}>
               <TextFieldGroup
+                autofocus="true"
                 placeholder="Name"
                 name="name"
                 type="name"
@@ -75,7 +76,7 @@ class Login extends Component {
                 error={errors.password}
               />
               <input type="submit" />
-              <p class="sign-up">
+              <p className="sign-up">
                 Or <Link to="/register">sign up</Link>, if you don't have an
                 account yet
               </p>

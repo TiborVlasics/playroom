@@ -46,7 +46,11 @@ module.exports = function(io) {
       } else {
         new Pong({ player1: user })
           .save()
-          .then(game => console.log(game))
+          .then(game => {
+            updateUsersCurrentGame(game, user)
+              .then(() => tavern.emit("new game", game))
+              .catch(err => console.log(err));
+          })
           .catch(err => console.log(err));
       }
     });
@@ -56,7 +60,7 @@ module.exports = function(io) {
      * emits 'unload game' with the deleted game object
      */
     socket.on("delete game", game => {
-      TicTacToe.findOneAndDelete({ _id: game._id })
+      Game.findOneAndDelete({ _id: game._id })
         .then(game => {
           User.findOneAndUpdate(
             { _id: game.player1.id },
@@ -75,8 +79,8 @@ module.exports = function(io) {
      */
     socket.on("join game", function(game) {
       updateUsersCurrentGame(game, user)
-        .then(
-          TicTacToe.findOneAndUpdate(
+        .then(() => {
+          Game.findOneAndUpdate(
             { _id: game._id },
             { $set: { player2: user, isFull: true } },
             { new: true }
@@ -94,8 +98,8 @@ module.exports = function(io) {
               );
             }
             tavern.to(game._id).emit("game is ready to start", game);
-          })
-        )
+          });
+        })
         .catch(err => console.log(err));
     });
   });
