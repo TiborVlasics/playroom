@@ -66,7 +66,6 @@ module.exports = function(io) {
           { _id: data.game },
           {
             $set: {
-              // winner: updatedGame.winner,
               isEnded: true
             }
           },

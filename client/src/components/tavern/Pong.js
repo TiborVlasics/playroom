@@ -95,13 +95,6 @@ class Pong extends Component {
     }
   }
 
-  // reset(c) {
-  // this.setState({ bx: c.width / 2 });
-  // this.setState({ by: c.height / 2 });
-  // this.setState({ xv: -this.state.xv });
-  // this.setState({ yv: 3 });
-  // }
-
   update(c, cc) {
     this.setState({ bx: this.state.bx + this.state.xv });
     this.setState({ by: this.state.by + this.state.yv });
@@ -123,7 +116,6 @@ class Pong extends Component {
         this.setState({ yv: dy * 0.3 });
       } else {
         this.setState({ score2: this.state.score2 + 1 });
-        // this.reset(c);
         this.socket.emit("score", {
           game: this.props.game._id,
           score: { score2: this.state.score2 }
@@ -141,7 +133,6 @@ class Pong extends Component {
         this.setState({ yv: dy * 0.3 });
       } else {
         this.setState({ score1: this.state.score1 + 1 });
-        // this.reset(c);
         this.socket.emit("score", {
           game: this.props.game._id,
           score: { score1: this.state.score1 }
@@ -175,6 +166,7 @@ class Pong extends Component {
           <span>{this.state.score2}</span>
         </div>
         <canvas
+          onPointerMove={this.onMouseMove}
           onMouseMove={this.onMouseMove}
           ref="gc"
           width="640"
