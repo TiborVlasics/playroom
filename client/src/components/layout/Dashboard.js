@@ -33,7 +33,6 @@ class Dashboard extends Component {
 
     return (
       <div>
-        {/* <h4>Hello {auth.user.name}!</h4> */}
         <div className="dashboard">
           <div className="history">
             {history.map((log, index) => (
@@ -42,27 +41,6 @@ class Dashboard extends Component {
                 <span>{log.createdDate}</span>
               </div>
             ))}
-          </div>
-          <div className="statistics">
-            <table>
-              <tbody>
-                <tr>
-                  <th>some</th>
-                  <th>some</th>
-                </tr>
-                <tr>
-                  <td>some statistics</td>
-                  <td>some statistics</td>
-                </tr>
-                <tr>
-                  <td>some statistics</td>
-                  <td>some statistics</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="rewards">
-            <h2>You have 40 xp</h2>
           </div>
         </div>
       </div>
