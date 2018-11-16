@@ -9,7 +9,7 @@ class TicTacToe extends Component {
   constructor() {
     super();
 
-    this.socket = io("/tic-tac-toe", {
+    this.socket = io("/", {
       transports: ["polling"],
       query: { token: localStorage.jwtToken }
     });
@@ -29,7 +29,7 @@ class TicTacToe extends Component {
     }
 
     this.socket.on("connect", () => {
-      this.socket.emit("join me to a room please", this.props.game);
+      this.socket.emit("join room", this.props.game);
     });
 
     this.socket.on("game started", game => {

@@ -16,7 +16,7 @@ class ChatRoom extends React.Component {
       users: []
     };
     this.socket = io.connect(
-      "/chat",
+      "/",
       {
         transports: ["polling", "websocket"],
         query: { token: localStorage.jwtToken }

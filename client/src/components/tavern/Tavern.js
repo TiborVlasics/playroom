@@ -17,7 +17,7 @@ import GameList from "./GameList";
 class Tavern extends Component {
   constructor() {
     super();
-    this.socket = io("/tavern", {
+    this.socket = io("/", {
       transports: ["polling"],
       query: { token: localStorage.jwtToken }
     });
@@ -40,7 +40,7 @@ class Tavern extends Component {
     this.pushUserToGame(this.props.currentGame);
     this.props.fetchGames();
 
-    this.socket.on("new game", game => {
+    this.socket.on("create game", game => {
       this.props.loadNewGame(game);
       if (this.props.auth.user.id === game.player1.id) {
         this.props.setCurrentGame(game);
@@ -52,7 +52,7 @@ class Tavern extends Component {
       this.props.setCurrentGame({});
     });
 
-    this.socket.on("game is ready to start", game => {
+    this.socket.on("game ready", game => {
       this.props.setCurrentGame(game);
     });
   }
@@ -71,7 +71,7 @@ class Tavern extends Component {
   }
 
   deleteGame(game) {
-    this.socket.emit("delete game", game);
+    this.socket.emit("unload game", game);
   }
 
   render() {

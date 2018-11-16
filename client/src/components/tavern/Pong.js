@@ -21,7 +21,7 @@ class Pong extends Component {
       score2: 0
     };
 
-    this.socket = io("/pong", {
+    this.socket = io("/", {
       transports: ["polling", "websockets"],
       query: { token: localStorage.jwtToken }
     });
@@ -48,7 +48,7 @@ class Pong extends Component {
       this.props.setCurrentGame(game);
     });
 
-    this.socket.on("move", move => {
+    this.socket.on("move y", move => {
       this.setState(move);
     });
 
@@ -81,14 +81,14 @@ class Pong extends Component {
     if (this.props.auth.user.id === this.props.game.player1.id) {
       const p1y = e.clientY - 217;
       this.setState({ p1y: p1y });
-      this.socket.emit("move", {
+      this.socket.emit("move y", {
         coord: { p1y: p1y },
         game: this.props.game._id
       });
     } else if (this.props.auth.user.id === this.props.game.player2.id) {
       const p2y = e.clientY - 217;
       this.setState({ p2y: p2y });
-      this.socket.emit("move", {
+      this.socket.emit("move y", {
         coord: { p2y: p2y },
         game: this.props.game._id
       });
