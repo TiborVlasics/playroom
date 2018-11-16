@@ -2,17 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
-import io from "socket.io-client";
 import Spinner from "../common/Spinner";
 
 class TicTacToe extends Component {
   constructor() {
     super();
-
-    this.socket = io("/", {
-      transports: ["polling"],
-      query: { token: localStorage.jwtToken }
-    });
 
     this.state = { isReplaying: false, replayBoard: null };
 
@@ -28,15 +22,13 @@ class TicTacToe extends Component {
       this.props.history.push("/dashboard");
     }
 
-    this.socket.on("connect", () => {
-      this.socket.emit("join room", this.props.game);
-    });
+    this.props.socket.emit("join room", this.props.game);
 
-    this.socket.on("game started", game => {
+    this.props.socket.on("game started", game => {
       this.props.setCurrentGame(game);
     });
 
-    this.socket.on("move", game => {
+    this.props.socket.on("move", game => {
       this.props.setCurrentGame(game);
     });
   }
@@ -47,13 +39,9 @@ class TicTacToe extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.socket.close();
-  }
-
   move(game, index) {
     const data = { ...game, move: index };
-    this.socket.emit("move", data);
+    this.props.socket.emit("move", data);
   }
 
   leaveGame() {

@@ -4,11 +4,6 @@ const Userlog = require("../user/Userlog");
 const { updateGame } = require("./ticTacToe.functions");
 
 module.exports = function(gameIo, socket, connections) {
-  /**
-   * @desc Joins player to a room, identified by the game id, which is sent.
-   * If all player connected, sets the game to started,
-   * and emits updated game object to all players with an initial state.
-   */
   socket.on("join room", game => {
     socket.join(game._id);
     let user1Connected = connections.hasOwnProperty(game.player1.id);

@@ -57,7 +57,7 @@ class Register extends Component {
             <p className="lead text-center">Create your account</p>
             <form noValidate onSubmit={this.onSubmit}>
               <TextFieldGroup
-                autofocus="true"
+                autofocus={true}
                 placeholder="Name"
                 name="name"
                 type="name"

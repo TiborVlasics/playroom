@@ -9,8 +9,10 @@ import {
 import store from "./store";
 import jwt_decode from "jwt-decode";
 import setAuthToken from "./helper/setAuthToken";
+import io from "socket.io-client";
 import { setCurrentUser } from "./actions/authActions";
 import { getCurrentGame } from "./actions/gameActions";
+import { connect } from "react-redux";
 
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -30,6 +32,33 @@ if (localStorage.jwtToken) {
 }
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.socket = io;
+    if (this.props.auth.isAuthenticated) {
+      this.initSocketConnection();
+    }
+  }
+
+  initSocketConnection() {
+    this.socket = io.connect(
+      "/",
+      {
+        transports: ["polling", "websocket"],
+        query: { token: localStorage.jwtToken }
+      }
+    );
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.auth.isAuthenticated === true) {
+      this.initSocketConnection();
+    } else if (props.auth.isAuthenticated === false) {
+      this.socket.close();
+    }
+  }
+
   render() {
     return (
       <Router>
@@ -40,11 +69,30 @@ class App extends Component {
               <Route exact path="/" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <SecretRoute path="/chat" component={ChatRoom} />
+              <SecretRoute
+                path="/chat"
+                component={ChatRoom}
+                socket={this.socket}
+              />
               <SecretRoute exact path="/dashboard" component={Dashboard} />
-              <SecretRoute exact path="/tavern" component={Tavern} />
-              <SecretRoute exact path="/tictactoe/:id" component={TicTacToe} />
-              <SecretRoute exact path="/pong/:id" component={Pong} />
+              <SecretRoute
+                exact
+                path="/tavern"
+                component={Tavern}
+                socket={this.socket}
+              />
+              <SecretRoute
+                exact
+                path="/tictactoe/:id"
+                component={TicTacToe}
+                socket={this.socket}
+              />
+              <SecretRoute
+                exact
+                path="/pong/:id"
+                component={Pong}
+                socket={this.socket}
+              />
               <Route render={() => <Redirect to="/dashboard" />} />
             </Switch>
           </div>
@@ -54,4 +102,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(App);

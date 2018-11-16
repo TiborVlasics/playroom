@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
-import io from "socket.io-client";
 
 class Pong extends Component {
   constructor() {
@@ -21,11 +20,6 @@ class Pong extends Component {
       score2: 0
     };
 
-    this.socket = io("/", {
-      transports: ["polling", "websockets"],
-      query: { token: localStorage.jwtToken }
-    });
-
     this.onMouseMove = this.onMouseMove.bind(this);
   }
 
@@ -40,19 +34,19 @@ class Pong extends Component {
       this.props.history.push("/dashboard");
     }
 
-    this.socket.on("connect", () => {
-      this.socket.emit("ready to start", this.props.game);
+    this.props.socket.on("connect", () => {
+      this.props.socket.emit("ready to start", this.props.game);
     });
 
-    this.socket.on("game started", game => {
+    this.props.socket.on("game started", game => {
       this.props.setCurrentGame(game);
     });
 
-    this.socket.on("move y", move => {
+    this.props.socket.on("move y", move => {
       this.setState(move);
     });
 
-    this.socket.on("ball to middle", data => {
+    this.props.socket.on("ball to middle", data => {
       this.setState(data.ballPosition);
       this.setState(data.score);
     });
@@ -61,7 +55,7 @@ class Pong extends Component {
       run = setInterval(() => this.update(c, cc), 1000 / 30);
     }
 
-    this.socket.on("game over", data => {
+    this.props.socket.on("game over", data => {
       console.log(data);
       clearInterval(run);
     });
@@ -73,22 +67,18 @@ class Pong extends Component {
     }
   }
 
-  componentWillUnmount() {
-    this.socket.close();
-  }
-
   onMouseMove(e) {
     if (this.props.auth.user.id === this.props.game.player1.id) {
       const p1y = e.clientY - 217;
       this.setState({ p1y: p1y });
-      this.socket.emit("move y", {
+      this.props.socket.emit("move y", {
         coord: { p1y: p1y },
         game: this.props.game._id
       });
     } else if (this.props.auth.user.id === this.props.game.player2.id) {
       const p2y = e.clientY - 217;
       this.setState({ p2y: p2y });
-      this.socket.emit("move y", {
+      this.props.socket.emit("move y", {
         coord: { p2y: p2y },
         game: this.props.game._id
       });
@@ -116,7 +106,7 @@ class Pong extends Component {
         this.setState({ yv: dy * 0.3 });
       } else {
         this.setState({ score2: this.state.score2 + 1 });
-        this.socket.emit("score", {
+        this.props.socket.emit("score", {
           game: this.props.game._id,
           score: { score2: this.state.score2 }
         });
@@ -133,7 +123,7 @@ class Pong extends Component {
         this.setState({ yv: dy * 0.3 });
       } else {
         this.setState({ score1: this.state.score1 + 1 });
-        this.socket.emit("score", {
+        this.props.socket.emit("score", {
           game: this.props.game._id,
           score: { score1: this.state.score1 }
         });

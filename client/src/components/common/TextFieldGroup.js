@@ -16,7 +16,7 @@ const TextFieldGroup = ({
   return (
     <div className="form-group">
       <input
-        autofocus={autofocus}
+        autoFocus={autofocus}
         type={type}
         className={
           error

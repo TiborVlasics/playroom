@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import io from "socket.io-client";
 
 import ChatTable from "./ChatTable";
 import ChatUsers from "./ChatUsers";
@@ -15,20 +14,13 @@ class ChatRoom extends React.Component {
       usersTyping: {},
       users: []
     };
-    this.socket = io.connect(
-      "/",
-      {
-        transports: ["polling", "websocket"],
-        query: { token: localStorage.jwtToken }
-      }
-    );
 
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentCleanup() {
-    this.socket.emit("user typing", {
+    this.props.socket.emit("user typing", {
       name: this.props.auth.user.name,
       isTyping: false
     });
@@ -37,11 +29,11 @@ class ChatRoom extends React.Component {
   componentDidMount() {
     window.addEventListener("beforeunload", this.componentCleanup);
 
-    this.socket.on("chat", message => {
+    this.props.socket.on("chat", message => {
       this.props.addMessage(message);
     });
 
-    this.socket.on("user typing", user => {
+    this.props.socket.on("user typing", user => {
       let name = user.name;
       let text = user.text;
       let oldState = this.state.usersTyping;
@@ -59,33 +51,32 @@ class ChatRoom extends React.Component {
       this.setState({ usersTyping: newState });
     });
 
-    this.socket.on("users", users => {
+    this.props.socket.on("users", users => {
       this.setState({ users: users });
       window.scrollTo(0, document.body.scrollHeight);
     });
 
-    this.socket.emit("get users");
+    this.props.socket.emit("get users");
 
-    this.socket.on("user joined", user => {
+    this.props.socket.on("user joined", user => {
       this.setState({ users: this.state.users.concat(user) });
     });
 
-    this.socket.on("user left", userData => {
+    this.props.socket.on("user left", userData => {
       let users = this.state.users.filter(user => user.id !== userData.id);
       this.setState({ users: users });
     });
 
-    this.socket.on("private", data => {
+    this.props.socket.on("private", data => {
       this.setState({ privateMsg: data.msg });
     });
   }
 
   componentWillUnmount() {
-    this.socket.emit("user typing", {
+    this.props.socket.emit("user typing", {
       name: this.props.auth.user.name,
       isTyping: false
     });
-    this.socket.close();
   }
 
   render() {
@@ -134,13 +125,13 @@ class ChatRoom extends React.Component {
       newMessage: event.target.value
     });
     if (event.target.value !== "") {
-      this.socket.emit("user typing", {
+      this.props.socket.emit("user typing", {
         name: this.props.auth.user.name,
         text: event.target.value,
         isTyping: true
       });
     } else {
-      this.socket.emit("user typing", {
+      this.props.socket.emit("user typing", {
         name: this.props.auth.user.name,
         text: event.target.value,
         isTyping: false
@@ -150,7 +141,7 @@ class ChatRoom extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.socket.emit("chat", {
+    this.props.socket.emit("chat", {
       author: this.props.auth.user,
       text: this.state.newMessage,
       timestamp: new Date().toISOString()
@@ -158,7 +149,7 @@ class ChatRoom extends React.Component {
     this.setState({
       newMessage: ""
     });
-    this.socket.emit("user typing", {
+    this.props.socket.emit("user typing", {
       name: this.props.auth.user.name,
       isTyping: false
     });

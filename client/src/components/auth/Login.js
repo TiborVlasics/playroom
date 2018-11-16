@@ -59,7 +59,7 @@ class Login extends Component {
             <h1 className="header">Login</h1>
             <form noValidate onSubmit={this.onSubmit}>
               <TextFieldGroup
-                autofocus="true"
+                autofocus={true}
                 placeholder="Name"
                 name="name"
                 type="name"

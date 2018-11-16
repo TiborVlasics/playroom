@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import io from "socket.io-client";
 import {
   fetchGames,
   loadNewGame,
@@ -17,10 +16,6 @@ import GameList from "./GameList";
 class Tavern extends Component {
   constructor() {
     super();
-    this.socket = io("/", {
-      transports: ["polling"],
-      query: { token: localStorage.jwtToken }
-    });
 
     this.joinGame = this.joinGame.bind(this);
     this.deleteGame = this.deleteGame.bind(this);
@@ -40,19 +35,19 @@ class Tavern extends Component {
     this.pushUserToGame(this.props.currentGame);
     this.props.fetchGames();
 
-    this.socket.on("create game", game => {
+    this.props.socket.on("create game", game => {
       this.props.loadNewGame(game);
       if (this.props.auth.user.id === game.player1.id) {
         this.props.setCurrentGame(game);
       }
     });
 
-    this.socket.on("unload game", game => {
+    this.props.socket.on("unload game", game => {
       this.props.unloadGame(game);
       this.props.setCurrentGame({});
     });
 
-    this.socket.on("game ready", game => {
+    this.props.socket.on("game ready", game => {
       this.props.setCurrentGame(game);
     });
   }
@@ -63,22 +58,21 @@ class Tavern extends Component {
 
   componentWillUnmount() {
     this.props.clearGames();
-    this.socket.close();
   }
 
   joinGame(game) {
-    this.socket.emit("join game", game);
+    this.props.socket.emit("join game", game);
   }
 
   deleteGame(game) {
-    this.socket.emit("unload game", game);
+    this.props.socket.emit("unload game", game);
   }
 
   render() {
     const tavernContent = (
       <div className="cards">
         {this.props.currentGame.hasOwnProperty("_id") ? null : (
-          <NewGameForm socket={this.socket} />
+          <NewGameForm socket={this.props.socket} />
         )}
         <GameList
           games={this.props.tavern.games}
