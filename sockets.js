@@ -1,3 +1,7 @@
+const {
+  addSocketToConnections,
+  deleteSocketFromConnections
+} = require("./helper/socketHelper");
 const jwt = require("jsonwebtoken");
 
 module.exports = function(server) {
@@ -20,10 +24,30 @@ module.exports = function(server) {
     }
   });
 
-  require("./chat/chat.socket")(io);
-  require("./tavern/tavern.socket")(io);
-  require("./tic-tac-toe/ticTacToe.socket")(io);
-  require("./pong/pong.socket")(io);
+  let connections = {};
+
+  io.on("connection", function(socket) {
+    const user = socket.handshake.headers.user;
+    addSocketToConnections(connections, user, io, socket, "io");
+
+    socket.on("disconnect", function() {
+      deleteSocketFromConnections(connections, user, io, socket, "io");
+    });
+
+    require("./chat/chat.socket")(io, socket);
+    require("./tavern/tavern.socket")(io, socket, user, connections);
+    require("./tic-tac-toe/ticTacToe.socket")(io, socket, connections);
+    require("./pong/pong.socket")(io, socket, connections);
+
+    socket.on("get users", () => {
+      let users = [];
+      Object.keys(connections).map(key => {
+        users.push(connections[key].user);
+      });
+
+      io.to(socket.id).emit("users", users);
+    });
+  });
 
   return io;
 };

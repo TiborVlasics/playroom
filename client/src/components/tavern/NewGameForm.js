@@ -19,7 +19,7 @@ class NewGameForm extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-    this.props.socket.emit("new game", this.state.game);
+    this.props.socket.emit("create game", this.state.game);
   }
 
   render() {
