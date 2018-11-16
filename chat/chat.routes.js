@@ -5,9 +5,8 @@ const passport = require("passport");
 
 /**
  * @route   POST api/chat
- * @desc    Register user
+ * @desc    Get all chat messages ordered by creation date
  * @access  Private
- * Returns all chat messages
  */
 router.get(
   "/",
