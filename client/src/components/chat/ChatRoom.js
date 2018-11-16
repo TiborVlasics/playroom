@@ -81,26 +81,24 @@ class ChatRoom extends React.Component {
 
   render() {
     return (
-      <div>
-        <div>
-          <div className="chat-wrapper">
-            <ChatUsers users={this.state.users} />
-            <ChatTable />
-            <div className="shadow-messages">
-              {Object.keys(this.state.usersTyping).map((user, index) => (
-                <div key={index} className="shadow-message">
-                  <div className="message-name">
-                    {user} is writing a message...
-                  </div>
-                  <div
-                    style={{ backgroundColor: "white" }}
-                    className="shadow-message-text blurry-text"
-                  >
-                    {this.state.usersTyping[user]}
-                  </div>
+      <div className="chat">
+        <div className="chat-wrapper">
+          <ChatUsers users={this.state.users} />
+          <ChatTable />
+          <div className="shadow-messages">
+            {Object.keys(this.state.usersTyping).map((user, index) => (
+              <div key={index} className="shadow-message">
+                <div className="message-name">
+                  {user} is writing a message...
                 </div>
-              ))}
-            </div>
+                <div
+                  style={{ backgroundColor: "white" }}
+                  className="shadow-message-text blurry-text"
+                >
+                  {this.state.usersTyping[user]}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
         <form onSubmit={this.handleSubmit}>

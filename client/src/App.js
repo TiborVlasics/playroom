@@ -17,8 +17,6 @@ import { connect } from "react-redux";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/layout/Dashboard";
-import ChatRoom from "./components/chat/ChatRoom";
-import Tavern from "./components/tavern/Tavern";
 import TicTacToe from "./components/tavern/TicTacToe";
 import Pong from "./components/tavern/Pong";
 import SecretRoute from "./components/SecretRoute";
@@ -64,21 +62,15 @@ class App extends Component {
       <Router>
         <div className="App">
           <Navbar />
-          <div>
+          <div className="main">
             <Switch>
               <Route exact path="/" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <SecretRoute
-                path="/chat"
-                component={ChatRoom}
-                socket={this.socket}
-              />
-              <SecretRoute exact path="/dashboard" component={Dashboard} />
-              <SecretRoute
                 exact
-                path="/tavern"
-                component={Tavern}
+                path="/dashboard"
+                component={Dashboard}
                 socket={this.socket}
               />
               <SecretRoute

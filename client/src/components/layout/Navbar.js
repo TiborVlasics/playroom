@@ -15,12 +15,6 @@ class Navbar extends Component {
 
     const authLinks = (
       <div className="nav-links">
-        <span className="nav-item">
-          <Link to="/chat">Chat</Link>
-        </span>
-        <span className="nav-item">
-          <Link to="/tavern">Tavern</Link>
-        </span>
         <div className="user-links">
           <span className="nav-item">{user.name}</span>
           <img className="nav-item nav-img" src={user.avatar} alt={user.name} />

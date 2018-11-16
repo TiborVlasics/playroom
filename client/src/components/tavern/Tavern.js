@@ -84,7 +84,7 @@ class Tavern extends Component {
     );
 
     return (
-      <div>
+      <div className="games">
         <h1>Games:</h1>
         {this.props.tavern.isLoading ? <Spinner /> : tavernContent}
       </div>

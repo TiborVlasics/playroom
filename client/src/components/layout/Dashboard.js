@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import History from "./History";
 
+import ChatRoom from "../chat/ChatRoom";
+import Tavern from "../tavern/Tavern";
+
 class Dashboard extends Component {
   pushUserToGame(game) {
     if (game.hasOwnProperty("_id") && game.isFull) {
@@ -23,10 +26,10 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div>
-        <div className="dashboard">
-          <History />
-        </div>
+      <div className="dashboard">
+        <ChatRoom socket={this.props.socket} />
+        <Tavern socket={this.props.socket} />
+        <History />
       </div>
     );
   }

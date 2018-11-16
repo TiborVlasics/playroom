@@ -1,5 +1,5 @@
-.App {
-  width: 1100px;
+.main {
+  width: 100%;
   margin: 0 auto;
   text-align: center;
 }
@@ -600,21 +600,16 @@ form input[type="text"]:focus {
 
 .history {
   background: white;
-  float: left;
-  width: 55%;
-}
-
-.statistics {
+  width: 30%;
   float: right;
-  width: 45%;
 }
 
-.rewards {
-  clear: both;
-  padding: 20px;
+.chat {
+  float: left;
+  width: 30%;
+  margin: 0 0;
 }
 
-.pong-scores span {
-  margin: 10px;
-  font-size: 30px;
+.games {
+  width: 30%;
 }
