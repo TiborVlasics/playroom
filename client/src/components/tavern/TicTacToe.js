@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentGame, setCurrentGame } from "../../actions/gameActions"
+import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
 import io from "socket.io-client";
 import Spinner from "../common/Spinner";
 
@@ -14,36 +14,36 @@ class TicTacToe extends Component {
       query: { token: localStorage.jwtToken }
     });
 
-    this.state = { isReplaying: false, replayBoard: null }
+    this.state = { isReplaying: false, replayBoard: null };
 
-    this.move = this.move.bind(this)
-    this.leaveGame = this.leaveGame.bind(this)
-    this.replay = this.replay.bind(this)
+    this.move = this.move.bind(this);
+    this.leaveGame = this.leaveGame.bind(this);
+    this.replay = this.replay.bind(this);
   }
 
   componentDidMount() {
     this.props.getCurrentGame();
 
     if (!this.props.game.hasOwnProperty("_id")) {
-      this.props.history.push("/dashboard")
+      this.props.history.push("/dashboard");
     }
 
     this.socket.on("connect", () => {
-      this.socket.emit("join me to a room please", this.props.game)
-    })
+      this.socket.emit("join me to a room please", this.props.game);
+    });
 
     this.socket.on("game started", game => {
-      this.props.setCurrentGame(game)
-    })
+      this.props.setCurrentGame(game);
+    });
 
     this.socket.on("move", game => {
-      this.props.setCurrentGame(game)
-    })
+      this.props.setCurrentGame(game);
+    });
   }
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.game.hasOwnProperty("_id")) {
-      this.props.history.push("/dashboard")
+      this.props.history.push("/dashboard");
     }
   }
 
@@ -52,22 +52,22 @@ class TicTacToe extends Component {
   }
 
   move(game, index) {
-    const data = { ...game, move: index }
-    this.socket.emit("move", data)
+    const data = { ...game, move: index };
+    this.socket.emit("move", data);
   }
 
   leaveGame() {
-    this.props.setCurrentGame({})
+    this.props.setCurrentGame({});
   }
 
   replay(index) {
     setTimeout(() => {
-      if (!this.state.isReplaying) this.setState({ isReplaying: true })
-      this.setState({ replayBoard: this.props.game.boardState[index] })
+      if (!this.state.isReplaying) this.setState({ isReplaying: true });
+      this.setState({ replayBoard: this.props.game.boardState[index] });
       if (this.props.game.boardState.length >= index - 1) {
         this.replay(index + 1);
       } else {
-        this.setState({ isReplaying: false })
+        this.setState({ isReplaying: false });
       }
     }, 1000);
   }
@@ -75,45 +75,45 @@ class TicTacToe extends Component {
   render() {
     const auth = this.props.auth;
     const game = this.props.game;
-    const opponent = game.player1 && game.player1.id === auth.user.id
-      ? game.player2
-      : game.player1
+    const opponent =
+      game.player1 && game.player1.id === auth.user.id
+        ? game.player2
+        : game.player1;
 
     const board = this.state.replayBoard
-      ? this.state.replayBoard.split("").map(col => <div>{col !== "?" ? col : null}</div>)
+      ? this.state.replayBoard
+          .split("")
+          .map(col => <div>{col !== "?" ? col : null}</div>)
       : game.isStarted
-        ? game.boardState[game.boardState.length - 1]
-          .split('')
+      ? game.boardState[game.boardState.length - 1]
+          .split("")
           .map((col, index) => {
             if (game.nextPlayer === auth.user.id && col === "?") {
-              return <div
-                key={index}
-                onClick={() => this.move(game, index)}>
-                {col !== "?" ? col : null
-                }
-              </div>
+              return (
+                <div key={index} onClick={() => this.move(game, index)}>
+                  {col !== "?" ? col : null}
+                </div>
+              );
             } else {
-              return <div key={index}>
-                {col !== "?" ? col : null}
-              </div>
+              return <div key={index}>{col !== "?" ? col : null}</div>;
             }
           })
-        : null
+      : null;
 
     let message;
     if (game.isEnded) {
       if (game.winner === null) {
-        message = "It's a  draw (O_O)"
+        message = "It's a  draw (O_O)";
       } else if (game.winner === auth.user.id) {
-        message = "You won :-D"
+        message = "You won :-D";
       } else {
-        message = "Looser..."
+        message = "Looser...";
       }
     } else {
       if (game.nextPlayer === auth.user.id) {
-        message = "It's your turn"
+        message = "It's your turn";
       } else {
-        message = "It's your opponents turn"
+        message = "It's your opponents turn";
       }
     }
 
@@ -121,26 +121,34 @@ class TicTacToe extends Component {
       <div>
         <button onClick={() => this.replay(0)}>Replay</button>
         <button onClick={this.leaveGame}>Leave</button>
-      </div>)
+      </div>
+    );
 
     return (
       <div className="tic-tac-toe">
-        {opponent ? <div className="opponent">
-          <p>Your opponent:</p>
-          <p>{opponent.name}</p>
-          <img src={opponent.avatar} alt="user avatar" style={{ width: "50px" }} />
-        </div> : null}
+        {opponent ? (
+          <div className="opponent">
+            <p>Your opponent:</p>
+            <p>{opponent.name}</p>
+            <img
+              src={opponent.avatar}
+              alt="user avatar"
+              style={{ width: "50px" }}
+            />
+          </div>
+        ) : null}
 
-        {game.isStarted ?
+        {game.isStarted ? (
           <div className="game">
             <p>{message}</p>
-            <div className="game-board">
-              {board}
-            </div>
-          </div> : <Spinner />}
+            <div className="game-board">{board}</div>
+          </div>
+        ) : (
+          <Spinner />
+        )}
         {game.isEnded && !this.state.isReplaying ? endGamePanel : null}
       </div>
-    )
+    );
   }
 }
 
