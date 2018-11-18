@@ -2,6 +2,8 @@
   width: 600px;
   margin: 0 auto;
   font-size: 13px;
+  position: relative;
+  left: 200px;
 }
 
 .cards {
