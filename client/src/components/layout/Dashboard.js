@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import History from "./History";
 
-import ChatRoom from "../chat/ChatRoom";
+import ChatWindow from "../chat/ChatWindow";
 import Tavern from "../tavern/Tavern";
 
 class Dashboard extends Component {
@@ -27,7 +27,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div className="dashboard">
-        <ChatRoom socket={this.props.socket} />
+        <ChatWindow socket={this.props.socket} />
         <Tavern socket={this.props.socket} />
         <History />
       </div>
