@@ -1,11 +1,8 @@
 .history {
-  position: absolute;
-  left: 170px;
-  top: 60px;
   background: white;
-  width: 500px;
-  float: right;
-  font-size: 12px;
+  width: 390px;
+  float: left;
+  font-size: 10px;
 }
 
 .history-item {

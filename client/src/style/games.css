@@ -1,7 +1,8 @@
 .games {
-  width: 500px;
+  width: 400px;
   margin: 0 auto;
-  margin-top: 0;
+  float: right;
+  font-size: 13px;
 }
 
 .cards {
