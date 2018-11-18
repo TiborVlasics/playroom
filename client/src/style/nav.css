@@ -1,13 +1,7 @@
 .nav {
-  background: rgb(0, 0, 0);
-  background: linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.8435749299719888) 0%,
-    rgba(0, 0, 0, 1) 100%
-  );
+  background: white;
   z-index: 15;
   position: fixed;
-  color: #fff;
   top: 0;
   left: 0;
   width: 100%;
