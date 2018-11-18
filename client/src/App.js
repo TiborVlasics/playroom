@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import "./Spinner.css"
 import {
   BrowserRouter as Router,
   Route,
