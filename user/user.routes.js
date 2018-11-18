@@ -68,6 +68,8 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Userlog.find({ userId: req.user.id })
+      .sort({ createdDate: -1 })
+      .limit(10)
       .then(logs => res.status(200).json(logs))
       .catch(err => console.log(err));
   }
