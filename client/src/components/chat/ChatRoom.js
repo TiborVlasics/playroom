@@ -82,7 +82,7 @@ class ChatRoom extends React.Component {
   render() {
     return (
       <div className="chat">
-        <div className="chat-wrapper">
+        <div className="chat-content">
           <ChatUsers users={this.state.users} />
           <ChatTable />
           <div className="shadow-messages">
@@ -91,10 +91,7 @@ class ChatRoom extends React.Component {
                 <div className="message-name">
                   {user} is writing a message...
                 </div>
-                <div
-                  style={{ backgroundColor: "white" }}
-                  className="shadow-message-text blurry-text"
-                >
+                <div className="shadow-message-text blurry-text">
                   {this.state.usersTyping[user]}
                 </div>
               </div>
