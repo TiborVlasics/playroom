@@ -5,7 +5,7 @@
     rgba(0, 0, 0, 0.8435749299719888) 0%,
     rgba(0, 0, 0, 1) 100%
   );
-  z-index: 10;
+  z-index: 15;
   position: fixed;
   color: #fff;
   top: 0;
