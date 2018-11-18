@@ -1,10 +1,10 @@
 .chat {
   z-index: 10;
   position: fixed;
-  bottom: 0;
-  left: 170px;
-  width: 420px;
-  height: 100vh;
+  bottom: 70px;
+  right: 10px;
+  width: 520px;
+  height: 600px;
   overflow-y: auto;
   overflow-x: hidden;
   background: #fff;
@@ -14,10 +14,12 @@
 }
 
 .chat-input {
+  position: fixed;
+  bottom: 0;
   height: 70px;
   font-size: 15px;
   font-family: "Raleway";
-  width: 100%;
+  width: 420px;
 }
 
 .chat-input:focus {
@@ -52,7 +54,7 @@
 
 .message-container {
   display: block;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 
 .message-name {
