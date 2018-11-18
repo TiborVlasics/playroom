@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import History from "./History";
 
 import ChatWindow from "../chat/ChatWindow";
 import Tavern from "../tavern/Tavern";
@@ -29,7 +28,6 @@ class Dashboard extends Component {
       <div className="dashboard">
         <ChatWindow socket={this.props.socket} />
         <Tavern socket={this.props.socket} />
-        <History />
       </div>
     );
   }
