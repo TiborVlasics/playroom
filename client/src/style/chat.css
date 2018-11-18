@@ -112,6 +112,7 @@
   vertical-align: bottom;
   margin-right: 20px;
   border-radius: 50%;
+  max-width: 20px;
 }
 
 .own-message img {

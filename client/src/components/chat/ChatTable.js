@@ -30,11 +30,6 @@ class ChatTable extends React.Component {
                 : "message-container"
             }
           >
-            <img
-              src={message.thumbnail}
-              style={{ maxWidth: 35 }}
-              alt="thumbnail"
-            />
             <div className="message-name">{message.author.name + ":"}</div>
             <div className="message-box">
               {message.text.map((text, index) => (
