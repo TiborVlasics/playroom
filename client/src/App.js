@@ -1,19 +1,18 @@
 import React, { Component } from "react";
-import "./App.css";
-import "./Spinner.css"
+import { connect } from "react-redux";
+import store from "./store";
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch
 } from "react-router-dom";
-import store from "./store";
 import jwt_decode from "jwt-decode";
-import setAuthToken from "./helper/setAuthToken";
 import io from "socket.io-client";
+import setAuthToken from "./helper/setAuthToken";
+
 import { setCurrentUser } from "./actions/authActions";
 import { getCurrentGame } from "./actions/gameActions";
-import { connect } from "react-redux";
 
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -22,6 +21,16 @@ import TicTacToe from "./components/tavern/TicTacToe";
 import Pong from "./components/tavern/Pong";
 import SecretRoute from "./components/SecretRoute";
 import Navbar from "./components/layout/Navbar";
+
+import "./style/App.css";
+import "./style/Spinner.css";
+import "./style/nav.css";
+import "./style/usersbar.css";
+import "./style/chat.css";
+import "./style/auth.css";
+import "./style/games.css";
+import "./style/history.css";
+import "./style/tic-tac-toe.css";
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
@@ -34,7 +43,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.socket = io;
+    this.socket = null;
     if (this.props.auth.isAuthenticated) {
       this.initSocketConnection();
     }

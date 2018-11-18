@@ -1,0 +1,25 @@
+.tic-tac-toe {
+  display: flex;
+  margin-top: 50px;
+  justify-content: center;
+}
+
+.tic-tac-toe .opponent {
+  margin: 0 30px 30px 60px;
+}
+
+.tic-tac-toe .game-board {
+  width: 366px;
+  height: 366px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 120px 120px 120px;
+  grid-template-rows: 120px 120px 120px;
+  align-items: stretch;
+}
+
+.tic-tac-toe .game-board div {
+  border: 1px solid black;
+  line-height: 120px;
+  font-size: 100px;
+}

@@ -1,0 +1,125 @@
+.chat {
+  float: left;
+  width: 30%;
+  margin: 0 0;
+}
+
+.chat-input {
+  z-index: 3;
+  margin: 0 auto;
+  position: fixed;
+  bottom: 0;
+  left: 80px;
+  width: 100%;
+  padding-left: 28px;
+  height: 70px;
+  font-size: 20px;
+  font-family: "Raleway";
+}
+
+.chat-input:focus {
+  outline: 0;
+}
+
+.chat-wrapper {
+  margin-bottom: 100px;
+}
+
+.chat-table {
+  display: inline-block;
+}
+
+/**
+*
+* Chat right bar - users typing
+*/
+
+.shadow-messages {
+  width: 15%;
+  display: inline-block;
+}
+
+.shadow-message {
+  margin-top: 30px;
+}
+
+.shadow-message-text {
+  word-wrap: break-word;
+}
+
+.blurry-text {
+  color: transparent;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+/**
+* Chat messages
+*
+/*/
+.message-container {
+  display: block;
+  width: 400px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+
+.own-message {
+  position: relative;
+}
+
+.message-name {
+  text-align: left;
+  font-size: 12px;
+}
+
+.message-text {
+  text-align: left;
+  word-wrap: break-word;
+  background-color: #ffffcf;
+  padding: 3px 20px 3px 20px;
+  font-size: 17px;
+  width: 330px;
+  text-align: right;
+}
+
+.message-text:first-child {
+  border-radius: 15px 15px 0 0;
+}
+
+.message-text:last-child {
+  border-radius: 0 0 15px 15px;
+}
+
+.message-text:only-child {
+  border-radius: 15px 15px 15px 15px;
+}
+
+.own-message .message-text {
+  background-color: #ffcfcf;
+  text-align: left;
+  position: relative;
+  left: 40px;
+}
+
+.message-date {
+  font-size: 10px;
+  float: left;
+}
+
+.own-message .message-date {
+  float: right;
+  position: relative;
+  right: 40px;
+}
+
+.message-container img {
+  float: right;
+  vertical-align: bottom;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.own-message img {
+  float: left;
+  vertical-align: bottom;
+}
