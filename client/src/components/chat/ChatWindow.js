@@ -2,9 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import ChatTable from "./ChatTable";
+import Messages from "./Messages";
 import ChatUsers from "./ChatUsers";
-import { addMessage } from "../../actions/chatActions";
+import {
+  loadMessages,
+  addMessage,
+  clearMessages
+} from "../../actions/chatActions";
 
 class Chat extends React.Component {
   constructor(props) {
@@ -15,8 +19,13 @@ class Chat extends React.Component {
       users: []
     };
 
+    this.messagesEnd = React.createRef();
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  scrollToBottom() {
+    this.messagesEnd.current.scrollIntoView({ behavior: "smooth" });
   }
 
   componentCleanup() {
@@ -29,8 +38,11 @@ class Chat extends React.Component {
   componentDidMount() {
     window.addEventListener("beforeunload", this.componentCleanup);
 
+    this.props.loadMessages();
+
     this.props.socket.on("chat", message => {
       this.props.addMessage(message);
+      this.scrollToBottom();
     });
 
     this.props.socket.on("user typing", user => {
@@ -72,11 +84,17 @@ class Chat extends React.Component {
     });
   }
 
+  componentWillReceiveProps(props) {
+    if (props.chat) setTimeout(() => this.scrollToBottom(), 1000);
+  }
+
   componentWillUnmount() {
     this.props.socket.emit("user typing", {
       name: this.props.auth.user.name,
       isTyping: false
     });
+
+    this.props.clearMessages();
   }
 
   render() {
@@ -84,7 +102,7 @@ class Chat extends React.Component {
       <div className="chat">
         <div className="chat-content">
           <ChatUsers users={this.state.users} />
-          <ChatTable />
+          <Messages scrollToBottom={this.scrollToBottom} />
           <div className="shadow-messages">
             {Object.keys(this.state.usersTyping).map((user, index) => (
               <div key={index} className="shadow-message">
@@ -97,6 +115,7 @@ class Chat extends React.Component {
               </div>
             ))}
           </div>
+          <div ref={this.messagesEnd} />
         </div>
         <form onSubmit={this.handleSubmit}>
           <input
@@ -153,14 +172,18 @@ class Chat extends React.Component {
 
 Chat.propTypes = {
   auth: PropTypes.object.isRequired,
-  addMessage: PropTypes.func.isRequired
+  chat: PropTypes.object.isRequired,
+  addMessage: PropTypes.func.isRequired,
+  loadMessages: PropTypes.func.isRequired,
+  clearMessages: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  chat: state.chat
 });
 
 export default connect(
   mapStateToProps,
-  { addMessage }
+  { addMessage, loadMessages, clearMessages }
 )(Chat);

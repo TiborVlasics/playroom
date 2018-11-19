@@ -1,20 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { loadMessages } from "../../actions/chatActions";
-import { clearMessages } from "../../actions/chatActions";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
 
-class ChatTable extends React.Component {
-  componentDidMount() {
-    this.props.loadMessages();
-    window.scrollTo(0, document.body.scrollHeight);
-  }
-
-  componentWillUnmount() {
-    this.props.clearMessages();
-  }
-
+class Messages extends React.Component {
   render() {
     const { user } = this.props.auth;
     const { messages, loading } = this.props.chat;
@@ -50,11 +39,9 @@ class ChatTable extends React.Component {
   }
 }
 
-ChatTable.propTypes = {
+Messages.propTypes = {
   auth: PropTypes.object.isRequired,
-  chat: PropTypes.object.isRequired,
-  loadMessages: PropTypes.func.isRequired,
-  clearMessages: PropTypes.func.isRequired
+  chat: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -62,7 +49,4 @@ const mapStateToProps = state => ({
   chat: state.chat
 });
 
-export default connect(
-  mapStateToProps,
-  { loadMessages, clearMessages }
-)(ChatTable);
+export default connect(mapStateToProps)(Messages);
