@@ -56,7 +56,7 @@ class Login extends Component {
       <div className="login">
         <div className="row">
           <div className="col-md-8 m-auto">
-            <h1 className="header">Login</h1>
+            <h1 className="display-5 text-center">Login</h1>
             <form noValidate onSubmit={this.onSubmit}>
               <TextFieldGroup
                 autofocus={true}

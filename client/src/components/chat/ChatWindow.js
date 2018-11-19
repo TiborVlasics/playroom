@@ -85,7 +85,7 @@ class Chat extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.chat) setTimeout(() => this.scrollToBottom(), 1000);
+    if (props.chat) setTimeout(() => this.scrollToBottom(), 500);
   }
 
   componentWillUnmount() {

@@ -1,6 +1,6 @@
 .nav {
-  background: #000000b5;
-  color: #ffad2dcf;
+  background: #00000083;
+  color: #ffffffcf;
   z-index: 15;
   position: fixed;
   top: 0;
@@ -9,7 +9,7 @@
   height: 60px;
   padding: 10px;
   box-shadow: 10px -3px 100px rgba(0, 0, 0, 0.6);
-  font-family: "Griffy";
+  font-family: "dumb";
 }
 
 .nav-content {

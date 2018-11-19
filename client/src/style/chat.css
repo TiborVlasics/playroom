@@ -2,25 +2,25 @@
   z-index: 10;
   position: fixed;
   bottom: 50px;
-  left: 160px;
-  width: 390px;
+  left: 130px;
+  width: 410px;
   height: 80vh;
   overflow-y: auto;
   overflow-x: hidden;
-  background: #fff;
-  -webkit-box-shadow: 13px 9px 48px -7px rgba(138, 138, 138, 0.47);
-  -moz-box-shadow: 13px 9px 48px -7px rgba(138, 138, 138, 0.47);
-  box-shadow: 13px 9px 48px -7px rgba(138, 138, 138, 0.47);
+  color: #fbfbfb;
+  font-family: "Raleway";
+}
+.chat::-webkit-scrollbar {
+  width: 1em;
 }
 
 .chat-input {
   position: fixed;
   bottom: 0;
-  left: 160px;
+  left: 130px;
   height: 50px;
   font-size: 15px;
-  font-family: "Raleway";
-  width: 390px;
+  width: 410px;
   border: 0;
   border-top: 1px solid #f2f2f2;
   padding: 20px;
@@ -74,11 +74,13 @@
 .message-text {
   text-align: left;
   word-wrap: break-word;
-  background-color: #ffff0086;
+  background-color: #3e3e06c5;
   padding: 0.5px 15px 0.5px 15px;
-  font-size: 12px;
+  font-size: 13px;
   width: 250px;
   text-align: right;
+  color: white;
+  font-size: 15px;
 }
 
 .message-text:first-child {
@@ -97,7 +99,7 @@
 }
 
 .own-message .message-text {
-  background-color: #ff00006e;
+  background-color: #2f0d0de0;
   text-align: left;
   position: relative;
   left: 40px;
