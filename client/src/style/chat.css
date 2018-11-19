@@ -1,7 +1,7 @@
 .chat {
   z-index: 10;
   position: fixed;
-  bottom: 70px;
+  bottom: 50px;
   left: 160px;
   width: 390px;
   height: 400px;
@@ -17,13 +17,17 @@
   position: fixed;
   bottom: 0;
   left: 160px;
-  height: 70px;
+  height: 50px;
   font-size: 15px;
   font-family: "Raleway";
   width: 390px;
   border: 0;
   border-top: 1px solid #f2f2f2;
   padding: 20px;
+}
+
+.chat-input::-webkit-input-placeholder {
+  color: #909090;
 }
 
 .chat-input:focus {
@@ -70,7 +74,7 @@
 .message-text {
   text-align: left;
   word-wrap: break-word;
-  background-color: #ffffcf;
+  background-color: #ffff0086;
   padding: 0.5px 15px 0.5px 15px;
   font-size: 12px;
   width: 250px;
@@ -93,7 +97,7 @@
 }
 
 .own-message .message-text {
-  background-color: #ffcfcf;
+  background-color: #ff00006e;
   text-align: left;
   position: relative;
   left: 40px;
