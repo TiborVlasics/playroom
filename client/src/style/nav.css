@@ -1,5 +1,6 @@
 .nav {
-  background: white;
+  background: #000000b5;
+  color: #ffad2dcf;
   z-index: 15;
   position: fixed;
   top: 0;
@@ -8,7 +9,7 @@
   height: 60px;
   padding: 10px;
   box-shadow: 10px -3px 100px rgba(0, 0, 0, 0.6);
-  font-family: "Open Sans";
+  font-family: "Griffy";
 }
 
 .nav-content {
@@ -37,13 +38,13 @@
 }
 
 .nav-logo {
-  color: #84a2bf;
+  color: inherit;
   font-size: 25px;
   align-items: flex-end;
 }
 
 .nav-logo a {
-  color: #84a2bf;
+  color: inherit;
   font-weight: 900;
 }
 
@@ -54,5 +55,5 @@
 
 .nav-item a {
   text-decoration: underline;
-  color: #84a2bf;
+  color: inherit;
 }
