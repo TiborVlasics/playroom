@@ -71,21 +71,24 @@
   text-align: left;
   word-wrap: break-word;
   background-color: #ffffcf;
-  padding: 3px 20px 3px 20px;
+  padding: 0.5px 15px 0.5px 15px;
   font-size: 12px;
   width: 250px;
   text-align: right;
 }
 
 .message-text:first-child {
+  padding-top: 10px;
   border-radius: 15px 15px 0 0;
 }
 
 .message-text:last-child {
+  padding-bottom: 10px;
   border-radius: 0 0 15px 15px;
 }
 
 .message-text:only-child {
+  padding: 10px 15px 10px 15px;
   border-radius: 15px 15px 15px 15px;
 }
 
