@@ -1,14 +1,11 @@
 const TicTacToe = require("./TicTacToe.model");
 const User = require("../user/User");
-const Userlog = require("../user/Userlog");
 const { updateGame } = require("./ticTacToe.functions");
 
 module.exports = function(gameIo, socket, connections) {
   socket.on("join room", game => {
     socket.join(game._id);
-    let user1Connected = connections.hasOwnProperty(game.player1.id);
-    let user2Connected = connections.hasOwnProperty(game.player2.id);
-    if (user1Connected && user2Connected && game.isStarted === false) {
+    if (!game.isStarted) {
       TicTacToe.findOneAndUpdate(
         { _id: game._id },
         {
@@ -52,39 +49,7 @@ module.exports = function(gameIo, socket, connections) {
             { currentGame: updatedGame._id },
             { $set: { currentGame: null } }
           )
-            .then(() => {
-              let player1Log;
-              let player2Log;
-              if (updatedGame.winner == "draw") {
-                player1Log = `You drawn in a game of tictactoe against ${
-                  updatedGame.player2.name
-                }`;
-                player2Log = `You drawn in a game of tictactoe against ${
-                  updatedGame.player1.name
-                }`;
-              } else if (updatedGame.winner.equals(updatedGame.player1.id)) {
-                player1Log = `You won a game of tictactoe against ${
-                  updatedGame.player2.name
-                }`;
-                player2Log = `You lost a game of tictactoe against ${
-                  updatedGame.player1.name
-                }`;
-              } else if (updatedGame.winner.equals(updatedGame.player2.id)) {
-                player1Log = `You lost a game of tictactoe against ${
-                  updatedGame.player2.name
-                }`;
-                player2Log = `You won a game of tictactoe against ${
-                  updatedGame.player1.name
-                }`;
-              }
-
-              Userlog.insertMany([
-                { userId: updatedGame.player1.id, text: player1Log },
-                { userId: updatedGame.player2.id, text: player2Log }
-              ])
-                .then(() => gameIo.to(game._id).emit("game ended"))
-                .catch(err => console.log(err));
-            })
+            .then(() => gameIo.to(game._id).emit("game ended"))
             .catch(err => console.log(err));
         }
       })
