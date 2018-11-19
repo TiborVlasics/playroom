@@ -1,10 +1,9 @@
 import isEmpty from "../helper/is-empty";
-import { SET_CURRENT_USER, SET_USER_HISTORY } from "../actions/types";
+import { SET_CURRENT_USER } from "../actions/types";
 
 const initialState = {
   isAuthenticated: false,
-  user: {},
-  history: []
+  user: {}
 };
 
 export default function(state = initialState, action) {
@@ -14,11 +13,6 @@ export default function(state = initialState, action) {
         ...state,
         isAuthenticated: !isEmpty(action.payload),
         user: action.payload
-      };
-    case SET_USER_HISTORY:
-      return {
-        ...state,
-        history: action.payload
       };
     default:
       return state;
