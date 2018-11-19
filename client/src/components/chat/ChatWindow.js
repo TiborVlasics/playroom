@@ -78,10 +78,6 @@ class Chat extends React.Component {
       let users = this.state.users.filter(user => user.id !== userData.id);
       this.setState({ users: users });
     });
-
-    this.props.socket.on("private", data => {
-      this.setState({ privateMsg: data.msg });
-    });
   }
 
   componentWillReceiveProps(props) {
