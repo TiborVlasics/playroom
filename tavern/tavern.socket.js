@@ -33,11 +33,11 @@ module.exports = function(io, socket, user, connections) {
    */
   socket.on("delete game", game => {
     Game.findOneAndDelete({ _id: game._id })
-      .then(game => {
+      .then(deletedGame => {
         User.findOneAndUpdate(
-          { _id: game.player1.id },
+          { _id: deletedGame.player1.id },
           { $set: { currentGame: null } }
-        ).then(() => io.emit("unload game", game));
+        ).then(() => io.emit("unload game", deletedGame));
       })
       .catch(err => console.log(err));
   });

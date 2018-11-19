@@ -29,9 +29,11 @@ module.exports = function(server) {
   io.on("connection", function(socket) {
     const user = socket.handshake.headers.user;
     addSocketToConnections(connections, user, io, socket, "io");
+    console.log("Connection", user.id, user.name);
 
     socket.on("disconnect", function() {
       deleteSocketFromConnections(connections, user, io, socket, "io");
+      console.log("disconnection", user.id, user.name);
     });
 
     require("./chat/chat.socket")(io, socket);
