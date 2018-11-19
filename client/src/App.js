@@ -63,7 +63,7 @@ class App extends Component {
     if (props.auth.isAuthenticated === true) {
       this.initSocketConnection();
     } else if (props.auth.isAuthenticated === false) {
-      this.socket.close();
+      setTimeout(this.socket.close, 1000);
     }
   }
 

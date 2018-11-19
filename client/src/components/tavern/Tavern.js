@@ -42,6 +42,10 @@ class Tavern extends Component {
   }
 
   componentWillUnmount() {
+    const game = this.props.currentGame;
+    if (game && !game.isStarted) {
+      this.deleteGame(game);
+    }
     this.props.clearGames();
   }
 
@@ -50,7 +54,7 @@ class Tavern extends Component {
   }
 
   deleteGame(game) {
-    this.props.socket.emit("unload game", game);
+    this.props.socket.emit("delete game", game);
   }
 
   render() {

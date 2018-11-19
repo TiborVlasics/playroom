@@ -10,8 +10,6 @@ module.exports = function(io, socket, user, connections) {
     if (gameType === "tictactoe") {
       createTicTacToe(user)
         .then(game => {
-          game = game.toObject();
-          game.type = "tictactoe";
           updateUsersCurrentGame(game, user)
             .then(() => io.emit("create game", game))
             .catch(err => console.log(err));
@@ -33,7 +31,7 @@ module.exports = function(io, socket, user, connections) {
    * @desc Deletes game from io and updates player1's current game to null
    * emits 'unload game' with the deleted game object
    */
-  socket.on("unload game", game => {
+  socket.on("delete game", game => {
     Game.findOneAndDelete({ _id: game._id })
       .then(game => {
         User.findOneAndUpdate(
