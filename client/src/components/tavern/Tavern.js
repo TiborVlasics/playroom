@@ -21,18 +21,7 @@ class Tavern extends Component {
     this.deleteGame = this.deleteGame.bind(this);
   }
 
-  pushUserToGame(game) {
-    if (game.hasOwnProperty("_id") && game.isFull) {
-      if (game.kind === "tictactoes") {
-        this.props.history.push(`/tictactoe/${game._id}`);
-      } else if (game.kind === "pongs") {
-        this.props.history.push(`/pong/${game._id}`);
-      }
-    }
-  }
-
   componentDidMount() {
-    this.pushUserToGame(this.props.currentGame);
     this.props.fetchGames();
 
     this.props.socket.on("create game", game => {
@@ -50,10 +39,6 @@ class Tavern extends Component {
     this.props.socket.on("game ready", game => {
       this.props.setCurrentGame(game);
     });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.pushUserToGame(nextProps.currentGame);
   }
 
   componentWillUnmount() {
