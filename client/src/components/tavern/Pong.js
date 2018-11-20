@@ -18,7 +18,9 @@ class Pong extends Component {
       yv: 4,
       bd: 7,
       score1: 0,
-      score2: 0
+      score2: 0,
+      width: 640,
+      height: 780
     };
 
     this.socket = io.connect(
@@ -40,32 +42,22 @@ class Pong extends Component {
     } else {
       const c = this.refs.gc;
       const cc = c.getContext("2d");
-      let run;
 
       this.socket.on("connect", () => {
-        this.socket.emit("ready to start", this.props.game);
+        this.socket.emit("join", this.props.game);
       });
 
       this.socket.on("game started", game => {
         this.props.setCurrentGame(game);
       });
 
-      this.socket.on("move y", move => {
+      this.socket.on("update", move => {
         this.setState(move);
+        this.update(cc);
       });
-
-      this.socket.on("ball to middle", data => {
-        this.setState(data.ballPosition);
-        this.setState(data.score);
-      });
-
-      if (this.props.game.isStarted === true) {
-        run = setInterval(() => this.update(c, cc), 1000 / 30);
-      }
 
       this.socket.on("game over", data => {
         console.log(data);
-        clearInterval(run);
       });
     }
   }
@@ -76,79 +68,42 @@ class Pong extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.socket.close();
+    this.props.setCurrentGame({});
+  }
+
   onMouseMove(e) {
     if (this.props.auth.user.id === this.props.game.player1.id) {
       const p1y = e.clientY - 217;
       this.setState({ p1y: p1y });
-      this.socket.emit("move y", {
-        coord: { p1y: p1y },
-        game: this.props.game._id
+      this.socket.emit("move", {
+        move: { p1y: p1y },
+        id: this.props.game._id
       });
     } else if (this.props.auth.user.id === this.props.game.player2.id) {
       const p2y = e.clientY - 217;
       this.setState({ p2y: p2y });
-      this.socket.emit("move y", {
-        coord: { p2y: p2y },
-        game: this.props.game._id
+      this.socket.emit("move", {
+        move: { p2y: p2y },
+        id: this.props.game._id
       });
     }
   }
 
-  update(c, cc) {
-    this.setState({ bx: this.state.bx + this.state.xv });
-    this.setState({ by: this.state.by + this.state.yv });
-
-    if (this.state.by < 0 && this.state.yv < 0) {
-      this.setState({ yv: -this.state.yv });
-    }
-    if (this.state.by > c.height && this.state.yv > 0) {
-      this.setState({ yv: -this.state.yv });
-    }
-    if (this.state.bx < 0) {
-      if (
-        this.state.by > this.state.p1y &&
-        this.state.by < this.state.p1y + this.state.ph
-      ) {
-        this.setState({ xv: -this.state.xv });
-
-        const dy = this.state.by - (this.state.p1y + this.state.ph / 2);
-        this.setState({ yv: dy * 0.3 });
-      } else {
-        this.setState({ score2: this.state.score2 + 1 });
-        this.socket.emit("score", {
-          game: this.props.game._id,
-          score: { score2: this.state.score2 }
-        });
-      }
-    }
-    if (this.state.bx > c.width) {
-      if (
-        this.state.by > this.state.p2y &&
-        this.state.by < this.state.p2y + this.state.ph
-      ) {
-        this.setState({ xv: -this.state.xv });
-
-        const dy = this.state.by - (this.state.p2y + this.state.ph / 2);
-        this.setState({ yv: dy * 0.3 });
-      } else {
-        this.setState({ score1: this.state.score1 + 1 });
-        this.socket.emit("score", {
-          game: this.props.game._id,
-          score: { score1: this.state.score1 }
-        });
-      }
-    }
-
+  update(cc) {
     cc.fillStyle = "black";
-    cc.fillRect(0, 0, c.width, c.height);
+    cc.fillRect(0, 0, this.state.width, this.state.height);
     cc.fillStyle = "white";
     cc.fillRect(0, this.state.p1y, this.state.pt, this.state.ph);
+
     cc.fillRect(
-      c.width - this.state.pt,
+      this.state.width - this.state.pt,
       this.state.p2y,
       this.state.pt,
       this.state.ph
     );
+
     cc.fillRect(
       this.state.bx - this.state.bd / 2,
       this.state.by - this.state.bd / 2,
