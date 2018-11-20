@@ -46,13 +46,13 @@ module.exports = function(io) {
                 score1: 0,
                 score2: 0,
                 width: 640,
-                height: 780
+                height: 480
               };
 
               intervals[updatedGame._id] = setInterval(() => {
                 update(games[updatedGame._id]);
                 pong.to(updatedGame._id).emit("update", games[updatedGame._id]);
-              }, 1000);
+              }, 1000 / 30);
             }
           })
           .catch(err => console.log(err));

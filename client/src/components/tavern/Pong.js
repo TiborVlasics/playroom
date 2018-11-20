@@ -20,7 +20,7 @@ class Pong extends Component {
       score1: 0,
       score2: 0,
       width: 640,
-      height: 780
+      height: 480
     };
 
     this.socket = io.connect(
@@ -92,7 +92,7 @@ class Pong extends Component {
   }
 
   update(cc) {
-    cc.fillStyle = "black";
+    cc.fillStyle = "#00000083";
     cc.fillRect(0, 0, this.state.width, this.state.height);
     cc.fillStyle = "white";
     cc.fillRect(0, this.state.p1y, this.state.pt, this.state.ph);
