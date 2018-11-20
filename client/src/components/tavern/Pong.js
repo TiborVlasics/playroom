@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
+import io from "socket.io-client";
 
 class Pong extends Component {
   constructor() {
@@ -20,45 +21,53 @@ class Pong extends Component {
       score2: 0
     };
 
+    this.socket = io.connect(
+      "/",
+      {
+        transports: ["polling", "websocket"],
+        query: { token: localStorage.jwtToken }
+      }
+    );
+
     this.onMouseMove = this.onMouseMove.bind(this);
   }
 
   componentDidMount() {
-    const c = this.refs.gc;
-    const cc = c.getContext("2d");
-    let run;
-
     this.props.getCurrentGame();
 
     if (!this.props.game.hasOwnProperty("_id")) {
       this.props.history.push("/dashboard");
+    } else {
+      const c = this.refs.gc;
+      const cc = c.getContext("2d");
+      let run;
+
+      this.socket.on("connect", () => {
+        this.socket.emit("ready to start", this.props.game);
+      });
+
+      this.socket.on("game started", game => {
+        this.props.setCurrentGame(game);
+      });
+
+      this.socket.on("move y", move => {
+        this.setState(move);
+      });
+
+      this.socket.on("ball to middle", data => {
+        this.setState(data.ballPosition);
+        this.setState(data.score);
+      });
+
+      if (this.props.game.isStarted === true) {
+        run = setInterval(() => this.update(c, cc), 1000 / 30);
+      }
+
+      this.socket.on("game over", data => {
+        console.log(data);
+        clearInterval(run);
+      });
     }
-
-    this.props.socket.on("connect", () => {
-      this.props.socket.emit("ready to start", this.props.game);
-    });
-
-    this.props.socket.on("game started", game => {
-      this.props.setCurrentGame(game);
-    });
-
-    this.props.socket.on("move y", move => {
-      this.setState(move);
-    });
-
-    this.props.socket.on("ball to middle", data => {
-      this.setState(data.ballPosition);
-      this.setState(data.score);
-    });
-
-    if (this.props.game.isStarted === true) {
-      run = setInterval(() => this.update(c, cc), 1000 / 30);
-    }
-
-    this.props.socket.on("game over", data => {
-      console.log(data);
-      clearInterval(run);
-    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -71,14 +80,14 @@ class Pong extends Component {
     if (this.props.auth.user.id === this.props.game.player1.id) {
       const p1y = e.clientY - 217;
       this.setState({ p1y: p1y });
-      this.props.socket.emit("move y", {
+      this.socket.emit("move y", {
         coord: { p1y: p1y },
         game: this.props.game._id
       });
     } else if (this.props.auth.user.id === this.props.game.player2.id) {
       const p2y = e.clientY - 217;
       this.setState({ p2y: p2y });
-      this.props.socket.emit("move y", {
+      this.socket.emit("move y", {
         coord: { p2y: p2y },
         game: this.props.game._id
       });
@@ -106,7 +115,7 @@ class Pong extends Component {
         this.setState({ yv: dy * 0.3 });
       } else {
         this.setState({ score2: this.state.score2 + 1 });
-        this.props.socket.emit("score", {
+        this.socket.emit("score", {
           game: this.props.game._id,
           score: { score2: this.state.score2 }
         });
@@ -123,7 +132,7 @@ class Pong extends Component {
         this.setState({ yv: dy * 0.3 });
       } else {
         this.setState({ score1: this.state.score1 + 1 });
-        this.props.socket.emit("score", {
+        this.socket.emit("score", {
           game: this.props.game._id,
           score: { score1: this.state.score1 }
         });
