@@ -22,7 +22,7 @@ class Pong extends Component {
     };
 
     this.socket = io.connect(
-      "/",
+      "/pong",
       {
         transports: ["polling", "websocket"],
         query: { token: localStorage.jwtToken }

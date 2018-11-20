@@ -25,21 +25,21 @@ module.exports = function(server) {
   });
 
   let connections = {};
+  const lobby = io.of("/");
 
-  io.on("connection", function(socket) {
+  lobby.on("connection", function(socket) {
     const user = socket.handshake.headers.user;
-    addSocketToConnections(connections, user, io, socket);
-    console.log("Connection", user.id, user.name);
+    addSocketToConnections(connections, user, lobby, socket);
+    console.log("Connection to lobby", user.id, user.name);
 
     socket.on("disconnect", function() {
-      deleteSocketFromConnections(connections, user, io, socket);
-      console.log("disconnection", user.id, user.name);
+      deleteSocketFromConnections(connections, user, lobby, socket);
+      console.log("Disconnection from lobby", user.id, user.name);
     });
 
-    require("./chat/chat.socket")(io, socket);
-    require("./tavern/tavern.socket")(io, socket, user, connections);
-    require("./tic-tac-toe/ticTacToe.socket")(io, socket, connections);
-    require("./pong/pong.socket")(io, socket, connections);
+    require("./chat/chat.socket")(lobby, socket);
+    require("./tavern/tavern.socket")(lobby, socket, user, connections);
+    require("./tic-tac-toe/ticTacToe.socket")(lobby, socket, connections);
 
     socket.on("get users", () => {
       let users = [];
@@ -47,9 +47,11 @@ module.exports = function(server) {
         users.push(connections[key].user);
       });
 
-      io.to(socket.id).emit("users", users);
+      lobby.to(socket.id).emit("users", users);
     });
   });
+
+  require("./pong/pong.socket")(io);
 
   return io;
 };

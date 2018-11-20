@@ -38,7 +38,7 @@ class Dashboard extends Component {
   }
 
   componentWillUnmount() {
-    this.socket.disconnect();
+    this.socket.close();
   }
 
   render() {
