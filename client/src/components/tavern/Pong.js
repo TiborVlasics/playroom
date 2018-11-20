@@ -32,6 +32,8 @@ class Pong extends Component {
     );
 
     this.onMouseMove = this.onMouseMove.bind(this);
+    this.clearCurrentGame = this.clearCurrentGame.bind(this);
+    this.surrender = this.surrender.bind(this);
   }
 
   componentDidMount() {
@@ -51,13 +53,13 @@ class Pong extends Component {
         this.props.setCurrentGame(game);
       });
 
+      this.socket.on("game ended", game => {
+        this.props.setCurrentGame(game);
+      });
+
       this.socket.on("update", move => {
         this.setState(move);
         this.update(cc);
-      });
-
-      this.socket.on("game over", data => {
-        console.log(data);
       });
     }
   }
@@ -91,8 +93,16 @@ class Pong extends Component {
     }
   }
 
+  surrender() {
+    this.socket.emit("surrender", this.props.game);
+  }
+
+  clearCurrentGame() {
+    this.props.setCurrentGame({});
+  }
+
   update(cc) {
-    cc.fillStyle = "#00000083";
+    cc.fillStyle = "rgba(0, 0, 0, 0.5)";
     cc.fillRect(0, 0, this.state.width, this.state.height);
     cc.fillStyle = "white";
     cc.fillRect(0, this.state.p1y, this.state.pt, this.state.ph);
@@ -113,11 +123,15 @@ class Pong extends Component {
   }
 
   render() {
+    const leaveBtn = <button onClick={this.clearCurrentGame}>Leave</button>;
+    const surrenderBtn = <button onClick={this.surrender}>Surrender</button>;
+
     return (
       <div>
         <div className="pong-scores">
           <span>{this.state.score1}</span>
           <span>{this.state.score2}</span>
+          {this.props.game.isEnded ? leaveBtn : surrenderBtn}
         </div>
         <canvas
           onPointerMove={this.onMouseMove}

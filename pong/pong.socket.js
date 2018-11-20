@@ -23,6 +23,7 @@ module.exports = function(io) {
 
     socket.on("join", game => {
       socket.join(game._id);
+
       if (!game.isStarted) {
         Pong.findOneAndUpdate(
           { _id: game._id },
@@ -107,21 +108,32 @@ module.exports = function(io) {
       games[data.id][moveKey] = data.move[moveKey];
     });
 
-    function onGameOver(game) {
+    const updateGameToEnded = game =>
       Pong.findOneAndUpdate(
         { _id: game._id },
         { $set: { isEnded: true } },
         { new: true }
-      )
-        .then(updatedGame => {
-          User.updateMany(
-            { currentGame: updatedGame._id },
-            { $set: { currentGame: null } }
-          )
-            .then(() => pong.to(game._id).emit("game over"))
-            .catch(err => console.log(err));
-        })
+      );
+
+    const updatePlayersCurrentGameToNull = game =>
+      User.updateMany(
+        { currentGame: game._id },
+        { $set: { currentGame: null } }
+      );
+
+    socket.on("surrender", game => {
+      clearInterval(intervals[game._id]);
+
+      // let { [game._id]: omit, ...gamesWithoutCurrent } = games;
+      // games = gamesWithoutCurrent;
+
+      updateGameToEnded(game)
+        .then(endedGame =>
+          updatePlayersCurrentGameToNull(endedGame)
+            .then(() => pong.to(endedGame._id).emit("game ended", game))
+            .catch(err => console.log(err))
+        )
         .catch(err => console.log(err));
-    }
+    });
   });
 };
