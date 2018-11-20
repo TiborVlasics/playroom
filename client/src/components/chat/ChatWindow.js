@@ -19,6 +19,7 @@ class Chat extends React.Component {
       users: []
     };
 
+    this.timer = null;
     this.messagesEnd = React.createRef();
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -81,10 +82,13 @@ class Chat extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.chat) setTimeout(() => this.scrollToBottom(), 500);
+    if (props.chat) this.timer = setTimeout(() => this.scrollToBottom(), 650);
   }
 
   componentWillUnmount() {
+    console.log("clearing timeout");
+    if (this.timer) clearTimeout(this.timer);
+
     this.props.socket.emit("user typing", {
       name: this.props.auth.user.name,
       isTyping: false

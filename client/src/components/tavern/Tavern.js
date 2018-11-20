@@ -43,7 +43,7 @@ class Tavern extends Component {
 
   componentWillUnmount() {
     const game = this.props.currentGame;
-    if (game && !game.isStarted) {
+    if (game && !game.isFull) {
       this.deleteGame(game);
     }
     this.props.clearGames();
@@ -83,6 +83,7 @@ class Tavern extends Component {
 Tavern.propTypes = {
   auth: PropTypes.object.isRequired,
   tavern: PropTypes.object.isRequired,
+  currentGame: PropTypes.object.isRequired,
   fetchGames: PropTypes.func.isRequired,
   loadNewGame: PropTypes.func.isRequired,
   unloadGame: PropTypes.func.isRequired,

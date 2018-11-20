@@ -8,11 +8,9 @@ import {
   Switch
 } from "react-router-dom";
 import jwt_decode from "jwt-decode";
-import io from "socket.io-client";
 import setAuthToken from "./helper/setAuthToken";
 
 import { setCurrentUser } from "./actions/authActions";
-import { getCurrentGame } from "./actions/gameActions";
 
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -36,37 +34,9 @@ if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
   const decoded = jwt_decode(localStorage.jwtToken);
   store.dispatch(setCurrentUser(decoded));
-  store.dispatch(getCurrentGame());
 }
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.socket = null;
-    if (this.props.auth.isAuthenticated) {
-      this.initSocketConnection();
-    }
-  }
-
-  initSocketConnection() {
-    this.socket = io.connect(
-      "/",
-      {
-        transports: ["polling", "websocket"],
-        query: { token: localStorage.jwtToken }
-      }
-    );
-  }
-
-  componentWillReceiveProps(props) {
-    if (props.auth.isAuthenticated === true) {
-      this.initSocketConnection();
-    } else if (props.auth.isAuthenticated === false) {
-      setTimeout(() => this.socket.close(), 1000);
-    }
-  }
-
   render() {
     return (
       <Router>
@@ -77,24 +47,9 @@ class App extends Component {
               <Route exact path="/" component={Login} />
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
-              <SecretRoute
-                exact
-                path="/dashboard"
-                component={Dashboard}
-                socket={this.socket}
-              />
-              <SecretRoute
-                exact
-                path="/tictactoe/:id"
-                component={TicTacToe}
-                socket={this.socket}
-              />
-              <SecretRoute
-                exact
-                path="/pong/:id"
-                component={Pong}
-                socket={this.socket}
-              />
+              <SecretRoute exact path="/dashboard" component={Dashboard} />
+              <SecretRoute exact path="/tictactoe/:id" component={TicTacToe} />
+              <SecretRoute exact path="/pong/:id" component={Pong} />
               <Route render={() => <Redirect to="/dashboard" />} />
             </Switch>
           </div>

@@ -8,7 +8,7 @@ export const LOAD_MESSAGES = "LOAD_MESSAGES";
 export const CLEAR_MESSAGES = "CLEAR_MESSAGES";
 export const CHAT_LOADING = "CHAT_LOADING";
 
-export const FETCH_GAMES = "FETCH_GAMES";
+export const LOAD_GAMES = "LOAD_GAMES";
 export const LOAD_NEW_GAME = "LOAD_NEW_GAME";
 export const UNLOAD_GAME = "UNLOAD_GAME";
 export const TAVERN_LOADING = "TAVERN_LOADING";

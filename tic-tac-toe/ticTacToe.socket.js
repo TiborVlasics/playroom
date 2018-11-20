@@ -19,10 +19,12 @@ module.exports = function(gameIo, socket, connections) {
         },
         { new: true }
       )
-        .then(updatedGame =>
-          gameIo.to(game._id).emit("game started", updatedGame)
-        )
+        .then(updatedGame => socket.emit("game started", updatedGame))
         .catch(err => console.log(err));
+    } else {
+      TicTacToe.findById({ _id: game._id }).then(game =>
+        socket.emit("game started", game)
+      );
     }
   });
 

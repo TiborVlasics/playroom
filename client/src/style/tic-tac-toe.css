@@ -15,7 +15,9 @@
   display: grid;
   grid-template-columns: 120px 120px 120px;
   grid-template-rows: 120px 120px 120px;
+  grid-gap: 2px;
   align-items: stretch;
+  background: #ffffffb9;
 }
 
 .tic-tac-toe .game-board div {

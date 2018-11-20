@@ -3,10 +3,19 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
 import Spinner from "../common/Spinner";
+import io from "socket.io-client";
 
 class TicTacToe extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.socket = io.connect(
+      "/",
+      {
+        transports: ["polling", "websocket"],
+        query: { token: localStorage.jwtToken }
+      }
+    );
 
     this.state = { isReplaying: false, replayBoard: null };
 
@@ -16,21 +25,19 @@ class TicTacToe extends Component {
   }
 
   componentDidMount() {
-    this.props.getCurrentGame();
-
-    if (!this.props.game.hasOwnProperty("_id")) {
+    if (!this.props.game._id) {
       this.props.history.push("/dashboard");
+    } else {
+      this.socket.emit("join room", this.props.game);
+
+      this.socket.on("game started", game => {
+        this.props.setCurrentGame(game);
+      });
+
+      this.socket.on("move", game => {
+        this.props.setCurrentGame(game);
+      });
     }
-
-    this.props.socket.emit("join room", this.props.game);
-
-    this.props.socket.on("game started", game => {
-      this.props.setCurrentGame(game);
-    });
-
-    this.props.socket.on("move", game => {
-      this.props.setCurrentGame(game);
-    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,9 +46,14 @@ class TicTacToe extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.props.setCurrentGame({});
+    this.socket.disconnect();
+  }
+
   move(game, index) {
     const data = { ...game, move: index };
-    this.props.socket.emit("move", data);
+    this.socket.emit("move", data);
   }
 
   leaveGame() {
