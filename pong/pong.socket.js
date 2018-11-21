@@ -65,7 +65,7 @@ module.exports = function(io) {
     });
 
     function update(game) {
-      console.log(game);
+      // console.log(game);
       game.bx = game.bx + game.xv;
       game.by = game.by + game.yv;
 
@@ -128,11 +128,11 @@ module.exports = function(io) {
       // games = gamesWithoutCurrent;
 
       updateGameToEnded(game)
-        .then(endedGame =>
+        .then(endedGame => {
           updatePlayersCurrentGameToNull(endedGame)
-            .then(() => pong.to(endedGame._id).emit("game ended", game))
-            .catch(err => console.log(err))
-        )
+            .then(() => pong.to(endedGame._id).emit("game ended", endedGame))
+            .catch(err => console.log(err));
+        })
         .catch(err => console.log(err));
     });
   });
