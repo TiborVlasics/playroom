@@ -6,3 +6,9 @@
   margin: 0 auto;
   width: 900px;
 }
+
+@media only screen and (max-width: 600px) {
+  .dashboard {
+    width: 600px;
+  }
+}

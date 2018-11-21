@@ -12,3 +12,13 @@ body {
   -o-background-size: cover;
   background-size: cover;
 }
+
+@media only screen and (max-width: 1000px) {
+  html {
+    background-position: center center;
+    height: 1000px;
+    width: 100%;
+    background-size: cover;
+    /* background-repeat: repeat; */
+  }
+}

@@ -1,5 +1,5 @@
 .users-bar {
-  height: 100vh;
+  height: 100%;
   z-index: 5;
   padding: 65px 10px;
   position: fixed;
