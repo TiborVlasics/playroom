@@ -1,4 +1,4 @@
-.chat {
+.chat-content {
   z-index: 10;
   position: fixed;
   bottom: 50px;
@@ -9,8 +9,11 @@
   overflow-x: hidden;
   color: #fbfbfb;
   font-family: "Raleway";
+  margin-bottom: 30px;
+  margin-left: 40px;
 }
-.chat::-webkit-scrollbar {
+
+.chat-content::-webkit-scrollbar {
   width: 1em;
 }
 
@@ -34,11 +37,6 @@
   outline: 0;
 }
 
-.chat-content {
-  margin-bottom: 30px;
-  margin-left: 40px;
-}
-
 .chat-table {
   display: inline-block;
 }
@@ -58,7 +56,7 @@
 
 .blurry-text {
   color: transparent;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
 }
 
 .message-container {
@@ -127,4 +125,33 @@
 .own-message img {
   float: left;
   vertical-align: bottom;
+}
+
+@media only screen and (max-width: 600px) {
+  .chat-content {
+    margin: 0 auto;
+    height: 80%;
+    margin: 0 auto;
+    bottom: 130px;
+    /* width: 80%; */
+    left: 140px;
+  }
+
+  .message-container {
+    width: 600px;
+  }
+
+  .message-text {
+    font-size: 20px;
+    /* width: 500px; */
+    /* margin: 0 auto; */
+  }
+
+  .chat-input {
+    left: 100px;
+    padding: 0;
+    height: 2em;
+    width: 100%;
+    font-size: 2em;
+  }
 }
