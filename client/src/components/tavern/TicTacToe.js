@@ -125,22 +125,18 @@ class TicTacToe extends Component {
     );
 
     return (
-      <div className="tic-tac-toe">
+      <div className="game-container">
         {opponent ? (
           <div className="opponent">
             <p>Your opponent:</p>
             <p>{opponent.name}</p>
-            <img
-              src={opponent.avatar}
-              alt="user avatar"
-              style={{ width: "50px" }}
-            />
+            <img src={opponent.avatar} alt="user avatar" />
           </div>
         ) : null}
 
         {game.isStarted ? (
           <div className="game">
-            <p>{message}</p>
+            <p className="info">{message}</p>
             <div className="game-board">{board}</div>
           </div>
         ) : (

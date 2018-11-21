@@ -127,7 +127,7 @@ class Pong extends Component {
     const surrenderBtn = <button onClick={this.surrender}>Surrender</button>;
 
     return (
-      <div>
+      <div className="game-container">
         <div className="pong-scores">
           <span>{this.state.score1}</span>
           <span>{this.state.score2}</span>

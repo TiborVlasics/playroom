@@ -1,5 +1,5 @@
 .games {
-  z-index: 8;
+  z-index: 200;
   width: 600px;
   font-size: 13px;
   float: right;
@@ -16,16 +16,12 @@
   color: black;
 }
 
-.pong {
+.pong-card {
   background: rgba(255, 255, 255, 0.329);
   color: #000000;
 }
 
-.pong-scores {
-  color: white;
-}
-
-.tictactoe {
+.tictactoe-card {
   background: rgba(210, 255, 208, 0.945);
 }
 
@@ -49,7 +45,6 @@
   .games {
     position: sticky;
     right: 0;
-    z-index: 200;
     width: 160px;
     font-size: 10px;
   }

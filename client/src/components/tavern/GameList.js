@@ -22,16 +22,14 @@ const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
         return (
           <div
             key={index}
-            className={game.kind === "pongs" ? "card pong" : "card tictactoe"}
+            className={
+              game.kind === "pongs" ? "card pong-card" : "card tictactoe-card"
+            }
           >
             <div className="card-header">
               {game._id === currentGame._id ? (
-                <button
-                  onClick={() => deleteGame(game)}
-                  className="btn btn-danger"
-                  style={{ fontSize: "20px", float: "right" }}
-                >
-                  &times;
+                <button onClick={() => deleteGame(game)} className="btn-delete">
+                  Cancel game
                 </button>
               ) : null}
               <h5 className="card-title">{game.kind}</h5>
