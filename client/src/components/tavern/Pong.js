@@ -102,7 +102,7 @@ class Pong extends Component {
   }
 
   update(cc) {
-    cc.fillStyle = "rgba(0, 0, 0, 0.5)";
+    cc.fillStyle = "black";
     cc.fillRect(0, 0, this.state.width, this.state.height);
     cc.fillStyle = "white";
     cc.fillRect(0, this.state.p1y, this.state.pt, this.state.ph);
