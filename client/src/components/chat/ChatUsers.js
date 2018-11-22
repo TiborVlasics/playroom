@@ -2,7 +2,7 @@ import React from "react";
 
 const ChatUsers = ({ users }) => (
   <div className="users-bar">
-    <p>online users:</p>
+    <p className="users-bar-header">online users:</p>
     {users.map((user, index) => {
       return (
         <div

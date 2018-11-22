@@ -23,3 +23,24 @@
   border-radius: 50px;
   width: 22px;
 }
+
+@media only screen and (max-width: 600px) {
+  .users-bar {
+    padding: 70px 0px;
+    background: none;
+    display: inline;
+  }
+
+  .users-bar-header {
+    display: inline;
+  }
+
+  .user img {
+    display: none;
+  }
+
+  .users-bar .user {
+    display: inline;
+    padding: 9px 0px 9px 10px;
+  }
+}

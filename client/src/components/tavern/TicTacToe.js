@@ -128,8 +128,8 @@ class TicTacToe extends Component {
       <div className="game-container">
         {opponent ? (
           <div className="opponent">
-            <p>Your opponent:</p>
-            <p>{opponent.name}</p>
+            <span>Your opponent:</span>
+            <span>{opponent.name}</span>
             <img src={opponent.avatar} alt="user avatar" />
           </div>
         ) : null}

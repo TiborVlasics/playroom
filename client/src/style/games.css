@@ -43,9 +43,26 @@
 
 @media only screen and (max-width: 600px) {
   .games {
-    position: sticky;
+    position: fixed;
+    overflow-y: auto;
+    overflow-x: hidden;
+    top: 120px;
     right: 0;
-    width: 160px;
+    height: 67%;
+    width: 140px;
+    font-size: 10px;
+  }
+}
+
+@media only screen and (max-height: 400px) {
+  .games {
+    position: fixed;
+    overflow-y: auto;
+    overflow-x: hidden;
+    top: 120px;
+    right: 0;
+    height: 40%;
+    width: 140px;
     font-size: 10px;
   }
 }

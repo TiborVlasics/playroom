@@ -70,7 +70,6 @@
 }
 
 .message-text {
-  text-align: left;
   word-wrap: break-word;
   background-color: #3e3e06c5;
   padding: 0.5px 15px 0.5px 15px;
@@ -99,8 +98,8 @@
 .own-message .message-text {
   background-color: #2f0d0de0;
   text-align: left;
-  position: relative;
-  left: 40px;
+  /* position: relative; */
+  /* left: 40px; */
 }
 
 .message-date {
@@ -110,8 +109,8 @@
 
 .own-message .message-date {
   float: right;
-  position: relative;
-  right: 40px;
+  /* position: relative;
+  right: 40px; */
 }
 
 .message-container img {
@@ -130,28 +129,44 @@
 @media only screen and (max-width: 600px) {
   .chat-content {
     margin: 0 auto;
-    height: 80%;
-    margin: 0 auto;
-    bottom: 130px;
-    /* width: 80%; */
-    left: 140px;
+    height: 60vh;
+    bottom: 70px;
+    left: 0px;
+    width: 200px;
   }
 
   .message-container {
-    width: 600px;
+    width: 200px;
   }
 
   .message-text {
-    font-size: 20px;
-    /* width: 500px; */
-    /* margin: 0 auto; */
+    font-size: 13px;
   }
 
   .chat-input {
-    left: 100px;
-    padding: 0;
-    height: 2em;
+    left: 0;
+    bottom: 0px;
+    padding-left: 10px;
+    height: 50px;
     width: 100%;
-    font-size: 2em;
+    font-size: 25px;
+  }
+
+  .shadow-messages {
+    display: none;
+  }
+
+  .message-text {
+    text-align: left;
+  }
+}
+
+@media only screen and (max-height: 400px) {
+  .chat-content {
+    margin: 0 auto;
+    height: 30vh;
+    bottom: 70px;
+    left: 0px;
+    width: 200px;
   }
 }
