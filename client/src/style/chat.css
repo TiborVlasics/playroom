@@ -72,12 +72,12 @@
 
 .message-text {
   word-wrap: break-word;
-  background-color: #3e3e06c5;
+  background-color: #3e3e06e5;
   padding: 0.5px 15px 0.5px 15px;
   font-size: 13px;
   width: 250px;
   text-align: right;
-  color: white;
+  color: #ffffffde;
   font-size: 15px;
 }
 
@@ -97,7 +97,7 @@
 }
 
 .own-message .message-text {
-  background-color: #2f0d0de0;
+  background-color: #2f0d0de5;
   text-align: left;
 }
 

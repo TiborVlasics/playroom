@@ -13,21 +13,37 @@
 
 .card {
   margin: 0 auto;
-  color: black;
+  margin-bottom: 20px;
+  color: #ffffff88;
+}
+
+.card-header {
+  display: inline-flex;
+  justify-content: space-between;
 }
 
 .pong-card {
-  background: rgba(36, 90, 134, 0.712);
-  color: #000000;
+  background: rgba(36, 90, 134, 0.95);
 }
 
 .tictactoe-card {
-  background: rgba(12, 83, 66, 0.745);
+  background: rgba(12, 83, 66, 0.95);
 }
 
 .new-game-card {
   background: none;
   color: #ffffff;
+}
+
+.card-player {
+  margin-left: 20px;
+  display: inline;
+}
+
+.card-player img {
+  max-width: 25px;
+  border-radius: 100%;
+  margin-left: 10px;
 }
 
 .hidden-button {
@@ -76,5 +92,14 @@
     height: 40%;
     width: 140px;
     font-size: 10px;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: stretch;
+  }
+
+  .card-player {
+    display: block;
   }
 }
