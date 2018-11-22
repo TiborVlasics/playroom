@@ -102,7 +102,6 @@ class Chat extends React.Component {
       <div className="chat">
         <div className="chat-content">
           <ChatUsers users={this.state.users} />
-          <Messages scrollToBottom={this.scrollToBottom} />
           <div className="shadow-messages">
             {Object.keys(this.state.usersTyping).map((user, index) => (
               <div key={index} className="shadow-message">
@@ -115,6 +114,8 @@ class Chat extends React.Component {
               </div>
             ))}
           </div>
+          <Messages scrollToBottom={this.scrollToBottom} />
+
           <div ref={this.messagesEnd} />
         </div>
         <form onSubmit={this.handleSubmit}>

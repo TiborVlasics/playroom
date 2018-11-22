@@ -17,12 +17,12 @@
 }
 
 .pong-card {
-  background: rgba(255, 255, 255, 0.329);
+  background: rgba(36, 90, 134, 0.712);
   color: #000000;
 }
 
 .tictactoe-card {
-  background: rgba(210, 255, 208, 0.945);
+  background: rgba(12, 83, 66, 0.745);
 }
 
 .new-game-card {
@@ -34,14 +34,13 @@
   display: none;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1370px) {
   .games {
     width: 400px;
-    font-size: 10px;
   }
 }
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 1040px) {
   .games {
     position: fixed;
     overflow-y: auto;

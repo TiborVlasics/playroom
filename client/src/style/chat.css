@@ -2,15 +2,14 @@
   z-index: 10;
   position: fixed;
   bottom: 50px;
-  left: 130px;
-  width: 410px;
+  left: 100px;
+  width: 450px;
   height: 80vh;
   overflow-y: auto;
   overflow-x: hidden;
   color: #fbfbfb;
   font-family: "Raleway";
-  margin-bottom: 30px;
-  margin-left: 40px;
+  background: #00000077;
 }
 
 .chat-content::-webkit-scrollbar {
@@ -20,10 +19,10 @@
 .chat-input {
   position: fixed;
   bottom: 0;
-  left: 130px;
+  left: 100px;
   height: 50px;
   font-size: 15px;
-  width: 410px;
+  width: 450px;
   border: 0;
   border-top: 1px solid #f2f2f2;
   padding: 20px;
@@ -43,8 +42,9 @@
 }
 
 .shadow-messages {
-  width: 15%;
+  width: 30%;
   display: inline-block;
+  margin-left: 30px;
 }
 
 .shadow-message {
@@ -121,6 +121,21 @@
 .own-message img {
   float: left;
   vertical-align: bottom;
+}
+
+@media only screen and (max-width: 880px) {
+  .shadow-messages {
+    display: none;
+  }
+
+  .chat-content,
+  .chat-input {
+    width: 300px;
+  }
+
+  .chat-table {
+    margin: 0 auto;
+  }
 }
 
 @media only screen and (max-width: 600px) {
