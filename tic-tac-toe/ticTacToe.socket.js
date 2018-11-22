@@ -2,9 +2,15 @@ const TicTacToe = require("./TicTacToe.model");
 const User = require("../user/User");
 const { updateGame } = require("./ticTacToe.functions");
 
-module.exports = function(gameIo, socket, connections) {
-  socket.on("join room", game => {
+module.exports = function(io, socket, connections) {
+  socket.on("subscribe", game => {
     socket.join(game._id);
+
+    io.in(game._id).clients((error, clients) => {
+      if (error) throw error;
+      console.log("clients in room", clients);
+    });
+
     if (!game.isStarted) {
       TicTacToe.findOneAndUpdate(
         { _id: game._id },
@@ -44,14 +50,14 @@ module.exports = function(gameIo, socket, connections) {
       { new: true }
     )
       .then(updatedGame => {
-        gameIo.to(game._id).emit("move", updatedGame);
+        io.to(game._id).emit("move", updatedGame);
 
         if (updatedGame.isEnded) {
           User.updateMany(
             { currentGame: updatedGame._id },
             { $set: { currentGame: null } }
           )
-            .then(() => gameIo.to(game._id).emit("game ended"))
+            .then(() => io.to(game._id).emit("game ended"))
             .catch(err => console.log(err));
         }
       })

@@ -46,7 +46,7 @@ class Pong extends Component {
       const cc = c.getContext("2d");
 
       this.socket.on("connect", () => {
-        this.socket.emit("join", this.props.game);
+        this.socket.emit("subscribe", this.props.game);
       });
 
       this.socket.on("game started", game => {

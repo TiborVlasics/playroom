@@ -28,7 +28,7 @@ class TicTacToe extends Component {
     if (!this.props.game._id) {
       this.props.history.push("/dashboard");
     } else {
-      this.socket.emit("join room", this.props.game);
+      this.socket.emit("subscribe", this.props.game);
 
       this.socket.on("game started", game => {
         this.props.setCurrentGame(game);

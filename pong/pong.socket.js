@@ -21,7 +21,7 @@ module.exports = function(io) {
       console.log("Disconnection from pong", user.id, user.name);
     });
 
-    socket.on("join", game => {
+    socket.on("subscribe", game => {
       socket.join(game._id);
 
       if (!game.isStarted) {
@@ -65,7 +65,6 @@ module.exports = function(io) {
     });
 
     function update(game) {
-      // console.log(game);
       game.bx = game.bx + game.xv;
       game.by = game.by + game.yv;
 
