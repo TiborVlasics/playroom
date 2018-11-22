@@ -41,7 +41,20 @@
   }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
+  .games {
+    position: fixed;
+    overflow-y: auto;
+    overflow-x: hidden;
+    top: 120px;
+    right: 0;
+    height: 67%;
+    width: 300px;
+    font-size: 10px;
+  }
+}
+
+@media only screen and (max-width: 740px) {
   .games {
     position: fixed;
     overflow-y: auto;
@@ -54,7 +67,7 @@
   }
 }
 
-@media only screen and (max-height: 400px) {
+@media only screen and (max-height: 400px) and (max-width: 740px) {
   .games {
     position: fixed;
     overflow-y: auto;

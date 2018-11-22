@@ -98,8 +98,6 @@
 .own-message .message-text {
   background-color: #2f0d0de0;
   text-align: left;
-  /* position: relative; */
-  /* left: 40px; */
 }
 
 .message-date {
@@ -109,8 +107,6 @@
 
 .own-message .message-date {
   float: right;
-  /* position: relative;
-  right: 40px; */
 }
 
 .message-container img {
@@ -161,12 +157,16 @@
   }
 }
 
-@media only screen and (max-height: 400px) {
+@media only screen and (max-height: 400px) and (max-width: 600px) {
   .chat-content {
     margin: 0 auto;
     height: 30vh;
     bottom: 70px;
     left: 0px;
     width: 200px;
+  }
+
+  .shadow-messages {
+    display: none;
   }
 }
