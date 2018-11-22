@@ -15,9 +15,7 @@ app.use("/api/games", require("./tavern/tavern.routes"));
 
 mongoose
   .connect(
-    `mongodb://${process.env.DB_USERNAME}:${
-      process.env.DB_PASSWORD
-    }@cluster0-shard-00-00-52ie2.mongodb.net:27017,cluster0-shard-00-01-52ie2.mongodb.net:27017,cluster0-shard-00-02-52ie2.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true`,
+    process.env.MONGO_URI,
     { useNewUrlParser: true }
   )
   .then(() => console.log("Mongodb connected"))
