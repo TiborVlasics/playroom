@@ -1,4 +1,4 @@
-const TicTacToe = require("../tic-tac-toe/TicTacToe.model");
+const TicTacToe = require("../tic-tac-toe/TicTacToe");
 const User = require("../user/User");
 
 function createTicTacToe(player) {

@@ -30,7 +30,7 @@ class TicTacToe extends Component {
     } else {
       this.socket.emit("subscribe", this.props.game);
 
-      this.socket.on("game started", game => {
+      this.socket.on("serve game", game => {
         this.props.setCurrentGame(game);
       });
 

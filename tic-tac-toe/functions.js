@@ -7,11 +7,13 @@ const mapGameStringToArray = game => {
 
 const applyMove = game => {
   const gameArray = game.gameArray.slice();
+
   if (game.player1.id === game.nextPlayer) {
     gameArray[game.move] = game.player1.symbol;
   } else {
     gameArray[game.move] = game.player2.symbol;
   }
+
   return { ...game, gameArray: gameArray };
 };
 
@@ -33,7 +35,8 @@ const mapGameArrayToMatrix = game => {
 };
 
 const mapMoveToIndexes = game => {
-  count = 0;
+  let count = 0;
+
   for (let i = 0; i < game.gameMatrix.length; i++) {
     for (let j = 0; j < game.gameMatrix[i].length; j++) {
       if (count === game.move) {
@@ -104,6 +107,7 @@ const evaluateGame = game => {
       continue;
     }
   }
+
   return { ...game };
 };
 
@@ -133,34 +137,26 @@ const setNextPlayer = game => {
 
 const mapGameArrayToString = game => {
   const gameState = game.gameArray.join("");
+
   return { ...game, gameString: gameState };
 };
 
-/**
- * TODO: write unit tests
- * @param {*} game
- */
 const removeGameArrayAndMatrixFromGameObject = game => {
   const { gameMatrix: omit, gameArray: omit1, ...gameWithoutArrays } = game;
+
   return gameWithoutArrays;
 };
 
-/**
- * TODO: write unit tests
- * @param {*} game
- */
 const removePlayersFromGameObject = game => {
   const { player1: omit, player2: omit1, ...gameWithoutPlayers } = game;
+
   return gameWithoutPlayers;
 };
 
-/**
- * TODO: write unit tests
- * @param {*} game
- */
-const removeBoardStateFromGameObject = game => {
-  const { boardState: omit, ...updatedGame } = game;
-  return updatedGame;
+const addGameStringToBoardState = game => {
+  const newBoardState = game.boardState.concat(game.gameString);
+
+  return { ...game, boardState: newBoardState };
 };
 
 const compose = (...fns) => arg =>
@@ -172,7 +168,7 @@ const compose = (...fns) => arg =>
  * with an initial game parameter
  * @returns a new function awaiting a Game object as param
  */
-const updateGame = compose(
+const calculate = compose(
   mapGameStringToArray,
   applyMove,
   mapGameArrayToMatrix,
@@ -183,7 +179,7 @@ const updateGame = compose(
   mapGameArrayToString,
   removeGameArrayAndMatrixFromGameObject,
   removePlayersFromGameObject,
-  removeBoardStateFromGameObject
+  addGameStringToBoardState
 );
 
 module.exports = {
@@ -195,5 +191,5 @@ module.exports = {
   checkIfGameIsADraw,
   setNextPlayer,
   mapGameArrayToString,
-  updateGame
+  calculate
 };
