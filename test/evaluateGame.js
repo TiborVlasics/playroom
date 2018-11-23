@@ -1,7 +1,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 const assert = chai.assert;
-const { evaluateGame } = require("../tic-tac-toe/ticTacToe.functions");
+const { evaluateGame } = require("../tic-tac-toe/functions");
 
 describe("Evaluate game", () => {
   it("Game object should not be mutated", () => {

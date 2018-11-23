@@ -1,7 +1,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 const assert = chai.assert;
-const { updateGame } = require("../tic-tac-toe/ticTacToe.functions");
+const { calculate } = require("../tic-tac-toe/functions");
 
 describe("Update game (calling all 11 functions composed)", () => {
   it("Game object should remain unmutated", () => {
@@ -30,7 +30,7 @@ describe("Update game (calling all 11 functions composed)", () => {
       __v: 0
     };
 
-    const updatedGame = updateGame(game);
+    const updatedGame = calculate(game);
     expect(game).to.not.have.property("gameString");
   });
 
@@ -59,8 +59,15 @@ describe("Update game (calling all 11 functions composed)", () => {
       createdDate: "2018-10-25T13:57:15.810Z",
       __v: 0
     };
-    const updatedGame = updateGame(game);
+    const updatedGame = calculate(game);
     assert.deepEqual(updatedGame, {
+      boardState: [
+        "?????????",
+        "?X???????",
+        "?X?O?????",
+        "?XXO?????",
+        "OXXO?????"
+      ],
       isStarted: true,
       gameString: "OXXO?????",
       isEnded: false,
@@ -105,8 +112,17 @@ describe("Update game (calling all 11 functions composed)", () => {
       createdDate: "2018-10-25T13:57:15.810Z",
       __v: 0
     };
-    const updatedGame = updateGame(game);
+    const updatedGame = calculate(game);
     assert.deepEqual(updatedGame, {
+      boardState: [
+        "?????????",
+        "?X???????",
+        "?X?O?????",
+        "?XXO?????",
+        "?XXOO????",
+        "XXXOO????"
+      ],
+
       isStarted: true,
       gameString: "XXXOO????",
       isEnded: true,
@@ -155,8 +171,20 @@ describe("Update game (calling all 11 functions composed)", () => {
       createdDate: "2018-10-25T13:57:15.810Z",
       __v: 0
     };
-    const updatedGame = updateGame(game);
+    const updatedGame = calculate(game);
     assert.deepEqual(updatedGame, {
+      boardState: [
+        "?????????",
+        "?X???????",
+        "?X?O?????",
+        "?XXO?????",
+        "?XX?OO???",
+        "?XXXOO???",
+        "OXXXOO???",
+        "OXXXOOX??",
+        "OXXXOOXO?",
+        "OXXXOOXOX"
+      ],
       isStarted: true,
       gameString: "OXXXOOXOX",
       isEnded: true,

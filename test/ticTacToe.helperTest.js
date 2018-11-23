@@ -9,7 +9,7 @@ const {
   checkIfGameIsADraw,
   setNextPlayer,
   mapGameArrayToString
-} = require("../tic-tac-toe/ticTacToe.functions");
+} = require("../tic-tac-toe/functions");
 
 describe("Map game's latest state to a matrix, and include it in the returned game object", () => {
   let game;
