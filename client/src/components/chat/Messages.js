@@ -10,6 +10,7 @@ class Messages extends React.Component {
 
     const chatTable = (
       <div>
+        {loading ? <Spinner /> : null}
         {messages.map(message => (
           <div
             key={message._id}
@@ -33,9 +34,7 @@ class Messages extends React.Component {
       </div>
     );
 
-    return (
-      <div className="chat-table">{loading ? <Spinner /> : chatTable}</div>
-    );
+    return <div className="chat-table">{chatTable}</div>;
   }
 }
 

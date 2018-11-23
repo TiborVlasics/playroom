@@ -19,14 +19,23 @@ class Chat extends React.Component {
       users: []
     };
 
-    this.timer = null;
+    this.height = null;
+    this.chat = React.createRef();
     this.messagesEnd = React.createRef();
     this.setNewMessage = this.setNewMessage.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onScroll = this.onScroll.bind(this);
   }
 
   scrollToBottom() {
-    this.messagesEnd.current.scrollIntoView({ behavior: "smooth" });
+    this.messagesEnd.current.scrollIntoView({ behavior: "instant" });
+  }
+
+  onScroll(e) {
+    if (e.target.scrollTop === 0) {
+      const messagesCount = this.props.chat.messages.length;
+      this.props.loadMessages(messagesCount);
+    }
   }
 
   componentCleanup() {
@@ -39,7 +48,7 @@ class Chat extends React.Component {
   componentDidMount() {
     window.addEventListener("beforeunload", this.componentCleanup);
 
-    this.props.loadMessages();
+    this.props.loadMessages(0);
 
     this.props.socket.on("chat", message => {
       this.props.addMessage(message);
@@ -82,13 +91,16 @@ class Chat extends React.Component {
   }
 
   componentWillReceiveProps(props) {
-    if (props.chat) this.timer = setTimeout(() => this.scrollToBottom(), 650);
+    this.height = this.chat.current.scrollHeight;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.chat.messages !== this.props.chat.messages)
+      this.chat.current.scrollTop =
+        this.chat.current.scrollHeight - this.height;
   }
 
   componentWillUnmount() {
-    console.log("clearing timeout");
-    if (this.timer) clearTimeout(this.timer);
-
     this.props.socket.emit("user typing", {
       name: this.props.auth.user.name,
       isTyping: false
@@ -100,7 +112,7 @@ class Chat extends React.Component {
   render() {
     return (
       <div className="chat">
-        <div className="chat-content">
+        <div ref={this.chat} className="chat-content" onScroll={this.onScroll}>
           <ChatUsers users={this.state.users} />
           <div className="shadow-messages">
             {Object.keys(this.state.usersTyping).map((user, index) => (
@@ -114,7 +126,7 @@ class Chat extends React.Component {
               </div>
             ))}
           </div>
-          <Messages scrollToBottom={this.scrollToBottom} />
+          <Messages />
 
           <div ref={this.messagesEnd} />
         </div>

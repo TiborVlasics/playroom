@@ -13,9 +13,13 @@ const initialState = {
 export default function messageReducer(state = initialState, action = {}) {
   switch (action.type) {
     case CHAT_LOADING:
-      return { ...state, loading: true, messages: [] };
+      return { ...state, loading: true };
     case LOAD_MESSAGES:
-      return { ...state, messages: action.payload, loading: false };
+      return {
+        ...state,
+        messages: [...action.payload, ...state.messages],
+        loading: false
+      };
     case ADD_MESSAGE:
       if (
         state.messages.length !== 0 &&
