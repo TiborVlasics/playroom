@@ -182,14 +182,4 @@ const calculate = compose(
   addGameStringToBoardState
 );
 
-module.exports = {
-  mapGameStringToArray,
-  applyMove,
-  mapGameArrayToMatrix,
-  mapMoveToIndexes,
-  evaluateGame,
-  checkIfGameIsADraw,
-  setNextPlayer,
-  mapGameArrayToString,
-  calculate
-};
+module.exports = { calculate };

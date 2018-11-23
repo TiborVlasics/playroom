@@ -8,7 +8,7 @@
  * @param: {object} socket                socket object
  * @param: {string} namespace             used for logging
  */
-function deleteSocketFromConnections(currentConnections, user, io, socket) {
+function removeSocket(currentConnections, user, io, socket) {
   if (currentConnections[user.id].sockets.length === 1) {
     delete currentConnections[user.id];
     io.emit("user left", user);
@@ -29,7 +29,7 @@ function deleteSocketFromConnections(currentConnections, user, io, socket) {
  * @param: {object} socket                socket object
  * @param: {string} namespace             used for logging
  */
-function addSocketToConnections(currentConnections, user, io, socket) {
+function addSocket(currentConnections, user, io, socket) {
   if (currentConnections.hasOwnProperty(user.id)) {
     currentConnections[user.id].sockets.push(socket);
   } else {
@@ -42,6 +42,6 @@ function addSocketToConnections(currentConnections, user, io, socket) {
 }
 
 module.exports = {
-  deleteSocketFromConnections,
-  addSocketToConnections
+  removeSocket,
+  addSocket
 };

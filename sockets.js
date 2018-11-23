@@ -1,7 +1,4 @@
-const {
-  addSocketToConnections,
-  deleteSocketFromConnections
-} = require("./helper/socketHelper");
+const { addSocket, removeSocket } = require("./helper/socketHelper");
 const jwt = require("jsonwebtoken");
 
 module.exports = function(server) {
@@ -29,11 +26,11 @@ module.exports = function(server) {
 
   lobby.on("connection", function(socket) {
     const user = socket.handshake.headers.user;
-    addSocketToConnections(connections, user, lobby, socket);
+    addSocket(connections, user, lobby, socket);
     console.log("Connection to lobby", user.id, user.name);
 
     socket.on("disconnect", function() {
-      deleteSocketFromConnections(connections, user, lobby, socket);
+      removeSocket(connections, user, lobby, socket);
       console.log("Disconnection from lobby", user.id, user.name);
     });
 
@@ -51,7 +48,7 @@ module.exports = function(server) {
     });
   });
 
-  require("./pong/pong.socket")(io);
+  require("./pong/controller")(io);
 
   return io;
 };
