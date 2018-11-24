@@ -50,6 +50,10 @@
   display: none;
 }
 
+.btn-cancel {
+  background: #9c4a4a;
+}
+
 @media only screen and (max-width: 1370px) {
   .games {
     width: 400px;

@@ -35,7 +35,7 @@ const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
                 Join game
               </button>
               {game._id === currentGame._id ? (
-                <button onClick={() => deleteGame(game)} className="btn-delete">
+                <button onClick={() => deleteGame(game)} className="btn-cancel">
                   Cancel game
                 </button>
               ) : null}
