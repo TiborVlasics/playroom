@@ -46,7 +46,7 @@ class Navbar extends Component {
       <nav className="nav">
         <div className="nav-content">
           <div className="nav-logo">
-            <Link to="/dashboard">Tic-tac-toe Playroom</Link>
+            <Link to="/dashboard">playRoom</Link>
           </div>
           {isAuthenticated ? authLinks : guestLinks}
         </div>
