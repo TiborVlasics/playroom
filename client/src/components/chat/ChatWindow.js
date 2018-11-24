@@ -109,6 +109,41 @@ class Chat extends React.Component {
     this.props.clearMessages();
   }
 
+  setNewMessage(event) {
+    this.setState({
+      newMessage: event.target.value
+    });
+    if (event.target.value !== "") {
+      this.props.socket.emit("user typing", {
+        name: this.props.auth.user.name,
+        text: event.target.value,
+        isTyping: true
+      });
+    } else {
+      this.props.socket.emit("user typing", {
+        name: this.props.auth.user.name,
+        text: event.target.value,
+        isTyping: false
+      });
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.socket.emit("chat", {
+      author: this.props.auth.user,
+      text: this.state.newMessage,
+      timestamp: new Date().toISOString()
+    });
+    this.setState({
+      newMessage: ""
+    });
+    this.props.socket.emit("user typing", {
+      name: this.props.auth.user.name,
+      isTyping: false
+    });
+  }
+
   render() {
     return (
       <div className="chat">
@@ -145,41 +180,6 @@ class Chat extends React.Component {
         </form>
       </div>
     );
-  }
-
-  setNewMessage(event) {
-    this.setState({
-      newMessage: event.target.value
-    });
-    if (event.target.value !== "") {
-      this.props.socket.emit("user typing", {
-        name: this.props.auth.user.name,
-        text: event.target.value,
-        isTyping: true
-      });
-    } else {
-      this.props.socket.emit("user typing", {
-        name: this.props.auth.user.name,
-        text: event.target.value,
-        isTyping: false
-      });
-    }
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
-    this.props.socket.emit("chat", {
-      author: this.props.auth.user,
-      text: this.state.newMessage,
-      timestamp: new Date().toISOString()
-    });
-    this.setState({
-      newMessage: ""
-    });
-    this.props.socket.emit("user typing", {
-      name: this.props.auth.user.name,
-      isTyping: false
-    });
   }
 }
 
