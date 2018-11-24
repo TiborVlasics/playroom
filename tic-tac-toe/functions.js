@@ -111,6 +111,82 @@ const evaluateGame = game => {
   return { ...game };
 };
 
+/**
+ *
+ * @param {*} game Gomoku game, where 5
+ */
+const evaluateGomoku = game => {
+  const move = game.move;
+  const matrix = game.gameMatrix;
+  const symbol = matrix[move.x][move.y];
+
+  for (let i = 0; i < 5; i++) {
+    try {
+      if (
+        matrix[move.x + 4 - i][move.y] === symbol &&
+        matrix[move.x + 3 - i][move.y] === symbol &&
+        matrix[move.x + 2 - i][move.y] === symbol &&
+        matrix[move.x + 1 - i][move.y] === symbol &&
+        matrix[move.x - i][move.y] === symbol
+      ) {
+        return { ...game, winner: game.nextPlayer, isEnded: true };
+      }
+    } catch (err) {
+      continue;
+    }
+  }
+
+  for (let i = 0; i < 5; i++) {
+    try {
+      if (
+        matrix[move.x + 4 - i][move.y - 4 + i] === symbol &&
+        matrix[move.x + 3 - i][move.y - 3 + i] === symbol &&
+        matrix[move.x + 2 - i][move.y - 2 + i] === symbol &&
+        matrix[move.x + 1 - i][move.y - 1 + i] === symbol &&
+        matrix[move.x - i][move.y + i] === symbol
+      ) {
+        return { ...game, winner: game.nextPlayer, isEnded: true };
+      }
+    } catch (err) {
+      continue;
+    }
+  }
+
+  for (let i = 0; i < 5; i++) {
+    try {
+      if (
+        matrix[move.x][move.y - 4 + i] === symbol &&
+        matrix[move.x][move.y - 3 + i] === symbol &&
+        matrix[move.x][move.y - 2 + i] === symbol &&
+        matrix[move.x][move.y - 1 + i] === symbol &&
+        matrix[move.x][move.y + i] === symbol
+      ) {
+        return { ...game, winner: game.nextPlayer, isEnded: true };
+      }
+    } catch (err) {
+      continue;
+    }
+  }
+
+  for (let i = 0; i < 5; i++) {
+    try {
+      if (
+        matrix[move.x - 4 + i][move.y - 4 + i] === symbol &&
+        matrix[move.x - 3 + i][move.y - 3 + i] === symbol &&
+        matrix[move.x - 2 + i][move.y - 2 + i] === symbol &&
+        matrix[move.x - 1 + i][move.y - 1 + i] === symbol &&
+        matrix[move.x + i][move.y + i] === symbol
+      ) {
+        return { ...game, winner: game.nextPlayer, isEnded: true };
+      }
+    } catch (err) {
+      continue;
+    }
+  }
+
+  return { ...game };
+};
+
 const checkIfGameIsADraw = game => {
   if (game.winner === null) {
     if (game.gameArray.some(symbol => symbol === "?")) {
@@ -124,7 +200,7 @@ const checkIfGameIsADraw = game => {
 };
 
 const setNextPlayer = game => {
-  if (game.isEnded === false) {
+  if (!game.isEnded) {
     if (game.player1.id === game.nextPlayer) {
       return { ...game, nextPlayer: game.player2.id };
     } else {
@@ -173,7 +249,7 @@ const calculate = compose(
   applyMove,
   mapGameArrayToMatrix,
   mapMoveToIndexes,
-  evaluateGame,
+  evaluateGomoku,
   checkIfGameIsADraw,
   setNextPlayer,
   mapGameArrayToString,
