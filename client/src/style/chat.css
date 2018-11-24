@@ -1,4 +1,5 @@
 .chat-content {
+  /* direction: rtl; */
   z-index: 10;
   position: fixed;
   bottom: 50px;
@@ -12,21 +13,34 @@
   background: #00000077;
 }
 
-/* .chat-content::-webkit-scrollbar {
-  width: 1em;
-} */
+.chat-content::-webkit-scrollbar {
+  width: 9px;
+}
+
+.chat-content::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.986);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.986);
+  background-color: rgb(13, 209, 7);
+}
+
+.chat-content::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.979);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.979);
+  border-radius: 10px;
+  background-color: #f5000011;
+}
 
 .chat-input {
   position: fixed;
   bottom: 0;
   left: 100px;
   height: 50px;
-  font-size: 15px;
+  font-size: 17px;
   width: 450px;
   border: 0;
-  border-top: 1px solid #f2f2f2;
   padding: 20px;
   z-index: 110;
+  background: #000000cc;
 }
 
 .chat-input::-webkit-input-placeholder {
@@ -35,6 +49,7 @@
 
 .chat-input:focus {
   outline: 0;
+  color: #909090;
 }
 
 .chat-table {
@@ -68,13 +83,14 @@
 .message-name {
   text-align: left;
   font-size: 12px;
+  font-weight: bold;
 }
 
 .message-text {
   word-wrap: break-word;
   background-color: #3e3e06e5;
   padding: 0.5px 15px 0.5px 15px;
-  font-size: 13px;
+  font-size: 14px;
   width: 250px;
   text-align: right;
   color: #ffffffde;
