@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
 import Spinner from "../common/Spinner";
+import Hourglass from "../common/Hourglass-spinner";
 import io from "socket.io-client";
 
 class TicTacToe extends Component {
@@ -22,6 +23,7 @@ class TicTacToe extends Component {
     this.move = this.move.bind(this);
     this.leaveGame = this.leaveGame.bind(this);
     this.replay = this.replay.bind(this);
+    this.surrender = this.surrender.bind(this);
   }
 
   componentDidMount() {
@@ -31,10 +33,6 @@ class TicTacToe extends Component {
       this.socket.emit("subscribe", this.props.game);
 
       this.socket.on("serve game", game => {
-        this.props.setCurrentGame(game);
-      });
-
-      this.socket.on("move", game => {
         this.props.setCurrentGame(game);
       });
     }
@@ -60,6 +58,10 @@ class TicTacToe extends Component {
     this.props.setCurrentGame({});
   }
 
+  surrender() {
+    this.socket.emit("surrender", this.props.game);
+  }
+
   replay(index) {
     setTimeout(() => {
       if (!this.state.isReplaying) this.setState({ isReplaying: true });
@@ -69,7 +71,7 @@ class TicTacToe extends Component {
       } else {
         this.setState({ isReplaying: false });
       }
-    }, 1000);
+    }, 500);
   }
 
   render() {
@@ -79,6 +81,9 @@ class TicTacToe extends Component {
       game.player1 && game.player1.id === auth.user.id
         ? game.player2
         : game.player1;
+
+    const isYourTurn = game.nextPlayer === auth.user.id;
+    const isOpponentsTurn = game.nextPlayer && game.nextPlayer !== auth.user.id;
 
     const board = this.state.replayBoard
       ? this.state.replayBoard
@@ -110,39 +115,44 @@ class TicTacToe extends Component {
         message = "Looser...";
       }
     } else {
-      if (game.nextPlayer === auth.user.id) {
+      if (isYourTurn) {
         message = "It's your turn";
       } else {
         message = "It's your opponents turn";
       }
     }
 
-    const endGamePanel = (
-      <div>
-        <button onClick={() => this.replay(0)}>Replay</button>
-        <button onClick={this.leaveGame}>Leave</button>
-      </div>
-    );
+    const replayBtn = <button onClick={() => this.replay(0)}>Replay</button>;
+    const leaveBtn = <button onClick={this.leaveGame}>Leave</button>;
+    const surrenderBtn = <button onClick={this.surrender}>Surrender</button>;
 
     return (
       <div className="game-container">
-        {opponent ? (
-          <div className="opponent">
-            <span>Your opponent:</span>
-            <span>{opponent.name}</span>
-            <img src={opponent.avatar} alt="user avatar" />
-          </div>
-        ) : null}
-
         {game.isStarted ? (
           <div className="game">
-            <p className="info">{message}</p>
             <div className="game-board">{board}</div>
           </div>
         ) : (
           <Spinner />
         )}
-        {game.isEnded && !this.state.isReplaying ? endGamePanel : null}
+        {opponent ? (
+          <div className="game-header">
+            <div className="opponent">
+              <p>Your opponent:</p>
+              <span>{opponent.name}</span>
+              <img src={opponent.avatar} alt="user avatar" />
+            </div>
+            <div className="info">
+              <p>{message}</p>
+              <div>{isOpponentsTurn ? <Hourglass /> : null}</div>
+            </div>
+            <div className="game-header-buttons">
+              {!game.isEnded ? surrenderBtn : null}
+              {game.isEnded && !this.state.isReplaying ? replayBtn : null}
+              {game.isEnded && !this.state.leaveBtn ? leaveBtn : null}
+            </div>
+          </div>
+        ) : null}
       </div>
     );
   }

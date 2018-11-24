@@ -34,12 +34,22 @@ module.exports = function(io, socket, connections) {
 
     updateGame(game._id, updatedGame)
       .then(updatedGame => {
-        io.to(game._id).emit("move", updatedGame);
+        io.to(game._id).emit("serve game", updatedGame);
 
         if (updatedGame.isEnded)
           clearPlayersGame(updatedGame)
             .then(() => io.to(game._id).emit("game ended"))
             .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
+  });
+
+  socket.on("surrender", game => {
+    updateGame(game._id, { isEnded: true, nextPlayer: null })
+      .then(endedGame => {
+        clearPlayersGame(endedGame)
+          .then(() => io.to(endedGame._id).emit("serve game", endedGame))
+          .catch(err => console.log(err));
       })
       .catch(err => console.log(err));
   });

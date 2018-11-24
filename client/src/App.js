@@ -22,6 +22,7 @@ import Navbar from "./components/layout/Navbar";
 
 import "./style/App.css";
 import "./style/Spinner.css";
+import "./style/Hourglass-spinner.css";
 import "./style/nav.css";
 import "./style/usersbar.css";
 import "./style/chat.css";
