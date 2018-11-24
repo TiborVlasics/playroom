@@ -1,5 +1,4 @@
 .chat-content {
-  /* direction: rtl; */
   z-index: 10;
   position: fixed;
   bottom: 50px;
@@ -88,13 +87,13 @@
 
 .message-text {
   word-wrap: break-word;
-  background-color: #3e3e06e5;
+  background-color: #9a9a2be5;
   padding: 0.5px 15px 0.5px 15px;
   font-size: 14px;
   width: 250px;
   text-align: right;
   color: #ffffffde;
-  font-size: 15px;
+  font-size: 17px;
 }
 
 .message-text:first-child {
@@ -113,7 +112,7 @@
 }
 
 .own-message .message-text {
-  background-color: #2f0d0de5;
+  background-color: #c34747e5;
   text-align: left;
 }
 
@@ -160,11 +159,6 @@
     height: 60vh;
     bottom: 70px;
     left: 0px;
-    width: 200px;
-  }
-
-  .message-container {
-    width: 200px;
   }
 
   .message-text {
