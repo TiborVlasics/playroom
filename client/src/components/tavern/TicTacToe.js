@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
+import io from "socket.io-client";
+
 import Spinner from "../common/Spinner";
 import Hourglass from "../common/Hourglass-spinner";
-import io from "socket.io-client";
+import Opponent from "./Opponent";
 
 class TicTacToe extends Component {
   constructor(props) {
@@ -77,10 +79,6 @@ class TicTacToe extends Component {
   render() {
     const auth = this.props.auth;
     const game = this.props.game;
-    const opponent =
-      game.player1 && game.player1.id === auth.user.id
-        ? game.player2
-        : game.player1;
 
     const isYourTurn = game.nextPlayer === auth.user.id;
     const isOpponentsTurn = game.nextPlayer && game.nextPlayer !== auth.user.id;
@@ -129,30 +127,22 @@ class TicTacToe extends Component {
     return (
       <div className="game-container">
         {game.isStarted ? (
-          <div className="game">
-            <div className="game-board">{board}</div>
-          </div>
+          <div className="game-board">{board}</div>
         ) : (
           <Spinner />
         )}
-        {opponent ? (
-          <div className="game-header">
-            <div className="opponent">
-              <p>Your opponent:</p>
-              <span>{opponent.name}</span>
-              <img src={opponent.avatar} alt="user avatar" />
-            </div>
-            <div className="info">
-              <p>{message}</p>
-              <div>{isOpponentsTurn ? <Hourglass /> : null}</div>
-            </div>
-            <div className="game-header-buttons">
-              {!game.isEnded ? surrenderBtn : null}
-              {game.isEnded && !this.state.isReplaying ? replayBtn : null}
-              {game.isEnded && !this.state.leaveBtn ? leaveBtn : null}
-            </div>
+        <div className="game-header">
+          <Opponent game={this.props.game} auth={this.props.auth} />
+          <div className="info">
+            <p>{message}</p>
+            <div>{isOpponentsTurn ? <Hourglass /> : null}</div>
           </div>
-        ) : null}
+          <div className="game-header-buttons">
+            {!game.isEnded ? surrenderBtn : null}
+            {game.isEnded && !this.state.isReplaying ? replayBtn : null}
+            {game.isEnded && !this.state.leaveBtn ? leaveBtn : null}
+          </div>
+        </div>
       </div>
     );
   }

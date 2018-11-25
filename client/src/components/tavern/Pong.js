@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
 import io from "socket.io-client";
 
+import Opponent from "./Opponent";
+
 class Pong extends Component {
   constructor() {
     super();
@@ -138,6 +140,7 @@ class Pong extends Component {
           />
         </div>
         <div className="game-header">
+          <Opponent game={this.props.game} auth={this.props.auth} />
           <span>{this.state.score1}</span>
           <span>{this.state.score2}</span>
           {this.props.game.isEnded ? leaveBtn : surrenderBtn}
