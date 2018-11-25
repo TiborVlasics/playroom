@@ -1,10 +1,15 @@
 .game-container {
-  margin-top: 50px;
-}
-
-.game-container {
   margin: 0 30px 30px 60px;
   color: #ffffffcf;
+}
+
+.game-container .game-pong {
+  width: 900px;
+  margin: 0 auto;
+}
+
+canvas {
+  margin: 0 auto;
 }
 
 .game-header {
@@ -53,34 +58,17 @@
   font-size: 40px;
 }
 
-.game .info {
-  color: #ffffffcf;
-}
-
-.game-container canvas {
-  margin: 0 auto;
-}
-
 .pong-scores {
   color: #ffffffcf;
 }
 
 @media only screen and (max-width: 600px) {
-  /* .game-container {
-    position: fixed;
-    top: 30px;
-  } */
-
   .game-board {
     margin: 0 auto;
     width: 315px;
     height: 315px;
     grid-template-columns: 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px;
     grid-template-rows: 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px;
-  }
-
-  .game-container .game-board div {
-    font-size: 14px;
   }
 
   .opponent img {

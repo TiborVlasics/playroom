@@ -77,14 +77,14 @@ class Pong extends Component {
 
   onMouseMove(e) {
     if (this.props.auth.user.id === this.props.game.player1.id) {
-      const p1y = e.clientY - 217;
+      const p1y = e.clientY - 160;
       this.setState({ p1y: p1y });
       this.socket.emit("move", {
         move: { p1y: p1y },
         id: this.props.game._id
       });
     } else if (this.props.auth.user.id === this.props.game.player2.id) {
-      const p2y = e.clientY - 217;
+      const p2y = e.clientY - 160;
       this.setState({ p2y: p2y });
       this.socket.emit("move", {
         move: { p2y: p2y },
@@ -128,18 +128,20 @@ class Pong extends Component {
 
     return (
       <div className="game-container">
-        <div className="pong-scores">
+        <div className="game-pong">
+          <canvas
+            onPointerMove={this.onMouseMove}
+            onMouseMove={this.onMouseMove}
+            ref="gc"
+            width="640"
+            height="480"
+          />
+        </div>
+        <div className="game-header">
           <span>{this.state.score1}</span>
           <span>{this.state.score2}</span>
           {this.props.game.isEnded ? leaveBtn : surrenderBtn}
         </div>
-        <canvas
-          onPointerMove={this.onMouseMove}
-          onMouseMove={this.onMouseMove}
-          ref="gc"
-          width="640"
-          height="480"
-        />
       </div>
     );
   }
