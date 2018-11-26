@@ -5,8 +5,9 @@ import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
 import io from "socket.io-client";
 
 import Spinner from "../common/Spinner";
-import Hourglass from "../common/Hourglass-spinner";
 import Opponent from "./Opponent";
+import Board from "./Board";
+import Info from "./Info";
 
 class TicTacToe extends Component {
   constructor(props) {
@@ -80,63 +81,27 @@ class TicTacToe extends Component {
     const auth = this.props.auth;
     const game = this.props.game;
 
-    const isYourTurn = game.nextPlayer === auth.user.id;
-    const isOpponentsTurn = game.nextPlayer && game.nextPlayer !== auth.user.id;
-
-    const board = (
-      <div className="game-board">
-        {this.state.replayBoard
-          ? this.state.replayBoard
-              .split("")
-              .map(col => <div>{col !== "?" ? col : null}</div>)
-          : game.isStarted
-          ? game.boardState[game.boardState.length - 1]
-              .split("")
-              .map((col, index) => {
-                if (game.nextPlayer === auth.user.id && col === "?") {
-                  return (
-                    <div key={index} onClick={() => this.move(game, index)}>
-                      {col !== "?" ? col : null}
-                    </div>
-                  );
-                } else {
-                  return <div key={index}>{col !== "?" ? col : null}</div>;
-                }
-              })
-          : null}
-      </div>
-    );
-
-    let message;
-    if (game.isEnded) {
-      if (game.winner === null) {
-        message = "It's a  draw (O_O)";
-      } else if (game.winner === auth.user.id) {
-        message = "You won :-D";
-      } else {
-        message = "Looser...";
-      }
-    } else {
-      if (isYourTurn) {
-        message = "It's your turn";
-      } else {
-        message = "It's your opponents turn";
-      }
-    }
-
     const replayBtn = <button onClick={() => this.replay(0)}>Replay</button>;
     const leaveBtn = <button onClick={this.leaveGame}>Leave</button>;
     const surrenderBtn = <button onClick={this.surrender}>Surrender</button>;
 
     return (
       <div className="game-container">
-        <div className="game-body">{game.isStarted ? board : <Spinner />}</div>
+        <div className="game-body">
+          {game.isStarted ? (
+            <Board
+              replayBoard={this.state.replayBoard}
+              game={game}
+              auth={auth}
+              move={this.move}
+            />
+          ) : (
+            <Spinner />
+          )}
+        </div>
         <div className="game-header">
           <Opponent game={this.props.game} auth={this.props.auth} />
-          <div className="info">
-            <p>{message}</p>
-            <div>{isOpponentsTurn ? <Hourglass /> : null}</div>
-          </div>
+          <Info game={game} auth={auth} />
           <div className="game-header-buttons">
             {!game.isEnded ? surrenderBtn : null}
             {game.isEnded && !this.state.isReplaying ? replayBtn : null}
