@@ -18,7 +18,6 @@ import Dashboard from "./components/layout/Dashboard";
 import TicTacToe from "./components/tavern/TicTacToe";
 import Pong from "./components/tavern/Pong";
 import SecretRoute from "./components/SecretRoute";
-import Navbar from "./components/layout/Navbar";
 
 import "./style/App.css";
 import "./style/Spinner.css";
@@ -42,18 +41,15 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <Navbar />
-          <div className="main">
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/register" component={Register} />
-              <Route exact path="/login" component={Login} />
-              <SecretRoute exact path="/dashboard" component={Dashboard} />
-              <SecretRoute exact path="/tictactoe/:id" component={TicTacToe} />
-              <SecretRoute exact path="/pong/:id" component={Pong} />
-              <Route render={() => <Redirect to="/dashboard" />} />
-            </Switch>
-          </div>
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+            <SecretRoute exact path="/dashboard" component={Dashboard} />
+            <SecretRoute exact path="/tictactoe/:id" component={TicTacToe} />
+            <SecretRoute exact path="/pong/:id" component={Pong} />
+            <Route render={() => <Redirect to="/dashboard" />} />
+          </Switch>
         </div>
       </Router>
     );

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { getCurrentGame } from "../../actions/gameActions";
 import io from "socket.io-client";
+import Navbar from "./Navbar";
 
 import ChatWindow from "../chat/ChatWindow";
 import Tavern from "../tavern/Tavern";
@@ -43,9 +44,12 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="dashboard">
-        <ChatWindow socket={this.socket} />
-        <Tavern socket={this.socket} />
+      <div>
+        <Navbar />
+        <div className="dashboard">
+          <ChatWindow socket={this.socket} />
+          <Tavern socket={this.socket} />
+        </div>
       </div>
     );
   }
