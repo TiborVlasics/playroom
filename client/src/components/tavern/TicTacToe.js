@@ -83,25 +83,29 @@ class TicTacToe extends Component {
     const isYourTurn = game.nextPlayer === auth.user.id;
     const isOpponentsTurn = game.nextPlayer && game.nextPlayer !== auth.user.id;
 
-    const board = this.state.replayBoard
-      ? this.state.replayBoard
-          .split("")
-          .map(col => <div>{col !== "?" ? col : null}</div>)
-      : game.isStarted
-      ? game.boardState[game.boardState.length - 1]
-          .split("")
-          .map((col, index) => {
-            if (game.nextPlayer === auth.user.id && col === "?") {
-              return (
-                <div key={index} onClick={() => this.move(game, index)}>
-                  {col !== "?" ? col : null}
-                </div>
-              );
-            } else {
-              return <div key={index}>{col !== "?" ? col : null}</div>;
-            }
-          })
-      : null;
+    const board = (
+      <div className="game-board">
+        {this.state.replayBoard
+          ? this.state.replayBoard
+              .split("")
+              .map(col => <div>{col !== "?" ? col : null}</div>)
+          : game.isStarted
+          ? game.boardState[game.boardState.length - 1]
+              .split("")
+              .map((col, index) => {
+                if (game.nextPlayer === auth.user.id && col === "?") {
+                  return (
+                    <div key={index} onClick={() => this.move(game, index)}>
+                      {col !== "?" ? col : null}
+                    </div>
+                  );
+                } else {
+                  return <div key={index}>{col !== "?" ? col : null}</div>;
+                }
+              })
+          : null}
+      </div>
+    );
 
     let message;
     if (game.isEnded) {
@@ -126,11 +130,7 @@ class TicTacToe extends Component {
 
     return (
       <div className="game-container">
-        {game.isStarted ? (
-          <div className="game-board">{board}</div>
-        ) : (
-          <Spinner />
-        )}
+        <div className="game-body">{game.isStarted ? board : <Spinner />}</div>
         <div className="game-header">
           <Opponent game={this.props.game} auth={this.props.auth} />
           <div className="info">

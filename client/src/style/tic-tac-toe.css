@@ -1,5 +1,5 @@
 .game-container {
-  margin: 0 30px 30px 60px;
+  margin: 20px 30px 30px 60px;
   color: #ffffffcf;
 }
 
@@ -39,12 +39,12 @@ canvas {
 }
 
 .game-board {
-  width: 915px;
-  height: 915px;
+  width: 615px;
+  height: 615px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px;
-  grid-template-rows: 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px 60px;
+  grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+  grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
   grid-gap: 1px;
   align-items: stretch;
   color: #ffffff;
@@ -55,7 +55,10 @@ canvas {
   text-align: center;
   vertical-align: center;
   border: 1px solid black;
-  font-size: 40px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 30px;
+  border: 0.1px solid #ed515e55;
 }
 
 .pong-scores {
