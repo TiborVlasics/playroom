@@ -61,6 +61,14 @@ canvas {
   border: 0.1px solid #ed515e55;
 }
 
+.game-board .x {
+  color: red;
+}
+
+.game-board .o {
+  color: white;
+}
+
 .pong-scores {
   color: #ffffffcf;
 }
