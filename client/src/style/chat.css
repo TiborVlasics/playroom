@@ -2,24 +2,26 @@
   z-index: 10;
   position: fixed;
   bottom: 50px;
-  left: 100px;
-  width: 450px;
-  height: 80vh;
+  left: 95px;
+  width: 550px;
+  height: 84.5vh;
   overflow-y: auto;
   overflow-x: hidden;
   color: #fbfbfb;
   font-family: "Raleway";
   background: #00000077;
+  padding-left: 20px;
+  padding-bottom: 40px;
 }
 
 .chat-content::-webkit-scrollbar {
-  width: 9px;
+  width: 12px;
 }
 
 .chat-content::-webkit-scrollbar-thumb {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.986);
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.986);
-  background-color: rgb(13, 209, 7);
+  background-color: rgb(7, 209, 24);
 }
 
 .chat-content::-webkit-scrollbar-track {
@@ -32,10 +34,10 @@
 .chat-input {
   position: fixed;
   bottom: 0;
-  left: 100px;
+  left: 95px;
   height: 50px;
   font-size: 17px;
-  width: 450px;
+  width: 550px;
   border: 0;
   padding: 20px;
   z-index: 110;
@@ -52,11 +54,13 @@
 }
 
 .chat-table {
+  height: 70%;
+  margin-left: 90px;
   display: inline-block;
 }
 
 .shadow-messages {
-  width: 30%;
+  width: 23%;
   display: inline-block;
   margin-left: 30px;
 }
@@ -81,7 +85,7 @@
 
 .message-name {
   text-align: left;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: bold;
 }
 
@@ -89,7 +93,7 @@
   word-wrap: break-word;
   background-color: #9a9a2be5;
   padding: 0.5px 15px 0.5px 15px;
-  font-size: 14px;
+  font-size: 15px;
   width: 250px;
   text-align: right;
   color: #ffffffde;
@@ -111,18 +115,20 @@
   border-radius: 15px 15px 15px 15px;
 }
 
+.own-message {
+  position: relative;
+  right: 14px;
+}
+
 .own-message .message-text {
   background-color: #c34747e5;
   text-align: left;
 }
 
 .message-date {
-  font-size: 10px;
-  float: left;
-}
-
-.own-message .message-date {
+  font-size: 13px;
   float: right;
+  text-shadow: 3px 2px #000000;
 }
 
 .message-container img {
@@ -138,7 +144,7 @@
   vertical-align: bottom;
 }
 
-@media only screen and (max-width: 880px) {
+@media only screen and (max-width: 1000px) {
   .shadow-messages {
     display: none;
   }
@@ -149,6 +155,7 @@
   }
 
   .chat-table {
+    position: relative;
     margin: 0 auto;
   }
 }
@@ -181,6 +188,14 @@
   .message-text {
     text-align: left;
   }
+
+  .message-date {
+    font-size: 11px;
+  }
+
+  .message-name {
+    font-size: 11px;
+  }
 }
 
 @media only screen and (max-height: 400px) and (max-width: 600px) {
@@ -188,7 +203,7 @@
     margin: 0 auto;
     height: 30vh;
     bottom: 70px;
-    left: 0px;
+    left: 13px;
     width: 200px;
   }
 
