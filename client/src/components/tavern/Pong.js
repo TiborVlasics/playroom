@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
 import io from "socket.io-client";
 
-import Opponent from "./Opponent";
+import Opponent from "../common/Opponent";
 
 class Pong extends Component {
   constructor() {

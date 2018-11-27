@@ -5,11 +5,11 @@ import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
 import io from "socket.io-client";
 
 import Spinner from "../common/Spinner";
-import Opponent from "./Opponent";
+import Opponent from "../common/Opponent";
 import Board from "./Board";
 import Info from "./Info";
 
-class TicTacToe extends Component {
+class Amoeba extends Component {
   constructor(props) {
     super(props);
 
@@ -113,7 +113,7 @@ class TicTacToe extends Component {
   }
 }
 
-TicTacToe.propTypes = {
+Amoeba.propTypes = {
   auth: PropTypes.object.isRequired,
   game: PropTypes.object.isRequired,
   getCurrentGame: PropTypes.func.isRequired,
@@ -128,4 +128,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { getCurrentGame, setCurrentGame }
-)(TicTacToe);
+)(Amoeba);

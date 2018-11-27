@@ -15,7 +15,7 @@ import { setCurrentUser } from "./actions/authActions";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/layout/Dashboard";
-import TicTacToe from "./components/tavern/TicTacToe";
+import Amoeba from "./components/amoeba/Amoeba";
 import Pong from "./components/tavern/Pong";
 import SecretRoute from "./components/SecretRoute";
 
@@ -46,7 +46,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <SecretRoute exact path="/dashboard" component={Dashboard} />
-            <SecretRoute exact path="/tictactoe/:id" component={TicTacToe} />
+            <SecretRoute exact path="/tictactoe/:id" component={Amoeba} />
             <SecretRoute exact path="/pong/:id" component={Pong} />
             <Route render={() => <Redirect to="/dashboard" />} />
           </Switch>
