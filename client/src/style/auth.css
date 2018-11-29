@@ -19,6 +19,12 @@
   width: 700px;
   border-radius: 5px;
   background: #000000cc;
+  margin-top: 100px;
+}
+
+.auth-container {
+  margin: 0 auto;
+  width: 50%;
 }
 
 form input[type="submit"] {
@@ -64,6 +70,5 @@ form input[type="text"]:focus {
   .login,
   .register {
     width: 500px;
-    padding: 0;
   }
 }

@@ -1,13 +1,14 @@
 .users-bar {
   height: 100%;
-  z-index: 5;
+  z-index: -10;
   padding: 65px 10px;
   position: fixed;
   top: 0;
   left: 0;
   color: #ffffff;
-  background: #00000077;
+  background: #00000099;
   font-size: 13px;
+  max-width: 95px;
 }
 
 .users-bar .user {
