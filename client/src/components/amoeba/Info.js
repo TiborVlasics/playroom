@@ -24,8 +24,10 @@ const Info = ({ game, auth }) => {
 
   return (
     <div>
-      <div>{message}</div>
-      <div>{isOpponentsTurn ? <Hourglass /> : null}</div>
+      <div className="spinner-container">
+        {isOpponentsTurn ? <Hourglass /> : null}
+      </div>
+      <div className="info-message">{message}</div>
     </div>
   );
 };
