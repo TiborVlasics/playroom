@@ -1,7 +1,7 @@
 const { calculate } = require("./functions");
 const { findGameById, clearPlayersGame, updateGame } = require("./queries");
 
-module.exports = function(io, socket, connections) {
+module.exports = function(io, socket, connections, user) {
   socket.on("subscribe", game => {
     socket.join(game._id);
 
@@ -47,7 +47,10 @@ module.exports = function(io, socket, connections) {
   });
 
   socket.on("surrender", game => {
-    updateGame(game._id, { isEnded: true, nextPlayer: null })
+    const winner =
+      user.id === game.player1.id ? game.player2.id : game.player1.id;
+
+    updateGame(game._id, { isEnded: true, nextPlayer: null, winner: winner })
       .then(endedGame => {
         clearPlayersGame(endedGame)
           .then(() => io.to(endedGame._id).emit("serve game", endedGame))
