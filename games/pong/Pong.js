@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Game = require("../tavern/Game");
+const Game = require("../Game");
 
 const PongSchema = new Schema({
   player1: { score: { type: Number, default: 0 } },

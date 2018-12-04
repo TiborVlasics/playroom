@@ -1,4 +1,4 @@
-const { addSocket, removeSocket } = require("../helper/socketHelper");
+const { addSocket, removeSocket } = require("../../helper/socketHelper");
 const { updateGame } = require("./functions");
 const {
   setGameToStarted,

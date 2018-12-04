@@ -24,7 +24,7 @@ const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
           >
             <div className="card-header">
               <h5 className="card-title">
-                {game.kind === "tictactoes" ? "Five-in-a-row" : "Pong"}
+                {game.kind === "amoebas" ? "Five-in-a-row" : "Pong"}
               </h5>
               <button
                 className={

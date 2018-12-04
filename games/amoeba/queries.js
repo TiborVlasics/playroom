@@ -1,8 +1,8 @@
-const TicTacToe = require("./TicTacToe");
-const User = require("../user/User");
+const Amoeba = require("./Amoeba");
+const User = require("../../user/User");
 
 const findGameById = id => {
-  return TicTacToe.findById({ _id: id });
+  return Amoeba.findById({ _id: id });
 };
 
 const clearPlayersGame = updatedGame => {
@@ -13,7 +13,7 @@ const clearPlayersGame = updatedGame => {
 };
 
 const updateGame = (gameId, updatedGame) => {
-  return TicTacToe.findOneAndUpdate(
+  return Amoeba.findOneAndUpdate(
     { _id: gameId },
     { $set: updatedGame },
     { new: true }

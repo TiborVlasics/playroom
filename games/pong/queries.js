@@ -1,4 +1,4 @@
-const User = require("../user/User");
+const User = require("../../user/User");
 const Pong = require("./Pong");
 
 const findGameById = id => Pong.findById({ _id: id });

@@ -35,8 +35,8 @@ module.exports = function(server) {
     });
 
     require("./chat/chat.socket")(lobby, socket);
-    require("./tavern/tavern.socket")(lobby, socket, user, connections);
-    require("./tic-tac-toe/controller")(lobby, socket, connections, user);
+    require("./games/tavern.socket")(lobby, socket, user, connections);
+    require("./games/amoeba/controller")(lobby, socket, connections, user);
 
     socket.on("get users", () => {
       let users = [];
@@ -48,7 +48,7 @@ module.exports = function(server) {
     });
   });
 
-  require("./pong/controller")(io);
+  require("./games/pong/controller")(io);
 
   return io;
 };

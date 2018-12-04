@@ -6,7 +6,7 @@ class NewGameForm extends Component {
   constructor() {
     super();
     this.state = {
-      game: "tictactoe"
+      game: "ameoba"
     };
 
     this.onChange = this.onChange.bind(this);
@@ -37,7 +37,7 @@ class NewGameForm extends Component {
               name="game"
               className="form-control"
             >
-              <option value="tictactoe">Tic-tac-toe</option>
+              <option value="ameoba">Five-in-a-row</option>
               <option value="pong">Pong</option>
             </select>
             <button className="btn btn-danger btn-sm mt-2">New Game</button>

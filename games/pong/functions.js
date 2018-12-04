@@ -36,4 +36,4 @@ function updateGame(game) {
   }
 }
 
-module.exports = { updateGame, initGame, deleteGame };
+module.exports = { updateGame };

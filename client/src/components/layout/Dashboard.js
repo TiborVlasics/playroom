@@ -6,7 +6,7 @@ import io from "socket.io-client";
 import Navbar from "./Navbar";
 
 import ChatWindow from "../chat/ChatWindow";
-import Tavern from "../tavern/Tavern";
+import Tavern from "../games/Games";
 
 class Dashboard extends Component {
   constructor() {
@@ -20,7 +20,7 @@ class Dashboard extends Component {
     );
   }
   pushUserToGame(game) {
-    if (game.kind === "tictactoes") {
+    if (game.kind === "amoebas") {
       this.props.history.push(`/tictactoe/${game._id}`);
     } else if (game.kind === "pongs") {
       this.props.history.push(`/pong/${game._id}`);

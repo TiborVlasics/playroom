@@ -1,4 +1,4 @@
-const Pong = require("../pong/Pong");
+const Pong = require("./pong/Pong");
 const User = require("../user/User");
 const {
   createTicTacToe,
@@ -7,7 +7,7 @@ const {
 
 module.exports = function(io, socket, user, connections) {
   socket.on("create game", gameType => {
-    if (gameType === "tictactoe") {
+    if (gameType === "ameoba") {
       createTicTacToe(user)
         .then(game => {
           updateUsersCurrentGame(game, user)
@@ -71,6 +71,4 @@ module.exports = function(io, socket, user, connections) {
       })
       .catch(err => console.log(err));
   });
-
-  socket.on("game started", game => {});
 };
