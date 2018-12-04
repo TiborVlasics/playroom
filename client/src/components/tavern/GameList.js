@@ -23,7 +23,9 @@ const GameList = ({ games, currentGame, joinGame, deleteGame }) => {
             }
           >
             <div className="card-header">
-              <h5 className="card-title">{game.kind}</h5>
+              <h5 className="card-title">
+                {game.kind === "tictactoes" ? "Five-in-a-row" : "Pong"}
+              </h5>
               <button
                 className={
                   currentGame.hasOwnProperty("_id") || game.isFull

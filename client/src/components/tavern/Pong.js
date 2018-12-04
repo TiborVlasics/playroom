@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { getCurrentGame, setCurrentGame } from "../../actions/gameActions";
 import io from "socket.io-client";
 
-import Opponent from "./Opponent";
+import Opponent from "../common/Opponent";
 
 class Pong extends Component {
   constructor() {
@@ -79,14 +79,14 @@ class Pong extends Component {
 
   onMouseMove(e) {
     if (this.props.auth.user.id === this.props.game.player1.id) {
-      const p1y = e.clientY - 160;
+      const p1y = e.clientY - 70;
       this.setState({ p1y: p1y });
       this.socket.emit("move", {
         move: { p1y: p1y },
         id: this.props.game._id
       });
     } else if (this.props.auth.user.id === this.props.game.player2.id) {
-      const p2y = e.clientY - 160;
+      const p2y = e.clientY - 70;
       this.setState({ p2y: p2y });
       this.socket.emit("move", {
         move: { p2y: p2y },

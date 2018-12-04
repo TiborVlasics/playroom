@@ -149,6 +149,7 @@ class Chat extends React.Component {
       <div className="chat">
         <div ref={this.chat} className="chat-content" onScroll={this.onScroll}>
           <ChatUsers users={this.state.users} />
+          <Messages />
           <div className="shadow-messages">
             {Object.keys(this.state.usersTyping).map((user, index) => (
               <div key={index} className="shadow-message">
@@ -161,7 +162,6 @@ class Chat extends React.Component {
               </div>
             ))}
           </div>
-          <Messages />
 
           <div ref={this.messagesEnd} />
         </div>

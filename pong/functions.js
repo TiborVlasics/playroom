@@ -1,27 +1,3 @@
-function initGame(games, updatedGame) {
-  games[updatedGame._id] = {
-    p1y: 40,
-    p2y: 40,
-    pt: 10,
-    ph: 100,
-    bx: 50,
-    by: 50,
-    xv: 4,
-    yv: 4,
-    bd: 7,
-    score1: 0,
-    score2: 0,
-    width: 640,
-    height: 480
-  };
-}
-
-function deleteGame(game, games) {
-  let { [game._id]: omit, ...gamesWithoutCurrent } = games;
-  games = gamesWithoutCurrent;
-  return games;
-}
-
 function updateGame(game) {
   game.bx = game.bx + game.xv;
   game.by = game.by + game.yv;
@@ -41,7 +17,7 @@ function updateGame(game) {
       game.score2 = game.score2 + 1;
       game.bx = 320;
       game.by = 240;
-      game.xv = 4;
+      game.xv = -4;
       game.yv = 4;
     }
   }

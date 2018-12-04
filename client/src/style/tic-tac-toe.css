@@ -10,9 +10,12 @@
 
 canvas {
   margin: 0 auto;
+  position: relative;
+  left: 110px;
 }
 
 .game-header {
+  margin: 0 auto;
   position: sticky;
   bottom: 0;
   width: 900px;
@@ -23,6 +26,16 @@ canvas {
   justify-content: space-around;
   margin-top: 20px;
   background: #000000dd;
+}
+
+.spinner-container {
+  position: relative;
+  top: 30px;
+}
+
+.info-message {
+  position: relative;
+  top: 55px;
 }
 
 .game-header .info p {
@@ -39,26 +52,35 @@ canvas {
 }
 
 .game-board {
-  width: 615px;
-  height: 615px;
+  width: 600px;
+  height: 600px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
   grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
-  grid-gap: 1px;
+  /* grid-gap: 1px; */
   align-items: stretch;
   color: #ffffff;
+  /* box-shadow: 10px 20px #000000da; */
 }
 
 .game-board div {
-  background: #000000ee;
+  background: #000000da;
   text-align: center;
   vertical-align: center;
   border: 1px solid black;
   line-height: 40px;
   text-align: center;
   font-size: 30px;
-  border: 0.1px solid #ed515e55;
+  border: 0.1px solid #ffffff55;
+}
+
+.game-board .x {
+  color: red;
+}
+
+.game-board .o {
+  color: white;
 }
 
 .pong-scores {
@@ -68,8 +90,8 @@ canvas {
 @media only screen and (max-width: 600px) {
   .game-board {
     margin: 0 auto;
-    width: 315px;
-    height: 315px;
+    width: 300px;
+    height: 300px;
     grid-template-columns: 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px;
     grid-template-rows: 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px 20px;
   }

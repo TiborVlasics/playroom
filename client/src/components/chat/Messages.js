@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import Spinner from "../common/Spinner";
+import moment from "moment-timezone";
 
 class Messages extends React.Component {
   render() {
@@ -28,7 +29,11 @@ class Messages extends React.Component {
                 </div>
               ))}
             </div>
-            <div className="message-date">{message.createdDate}</div>
+            <div className="message-date">
+              {moment(message.createdDate)
+                .tz("Europe/Budapest")
+                .fromNow() + "..."}
+            </div>
           </div>
         ))}
       </div>

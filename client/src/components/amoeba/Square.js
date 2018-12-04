@@ -6,7 +6,7 @@ const Square = ({ game, auth, value, index, move }) => {
   if (game.nextPlayer === auth.user.id && value === "?") {
     return <div onClick={() => move(game, index)}>{renderedValue}</div>;
   } else {
-    return <div>{renderedValue}</div>;
+    return <div className={value === "X" ? "x" : "o"}>{renderedValue}</div>;
   }
 };
 
