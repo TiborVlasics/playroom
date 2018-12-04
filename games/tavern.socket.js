@@ -1,14 +1,11 @@
 const Pong = require("./pong/Pong");
 const User = require("../user/User");
-const {
-  createTicTacToe,
-  updateUsersCurrentGame
-} = require("./tavern.functions");
+const { createAmoeba, updateUsersCurrentGame } = require("./queries");
 
 module.exports = function(io, socket, user, connections) {
   socket.on("create game", gameType => {
     if (gameType === "ameoba") {
-      createTicTacToe(user)
+      createAmoeba(user)
         .then(game => {
           updateUsersCurrentGame(game, user)
             .then(() => io.emit("create game", game))

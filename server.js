@@ -9,9 +9,9 @@ require("dotenv").config();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/api/user", require("./user/user.routes"));
+app.use("/api/user", require("./user/routes"));
 app.use("/api/messages", require("./chat/routes"));
-app.use("/api/games", require("./games/tavern.routes"));
+app.use("/api/games", require("./games/routes"));
 
 mongoose
   .connect(

@@ -1,7 +1,7 @@
 const TicTacToe = require("./amoeba/Amoeba");
 const User = require("../user/User");
 
-function createTicTacToe(player) {
+function createAmoeba(player) {
   return new TicTacToe({
     player1: player,
     isFull: false
@@ -16,4 +16,4 @@ function updateUsersCurrentGame(game, user) {
   );
 }
 
-module.exports = { createTicTacToe, updateUsersCurrentGame };
+module.exports = { createAmoeba, updateUsersCurrentGame };
