@@ -47,7 +47,7 @@ const mapMoveToIndexes = game => {
   }
 };
 
-const evaluateGame = game => {
+const evaluateTicTacToe = game => {
   const move = game.move;
   const matrix = game.gameMatrix;
   const symbol = matrix[move.x][move.y];
@@ -258,17 +258,32 @@ const calculate = compose(
   addGameStringToBoardState
 );
 
+const updateTicTacToe = compose(
+  mapGameStringToArray,
+  applyMove,
+  mapGameArrayToMatrix,
+  mapMoveToIndexes,
+  evaluateGomoku,
+  checkIfGameIsADraw,
+  setNextPlayer,
+  mapGameArrayToString,
+  removeGameArrayAndMatrixFromGameObject,
+  removePlayersFromGameObject,
+  addGameStringToBoardState
+);
+
 module.exports = {
   mapGameStringToArray,
   applyMove,
   mapGameArrayToMatrix,
   mapMoveToIndexes,
-  evaluateGame,
+  evaluateTicTacToe,
   checkIfGameIsADraw,
   setNextPlayer,
   mapGameArrayToString,
   removeGameArrayAndMatrixFromGameObject,
   removePlayersFromGameObject,
   addGameStringToBoardState,
-  calculate
+  calculate,
+  updateTicTacToe
 };

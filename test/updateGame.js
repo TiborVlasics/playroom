@@ -1,7 +1,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 const assert = chai.assert;
-const { calculate } = require("../tic-tac-toe/functions");
+const { updateTicTacToe } = require("../games/amoeba/functions");
 
 describe("Update game (calling all 11 functions composed)", () => {
   it("Game object should remain unmutated", () => {
@@ -30,7 +30,7 @@ describe("Update game (calling all 11 functions composed)", () => {
       __v: 0
     };
 
-    const updatedGame = calculate(game);
+    const updatedGame = updateTicTacToe(game);
     expect(game).to.not.have.property("gameString");
   });
 
@@ -59,7 +59,7 @@ describe("Update game (calling all 11 functions composed)", () => {
       createdDate: "2018-10-25T13:57:15.810Z",
       __v: 0
     };
-    const updatedGame = calculate(game);
+    const updatedGame = updateTicTacToe(game);
     assert.deepEqual(updatedGame, {
       boardState: [
         "?????????",
@@ -112,7 +112,7 @@ describe("Update game (calling all 11 functions composed)", () => {
       createdDate: "2018-10-25T13:57:15.810Z",
       __v: 0
     };
-    const updatedGame = calculate(game);
+    const updatedGame = updateTicTacToe(game);
     assert.deepEqual(updatedGame, {
       boardState: [
         "?????????",
@@ -171,7 +171,7 @@ describe("Update game (calling all 11 functions composed)", () => {
       createdDate: "2018-10-25T13:57:15.810Z",
       __v: 0
     };
-    const updatedGame = calculate(game);
+    const updatedGame = updateTicTacToe(game);
     assert.deepEqual(updatedGame, {
       boardState: [
         "?????????",

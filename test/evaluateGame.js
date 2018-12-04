@@ -1,7 +1,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 const assert = chai.assert;
-const { evaluateGame } = require("../tic-tac-toe/functions");
+const { evaluateTicTacToe } = require("../games/amoeba/functions");
 
 describe("Evaluate game", () => {
   it("Game object should not be mutated", () => {
@@ -11,7 +11,7 @@ describe("Evaluate game", () => {
       move: { x: 1, y: 1 },
       winner: null
     };
-    const updatedGame = evaluateGame(game);
+    const updatedGame = evaluateTicTacToe(game);
     assert.equal(game.winner, null);
   });
 
@@ -22,7 +22,7 @@ describe("Evaluate game", () => {
       move: { x: 1, y: 1 },
       winner: null
     };
-    const updatedGame = evaluateGame(game);
+    const updatedGame = evaluateTicTacToe(game);
     expect(updatedGame).to.have.property("gameMatrix");
   });
 
@@ -33,7 +33,7 @@ describe("Evaluate game", () => {
       move: { x: 1, y: 1 },
       winner: null
     };
-    const updatedGame = evaluateGame(game);
+    const updatedGame = evaluateTicTacToe(game);
     assert.equal(updatedGame.winner, "5bd1cbc3e9f6ea38c32d649a");
   });
 
@@ -44,7 +44,7 @@ describe("Evaluate game", () => {
       move: { x: 1, y: 0 },
       winner: null
     };
-    const updatedGame = evaluateGame(game);
+    const updatedGame = evaluateTicTacToe(game);
     assert.equal(updatedGame.winner, "5bd1cbc3e9f6ea38c32d649a");
   });
 
@@ -55,7 +55,7 @@ describe("Evaluate game", () => {
       move: { x: 1, y: 1 },
       winner: null
     };
-    const updatedGame = evaluateGame(game);
+    const updatedGame = evaluateTicTacToe(game);
     assert.equal(updatedGame.winner, "5bd1cbc3e9f6ea38c32d649a");
   });
 
@@ -66,7 +66,7 @@ describe("Evaluate game", () => {
       move: { x: 2, y: 2 },
       winner: null
     };
-    const updatedGame = evaluateGame(game);
+    const updatedGame = evaluateTicTacToe(game);
     assert.equal(updatedGame.winner, "5bd1cbc3e9f6ea38c32d649a");
   });
 
@@ -77,7 +77,7 @@ describe("Evaluate game", () => {
       move: { x: 0, y: 1 },
       winner: null
     };
-    const updatedGame = evaluateGame(game);
+    const updatedGame = evaluateTicTacToe(game);
     assert.equal(updatedGame.winner, "5bd1cbc3e9f6ea38c32d649a");
   });
 
@@ -88,7 +88,7 @@ describe("Evaluate game", () => {
       move: { x: 1, y: 1 },
       winner: null
     };
-    const updatedGame = evaluateGame(game);
+    const updatedGame = evaluateTicTacToe(game);
     assert.equal(updatedGame.isEnded, true);
   });
 
@@ -99,7 +99,7 @@ describe("Evaluate game", () => {
       move: { x: 1, y: 1 },
       winner: null
     };
-    const updatedGame = evaluateGame(game);
+    const updatedGame = evaluateTicTacToe(game);
     assert.equal(updatedGame.winner, null);
   });
 });
