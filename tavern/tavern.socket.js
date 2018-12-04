@@ -65,9 +65,12 @@ module.exports = function(io, socket, user, connections) {
           if (connections.hasOwnProperty(player2)) {
             connections[player2].sockets.map(socket => socket.join(game._id));
           }
+          io.emit("game started");
           io.to(game._id).emit("game ready", game);
         });
       })
       .catch(err => console.log(err));
   });
+
+  socket.on("game started", game => {});
 };

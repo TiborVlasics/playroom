@@ -39,6 +39,10 @@ class Tavern extends Component {
     this.props.socket.on("game ready", game => {
       this.props.setCurrentGame(game);
     });
+
+    this.props.socket.on("game started", game => {
+      this.props.fetchGames();
+    });
   }
 
   componentWillUnmount() {
