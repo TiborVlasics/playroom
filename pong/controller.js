@@ -1,10 +1,9 @@
 const { addSocket, removeSocket } = require("../helper/socketHelper");
-const { updateGame, initGame } = require("./functions");
+const { updateGame } = require("./functions");
 const {
   setGameToStarted,
   updateGameToEnded,
-  setPlayersGameToNull,
-  findGameById
+  setPlayersGameToNull
 } = require("./queries");
 
 module.exports = function(io) {
@@ -26,26 +25,36 @@ module.exports = function(io) {
     socket.on("subscribe", game => {
       socket.join(game._id);
 
-      if (!game.isStarted) {
-        setGameToStarted(game)
-          .then(startedGame => {
-            pong.to(startedGame._id).emit("serve game", startedGame);
-
-            if (!games.hasOwnProperty(startedGame._id)) {
-              initGame(games, startedGame);
-
-              intervals[startedGame._id] = setInterval(() => {
-                updateGame(games[startedGame._id]);
-                pong.to(startedGame._id).emit("update", games[startedGame._id]);
-              }, 1000 / 30);
-            }
-          })
-          .catch(err => console.log(err));
-      } else {
-        findGameById(game._id)
-          .then(game => socket.emit("serve game", game))
-          .catch(err => console.log(err));
+      if (!games[game._id]) {
+        games[game._id] = {
+          p1y: 40,
+          p2y: 40,
+          pt: 10,
+          ph: 100,
+          bx: 50,
+          by: 50,
+          xv: 4,
+          yv: 4,
+          bd: 7,
+          score1: 0,
+          score2: 0,
+          width: 640,
+          height: 480
+        };
       }
+
+      if (!intervals[game._id]) {
+        intervals[game._id] = setInterval(() => {
+          updateGame(games[game._id]);
+          pong.to(game._id).emit("update", games[game._id]);
+        }, 1000 / 40);
+      }
+
+      setGameToStarted(game)
+        .then(startedGame => {
+          pong.to(startedGame._id).emit("serve game", startedGame);
+        })
+        .catch(err => console.log(err));
     });
 
     socket.on("move", data => {
