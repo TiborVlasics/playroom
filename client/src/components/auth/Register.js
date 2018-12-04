@@ -52,7 +52,7 @@ class Register extends Component {
     return (
       <div className="register">
         <div className="row">
-          <div className="col-md-8 m-auto">
+          <div className="auth-container">
             <h1 className="display-5 text-center">Sign Up</h1>
             <p className="lead text-center">Create your account</p>
             <form noValidate onSubmit={this.onSubmit}>
