@@ -4,7 +4,7 @@
   bottom: 50px;
   left: 95px;
   width: 550px;
-  height: 84.5vh;
+  height: 70%;
   overflow-y: auto;
   overflow-x: hidden;
   color: #fbfbfb;
@@ -144,7 +144,7 @@
   vertical-align: bottom;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1050px) {
   .shadow-messages {
     display: none;
   }

@@ -79,7 +79,7 @@
   }
 }
 
-@media only screen and (max-width: 740px) {
+@media only screen and (max-width: 815px) {
   .games {
     position: fixed;
     overflow-y: auto;
