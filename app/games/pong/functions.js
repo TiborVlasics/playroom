@@ -1,3 +1,29 @@
+function initGame(games, game, intervals, io) {
+  if (!games[game._id]) {
+    games[game._id] = {
+      p1y: 40,
+      p2y: 40,
+      pt: 10,
+      ph: 100,
+      bx: 50,
+      by: 50,
+      xv: 4,
+      yv: 4,
+      bd: 7,
+      score1: 0,
+      score2: 0,
+      width: 640,
+      height: 480
+    };
+  }
+  if (!intervals[game._id]) {
+    intervals[game._id] = setInterval(() => {
+      updateGame(games[game._id]);
+      io.to(game._id).emit("update", games[game._id]);
+    }, 1000 / 40);
+  }
+}
+
 function updateGame(game) {
   game.bx = game.bx + game.xv;
   game.by = game.by + game.yv;
@@ -36,4 +62,4 @@ function updateGame(game) {
   }
 }
 
-module.exports = { updateGame };
+module.exports = { initGame };
