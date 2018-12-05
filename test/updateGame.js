@@ -1,7 +1,7 @@
 const chai = require("chai");
 const expect = chai.expect;
 const assert = chai.assert;
-const { updateTicTacToe } = require("../games/amoeba/functions");
+const { updateTicTacToe } = require("../app/games/amoeba/functions");
 
 describe("Update game (calling all 11 functions composed)", () => {
   it("Game object should remain unmutated", () => {

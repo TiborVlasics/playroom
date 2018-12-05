@@ -9,7 +9,7 @@ const {
   checkIfGameIsADraw,
   setNextPlayer,
   mapGameArrayToString
-} = require("../games/amoeba/functions");
+} = require("../app/games/amoeba/functions");
 
 describe("Map game's latest state to a matrix, and include it in the returned game object", () => {
   let game;
