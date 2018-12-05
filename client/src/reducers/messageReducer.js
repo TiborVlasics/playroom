@@ -1,9 +1,4 @@
-import {
-  ADD_MESSAGE,
-  LOAD_MESSAGES,
-  CLEAR_MESSAGES,
-  CHAT_LOADING
-} from "../actions/types";
+import * as types from "../actions/types";
 
 const initialState = {
   loading: false,
@@ -12,15 +7,15 @@ const initialState = {
 
 export default function messageReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case CHAT_LOADING:
+    case types.CHAT_LOADING:
       return { ...state, loading: true };
-    case LOAD_MESSAGES:
+    case types.LOAD_MESSAGES:
       return {
         ...state,
         messages: [...action.payload, ...state.messages],
         loading: false
       };
-    case ADD_MESSAGE:
+    case types.ADD_MESSAGE:
       if (
         state.messages.length !== 0 &&
         state.messages[state.messages.length - 1]._id === action.payload._id
@@ -34,7 +29,7 @@ export default function messageReducer(state = initialState, action = {}) {
       } else {
         return { ...state, messages: state.messages.concat([action.payload]) };
       }
-    case CLEAR_MESSAGES:
+    case types.CLEAR_MESSAGES:
       return initialState;
     default:
       return state;
