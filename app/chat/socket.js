@@ -1,35 +1,19 @@
 const Message = require("./Message");
+const { createNewMessage, addTextToLastMessage } = require("./queries");
 
 module.exports = function(chat, socket, connections) {
-  socket.on("chat", async msg => {
-    try {
-      let lastMsg = await Message.findOne().sort({ createdDate: -1 });
-      if (lastMsg && lastMsg.author.name === msg.author.name) {
-        let newMsg = await Message.findOneAndUpdate(
-          { _id: lastMsg._id },
-          {
-            $set: {
-              text: [...lastMsg.text, msg.text],
-              createdDate: Date.now()
-            }
-          },
-          { new: true }
-        );
-        chat.emit("chat", newMsg);
-      } else {
-        let newMessage = await new Message({
-          author: {
-            id: msg.author.id,
-            name: msg.author.name
-          },
-          text: [msg.text],
-          thumbnail: msg.author.avatar
-        }).save();
-        chat.emit("chat", newMessage);
-      }
-    } catch (err) {
-      socket.broadcast.emit("chat", err);
-    }
+  socket.on("chat", message => {
+    Message.findOne()
+      .sort({ createdDate: -1 })
+      .then(lastMsg => {
+        if (lastMsg && lastMsg.author.name === message.author.name) {
+          return addTextToLastMessage(lastMsg, message);
+        } else {
+          return createNewMessage(message);
+        }
+      })
+      .then(newMessage => chat.emit("chat", newMessage))
+      .catch(err => console.log(err));
   });
 
   socket.on("user typing", data => {
