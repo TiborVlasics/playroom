@@ -21,14 +21,13 @@ import SecretRoute from "./components/SecretRoute";
 
 import "./style/App.css";
 import "./style/Spinner.css";
-import "./style/Hourglass-spinner.css";
+import "./style/Spinner-small.css";
 import "./style/nav.css";
 import "./style/usersbar.css";
 import "./style/chat.css";
 import "./style/auth.css";
 import "./style/games.css";
-import "./style/history.css";
-import "./style/tic-tac-toe.css";
+import "./style/amoeba.css";
 
 if (localStorage.jwtToken) {
   setAuthToken(localStorage.jwtToken);
