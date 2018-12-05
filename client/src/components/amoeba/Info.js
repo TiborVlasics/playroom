@@ -1,5 +1,5 @@
 import React from "react";
-import Hourglass from "../common/Hourglass-spinner";
+import Spinner from "../common/GameSpinner";
 
 const Info = ({ game, auth }) => {
   const isYourTurn = game.nextPlayer === auth.user.id;
@@ -25,7 +25,7 @@ const Info = ({ game, auth }) => {
   return (
     <div>
       <div className="spinner-container">
-        {isOpponentsTurn ? <Hourglass /> : null}
+        {isOpponentsTurn ? <Spinner /> : null}
       </div>
       <div className="info-message">{message}</div>
     </div>

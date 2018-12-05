@@ -16,7 +16,7 @@ import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/layout/Dashboard";
 import Amoeba from "./components/amoeba/Amoeba";
-import Pong from "./components/games/Pong";
+import Pong from "./components/pong/Pong";
 import SecretRoute from "./components/SecretRoute";
 
 import "./style/App.css";

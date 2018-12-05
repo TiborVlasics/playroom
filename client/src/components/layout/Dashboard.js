@@ -5,8 +5,8 @@ import { getCurrentGame } from "../../actions/gameActions";
 import io from "socket.io-client";
 import Navbar from "./Navbar";
 
-import ChatWindow from "../chat/ChatWindow";
-import Tavern from "../games/Games";
+import ChatContainer from "../chat/ChatContainer";
+import GameContainer from "../games/GameContainer";
 
 class Dashboard extends Component {
   constructor() {
@@ -47,8 +47,8 @@ class Dashboard extends Component {
       <div>
         <Navbar />
         <div className="dashboard">
-          <ChatWindow socket={this.socket} />
-          <Tavern socket={this.socket} />
+          <ChatContainer socket={this.socket} />
+          <GameContainer socket={this.socket} />
         </div>
       </div>
     );

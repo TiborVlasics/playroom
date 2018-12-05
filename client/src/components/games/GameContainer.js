@@ -13,7 +13,7 @@ import Spinner from "../common/Spinner";
 import NewGameForm from "./NewGameForm";
 import GameList from "./GameList";
 
-class Tavern extends Component {
+class GameContainer extends Component {
   constructor() {
     super();
 
@@ -84,7 +84,7 @@ class Tavern extends Component {
   }
 }
 
-Tavern.propTypes = {
+GameContainer.propTypes = {
   auth: PropTypes.object.isRequired,
   tavern: PropTypes.object.isRequired,
   currentGame: PropTypes.object.isRequired,
@@ -104,4 +104,4 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   { fetchGames, loadNewGame, setCurrentGame, clearGames, unloadGame }
-)(Tavern);
+)(GameContainer);
