@@ -1,8 +1,8 @@
-const TicTacToe = require("./amoeba/Amoeba");
+const Amoeba = require("./amoeba/Amoeba");
 const User = require("../user/User");
 
 function createAmoeba(player) {
-  return new TicTacToe({
+  return new Amoeba({
     player1: player,
     isFull: false
   }).save();
