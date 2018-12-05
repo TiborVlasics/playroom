@@ -5,9 +5,12 @@ module.exports = function(chat, socket, connections) {
   socket.on("chat", message => {
     Message.findOne()
       .sort({ createdDate: -1 })
-      .then(lastMsg => {
-        if (lastMsg && lastMsg.author.name === message.author.name) {
-          return addTextToLastMessage(lastMsg, message);
+      .then(latestMessage => {
+        if (
+          latestMessage &&
+          latestMessage.author.name === message.author.name
+        ) {
+          return addTextToLastMessage(latestMessage, message);
         } else {
           return createNewMessage(message);
         }

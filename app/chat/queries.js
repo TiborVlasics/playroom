@@ -11,12 +11,12 @@ function createNewMessage(message) {
   }).save();
 }
 
-function addTextToLastMessage(lastMsg, message) {
+function addTextToLastMessage(latestMessage, message) {
   return Message.findOneAndUpdate(
-    { _id: lastMsg._id },
+    { _id: latestMessage._id },
     {
       $set: {
-        text: [...lastMsg.text, message.text],
+        text: [...latestMessage.text, message.text],
         createdDate: Date.now()
       }
     },
