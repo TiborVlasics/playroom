@@ -1,6 +1,6 @@
 const Message = require("./Message");
 
-module.exports = function(chat, socket) {
+module.exports = function(chat, socket, connections) {
   socket.on("chat", async msg => {
     try {
       let lastMsg = await Message.findOne().sort({ createdDate: -1 });
@@ -34,5 +34,14 @@ module.exports = function(chat, socket) {
 
   socket.on("user typing", data => {
     socket.broadcast.emit("user typing", data);
+  });
+
+  socket.on("get users", () => {
+    let users = [];
+    Object.keys(connections).map(key => {
+      users.push(connections[key].user);
+    });
+
+    chat.to(socket.id).emit("users", users);
   });
 };

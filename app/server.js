@@ -4,6 +4,7 @@ const port = process.env.PORT || 5000;
 const server = app.listen(port, () => console.log(`Server running on ${port}`));
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+
 require("./sockets")(server);
 require("dotenv").config();
 

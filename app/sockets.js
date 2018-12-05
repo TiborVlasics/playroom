@@ -8,6 +8,7 @@ module.exports = function(server) {
   require("./config/socket.io")(io);
 
   let connections = {};
+
   const lobby = io.of("/");
 
   lobby.on("connection", function(socket) {
@@ -20,21 +21,12 @@ module.exports = function(server) {
       console.log("Disconnection from lobby", user.id, user.name);
     });
 
-    require("./chat/chat.socket")(lobby, socket);
-    require("./games/tavern.socket")(lobby, socket, user, connections);
-    require("./games/amoeba/controller")(lobby, socket, connections, user);
-
-    socket.on("get users", () => {
-      let users = [];
-      Object.keys(connections).map(key => {
-        users.push(connections[key].user);
-      });
-
-      lobby.to(socket.id).emit("users", users);
-    });
+    require("./chat/socket")(lobby, socket, connections);
+    require("./games/socket")(lobby, socket, user, connections);
+    require("./games/amoeba/socket")(lobby, socket, connections, user);
   });
 
-  require("./games/pong/controller")(io);
+  require("./games/pong/socket")(io);
 
   return io;
 };
